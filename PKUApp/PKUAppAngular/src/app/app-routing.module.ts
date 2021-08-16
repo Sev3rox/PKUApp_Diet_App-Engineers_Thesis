@@ -8,7 +8,7 @@ import { RegisterUserComponent } from './authentication/register-user/register-u
 const routes: Routes = [
   { path: 'home',component : HomeComponent},
   { path: '404', component : NotFoundComponent},
-  { path: 'authentication', component : RegisterUserComponent},
+  { path: 'authentication/register', component : RegisterUserComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full'}
 ];
