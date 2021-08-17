@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterUserComponent } from './authentication/register-user/register-user.component';
+import { LoginComponent } from './authentication/login/login.component';
 
 
 const routes: Routes = [
   { path: 'home',component : HomeComponent},
   { path: '404', component : NotFoundComponent},
   { path: 'authentication/register', component : RegisterUserComponent},
+  { path: 'authentication/login', component : LoginComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full'}
 ];

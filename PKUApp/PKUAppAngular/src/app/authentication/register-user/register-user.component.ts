@@ -3,6 +3,7 @@ import { UserForRegistrationDto } from './../../_interfaces/userForRegistrationD
 import { PasswordConfirmationValidatorService } from './../../shared/custom-validators/password-confirmation-validator.service';
 import { AuthenticationService } from './../../shared/services/authentication.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-user',
@@ -11,7 +12,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterUserComponent implements OnInit {
 
-  constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService) { }
+  constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService,private _router: Router) { }
 
   registerForm: FormGroup;
   public errorMessage: string = '';
@@ -50,7 +51,7 @@ export class RegisterUserComponent implements OnInit {
     };
 
     this._authService.registerUser("api/accounts/registration", user)
-    .subscribe(_ =>console.log("Successful registration"),
+    .subscribe(_ =>this._router.navigate(["/authentication/login"]),
     error => {this.errorMessage = error; this.showError = true}
     )
   }
