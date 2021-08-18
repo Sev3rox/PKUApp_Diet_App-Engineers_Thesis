@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtModule } from "@auth0/angular-jwt";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,7 +12,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterUserComponent } from './authentication/register-user/register-user.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { LoginComponent } from './authentication/login/login.component';
+import { environment } from 'src/environments/environment';
+import { ProductComponent } from './products/product/product.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
 
 @NgModule({
   declarations: [
@@ -20,14 +27,23 @@ import { LoginComponent } from './authentication/login/login.component';
     HomeComponent,
     RegisterUserComponent,
     NotFoundComponent,
-    LoginComponent
+    LoginComponent,
+    ProductComponent,
+    PrivacyComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: [environment.urlAddress],
+        disallowedRoutes: []
+      }
+    })
   ],
   providers: [
     {

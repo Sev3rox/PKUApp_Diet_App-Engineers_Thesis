@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using PKUAppAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,8 +16,10 @@ namespace PKUAppAPI.JwtFeatures
     {
         private readonly IConfiguration _configuration;
         private readonly IConfigurationSection _jwtSettings;
-        public JwtHandler(IConfiguration configuration)
+        private readonly UserManager<User> _userManager;
+        public JwtHandler(IConfiguration configuration, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _configuration = configuration;
             _jwtSettings = _configuration.GetSection("JwtSettings");
         }
@@ -29,12 +32,18 @@ namespace PKUAppAPI.JwtFeatures
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public List<Claim> GetClaims(IdentityUser user)
+        public async Task<List<Claim>> GetClaims(User user)
         {
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Email)
             };
+
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             return claims;
         }

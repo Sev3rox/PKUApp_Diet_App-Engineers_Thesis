@@ -105,5 +105,16 @@ namespace PKUAppAPI.Controllers
         {
             return _context.Products.Any(e => e.ProductId == id);
         }
+
+
+        [HttpGet("Privacy")]
+        [Authorize]
+        public IActionResult Privacy()
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            return Ok(claims);
+        }
     }
 }

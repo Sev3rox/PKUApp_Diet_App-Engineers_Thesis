@@ -4,8 +4,8 @@ import { UserForRegistrationDto } from './../../_interfaces/userForRegistrationD
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from './../../../environments/environment';
-import { EnvironmentUrlService } from './environment-url.service';
 import { Subject } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AuthenticationService {
   private _authChangeSub = new Subject<boolean>()
   public authChanged = this._authChangeSub.asObservable();
 
-  constructor(private _http: HttpClient,) { }
+  constructor(private _http: HttpClient, private _jwtHelper: JwtHelperService) { }
 
   public registerUser = (route: string, body: UserForRegistrationDto) => {
     return this._http.post(this.createCompleteRoute(route, environment.urlAddress), body);
@@ -35,7 +35,17 @@ export class AuthenticationService {
     this._authChangeSub.next(isAuthenticated);
   }
 
-  private createCompleteRoute = (route: string, envAddress: string) => {
+  public isUserAuthenticated = (): boolean => {
+    const token = localStorage.getItem("token");
+ 
+    return (!!(token)) && (!this._jwtHelper.isTokenExpired(token));
+  }
+
+  public privacy = (route: string) =>{
+    return this._http.get(this.createCompleteRoute(route,environment.urlAddress))
+  }
+
+  public createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}/${route}`;
   }
 }
