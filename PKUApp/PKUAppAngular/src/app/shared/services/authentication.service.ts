@@ -45,6 +45,14 @@ export class AuthenticationService {
     return this._http.get(this.createCompleteRoute(route,environment.urlAddress))
   }
 
+  public isUserAdmin = (): boolean => {
+    const token = localStorage.getItem("token");
+    const decodedToken = this._jwtHelper.decodeToken(token);
+    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+    console.log(role === 'Administrator');
+    return role === 'Administrator';
+  }
+
   public createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}/${route}`;
   }

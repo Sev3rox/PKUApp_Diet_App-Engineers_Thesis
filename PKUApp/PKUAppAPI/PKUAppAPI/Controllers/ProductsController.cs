@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,12 @@ namespace PKUAppAPI.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly PKUAppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ProductsController(PKUAppDbContext context)
+        public ProductsController(PKUAppDbContext context, IMapper mapper)
         {
+          
+            _mapper = mapper;
             _context = context;
         }
 
@@ -26,6 +30,7 @@ namespace PKUAppAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
+
             return await _context.Products.ToListAsync();
         }
 
@@ -108,7 +113,7 @@ namespace PKUAppAPI.Controllers
 
 
         [HttpGet("Privacy")]
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Privacy()
         {
             var claims = User.Claims

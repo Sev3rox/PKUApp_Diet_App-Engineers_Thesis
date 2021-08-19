@@ -34,7 +34,7 @@ namespace PKUAppAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
+            
 
             services.AddDbContext<PKUAppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
 
@@ -71,6 +71,8 @@ namespace PKUAppAPI
             services.AddScoped<JwtHandler>();
 
             services.AddCors();
+
+            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

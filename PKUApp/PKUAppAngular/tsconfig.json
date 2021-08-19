@@ -12,6 +12,7 @@
 
     "noImplicitAny": false,
     "strictPropertyInitialization": false,
+    "strictNullChecks":false,
 
     "declaration": false,
     "downlevelIteration": true,

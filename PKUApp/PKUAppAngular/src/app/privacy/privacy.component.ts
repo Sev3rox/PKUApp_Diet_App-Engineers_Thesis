@@ -7,7 +7,7 @@ import { AuthenticationService } from '.././shared/services/authentication.servi
   styleUrls: ['./privacy.component.css']
 })
 export class PrivacyComponent implements OnInit {
-  public claims: any;
+  public claims: any [];
   constructor(private _authService: AuthenticationService) { }
   ngOnInit(): void {
     this.getClaims();
