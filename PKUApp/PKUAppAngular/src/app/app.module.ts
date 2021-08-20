@@ -16,6 +16,7 @@ import { environment } from 'src/environments/environment';
 import { ProductComponent } from './products/product/product.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { AdminProductsComponent } from './admin-products/admin-products.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -31,7 +32,8 @@ export function tokenGetter() {
     LoginComponent,
     ProductComponent,
     PrivacyComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    AdminProductsComponent
   ],
   imports: [
     BrowserModule,
