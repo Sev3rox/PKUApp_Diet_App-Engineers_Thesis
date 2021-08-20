@@ -20,8 +20,7 @@ export class RegisterUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
+      Name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
       confirm: new FormControl('')
@@ -43,8 +42,7 @@ export class RegisterUserComponent implements OnInit {
     const formValues = { ...registerFormValue };
 
     const user: UserForRegistrationDto = {
-      firstName: formValues.firstName,
-      lastName: formValues.lastName,
+      Name: formValues.Name,
       email: formValues.email,
       password: formValues.password,
       confirmPassword: formValues.confirm

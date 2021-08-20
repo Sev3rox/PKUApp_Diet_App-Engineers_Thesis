@@ -7,15 +7,12 @@
 
         <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
             <div class="form-group row">
-                <label for="firstName" class="col-form-label col-sm-2">First Name:</label>
+                <label for="Name" class="col-form-label col-sm-2">Name:</label>
                 <div class="col-md-5">
-                    <input type="text" id="firstName" formControlName="firstName" class="form-control" />
+                    <input type="text" id="Name" formControlName="Name" class="form-control" />
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="lastName" class="col-form-label col-sm-2">Last Name:</label>
                 <div class="col-md-5">
-                    <input type="text" id="lastName" formControlName="lastName" class="form-control" />
+                    <em *ngIf="validateControl('Name') && hasError('Name', 'required')">Name is required</em>
                 </div>
             </div>
             <div class="form-group row">

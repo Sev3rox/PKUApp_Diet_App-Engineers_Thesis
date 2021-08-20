@@ -8,9 +8,7 @@ namespace PKUAppAPI.DTO
 {
     public class UserForRegistrationDto
     {
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "Email is required.")]
         public string Email { get; set; }
