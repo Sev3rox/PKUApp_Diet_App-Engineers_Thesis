@@ -4,6 +4,7 @@ import { PasswordConfirmationValidatorService } from './../../shared/custom-vali
 import { AuthenticationService } from './../../shared/services/authentication.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register-user',
@@ -12,7 +13,8 @@ import { Router } from '@angular/router';
 })
 export class RegisterUserComponent implements OnInit {
 
-  constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService,private _router: Router) { }
+  constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService,private _router: Router,
+    private toastr: ToastrService) { }
 
   registerForm: FormGroup;
   public errorMessage: string = '';
@@ -49,7 +51,10 @@ export class RegisterUserComponent implements OnInit {
     };
 
     this._authService.registerUser("api/accounts/registration", user)
-    .subscribe(_ =>this._router.navigate(["/authentication/login"]),
+    .subscribe(_ =>{
+      this._router.navigate(["/authentication/login"])
+      this.toastr.success("Registered successfully", "Registration");
+    },
     error => {this.errorMessage = error; this.showError = true}
     )
   }

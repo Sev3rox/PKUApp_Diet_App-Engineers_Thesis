@@ -9,6 +9,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { AdminProductsComponent } from './admin-products/admin-products.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'product',component : ProductComponent, canActivate: [AuthGuard]},
   { path: '404', component : NotFoundComponent},
   { path: 'privacy', component: PrivacyComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin-products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'authentication/register', component : RegisterUserComponent},
   { path: 'authentication/login', component : LoginComponent},

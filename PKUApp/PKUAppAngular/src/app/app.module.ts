@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from "@auth0/angular-jwt";
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +19,8 @@ import { ProductComponent } from './products/product/product.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { AdminProductsComponent } from './admin-products/admin-products.component';
+import { ShowProductsComponent } from './admin-products/show-products/show-products.component';
+import { AddEditProductComponent } from './admin-products/add-edit-product/add-edit-product.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -33,7 +37,9 @@ export function tokenGetter() {
     ProductComponent,
     PrivacyComponent,
     ForbiddenComponent,
-    AdminProductsComponent
+    AdminProductsComponent,
+    ShowProductsComponent,
+    AddEditProductComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +53,10 @@ export function tokenGetter() {
         allowedDomains: [environment.urlAddress2],
         disallowedRoutes: []
       }
+    }),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass :'toast-top-right'
     })
   ],
   providers: [

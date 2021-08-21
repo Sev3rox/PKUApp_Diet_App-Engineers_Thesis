@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from './../../shared/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   public showError: boolean;
   private _returnUrl: string;
 
-  constructor(private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute) { }
+  constructor(private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -46,8 +48,8 @@ export class LoginComponent implements OnInit {
     .subscribe(res => {
        localStorage.setItem("token", res.Token);
        this._authService.sendAuthStateChangeNotification(res.IsAuthSuccessful);
-       console.log(res);
        this._router.navigate([this._returnUrl]);
+       this.toastr.success("Logged in successfully", "Logging In");
     },
     (error) => {
       this.errorMessage = error;

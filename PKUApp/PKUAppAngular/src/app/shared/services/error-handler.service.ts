@@ -65,8 +65,16 @@ export class ErrorHandlerService implements HttpInterceptor {
       })
       return message.slice(0, -4);
     }
-    else{
-      return error.error ? error.error : error.message;
+    else if(this._router.url.includes('/admin-products')){
+      let message = '';
+      console.log(error.error.errors)
+      const values = Object.values(error.error.errors);
+      values.map((m: any) => {
+         message += m + '<br>';
+      })
+      return message.slice(0, -4);
     }
+    else
+    return error.error ? error.error : error.message;
   }
 }
