@@ -22,30 +22,44 @@ export class AddEditProductComponent implements OnInit {
       product:any;
       ProductId:number;
       Name:string;
+      Category:string;
       Phe:number;
       Calories:number;
       Protein:number;
-      TotalFat:number;
-      TotalCarb:number;
+      Fat:number;
+      Carb:number;
+
+      CategoriesList:any=[];
 
   ngOnInit(): void {
 
       this.ProductId=this.product.ProductId;
       this.Name=this.product.Name;
-      this.Phe=this.product.Phe;
-      this.Calories=this.product.Calories;
-      this.Protein=this.product.Protein;
-      this.TotalFat=this.product.TotalFat;
-      this.TotalCarb=this.product.TotalCarb;
+      this.Category=this.product.Category;
+      this.Phe=this.product.Phe/100;
+      this.Calories=this.product.Calories/100;
+      this.Protein=this.product.Protein/100;
+      this.Fat=this.product.Fat/100;
+      this.Carb=this.product.Carb/100;
 
       this.productForm = new FormGroup({
         Name: new FormControl(this.Name, [Validators.required]),
-        Phe: new FormControl(this.Phe, [Validators.required, Validators.min(0), Validators.max(2147483647)]),
-        Calories: new FormControl(this.Calories, [Validators.required, Validators.min(0),Validators.max(2147483647)]),
-        Protein: new FormControl(this.Protein, [Validators.required, Validators.min(0), Validators.max(2147483647)]),
-        TotalFat: new FormControl(this.TotalFat, [Validators.required, Validators.min(0), Validators.max(2147483647)]),
-        TotalCarb: new FormControl(this.TotalCarb, [Validators.required, Validators.min(0), Validators.max(2147483647)]),
+        Category: new FormControl(this.Category, [Validators.required]),
+        Phe: new FormControl(this.Phe, [Validators.required, Validators.min(0), Validators.max(1000)]),
+        Calories: new FormControl(this.Calories, [Validators.required, Validators.min(0),Validators.max(1000)]),
+        Protein: new FormControl(this.Protein, [Validators.required, Validators.min(0), Validators.max(100)]),
+        Fat: new FormControl(this.Fat, [Validators.required, Validators.min(0), Validators.max(100)]),
+        Carb: new FormControl(this.Carb, [Validators.required, Validators.min(0), Validators.max(100)]),
       })
+      this.loadCategoriesList();
+
+    }
+
+    loadCategoriesList(){
+      this.service.getAllCategoriesNames().subscribe((data:any)=>{
+        this.CategoriesList=data;
+        this.CategoriesList.splice(this.CategoriesList.indexOf(this.Category), 1);
+      });
     }
 
     addUpdateProduct(productFormValue){
@@ -58,17 +72,17 @@ export class AddEditProductComponent implements OnInit {
   addProduct(productFormValue){
     this.showError = false;
     const product = {... productFormValue };
-    console.log(product)
     var val = { ProductId:this.ProductId,
                 Name:product.Name,
-                Phe:product.Phe,
-                Calories:product.Calories,
-                Protein:product.Protein,
-                TotalFat:product.TotalFat,
-                TotalCarb:product.TotalCarb}
+                Category:product.Category,
+                Phe:(Math.round((Math.round(product.Phe * 100) / 100)*100)),
+                Calories:(Math.round((Math.round(product.Calories * 100) / 100)*100)),
+                Protein:(Math.round((Math.round(product.Protein * 100) / 100)*100)),
+                Fat:(Math.round((Math.round(product.Fat * 100) / 100)*100)),
+                Carb:(Math.round((Math.round(product.Carb * 100) / 100)*100))}
 
     this.service.addProduct(val).subscribe(res=>{
-      this.closing.closeClick2();
+      this.closing.closeClickFromOutside();
       this.toastr.success("Added successfully", "Product Management");
     },
     (error) => {
@@ -82,14 +96,15 @@ export class AddEditProductComponent implements OnInit {
     const product = {... productFormValue };
     var val = { ProductId:this.ProductId,
                 Name:product.Name,
-                Phe:product.Phe,
-                Calories:product.Calories,
-                Protein:product.Protein,
-                TotalFat:product.TotalFat,
-                TotalCarb:product.TotalCarb};
+                Category:product.Category,
+                Phe:(Math.round((Math.round(product.Phe * 100) / 100)*100)),
+                Calories:(Math.round((Math.round(product.Calories * 100) / 100)*100)),
+                Protein:(Math.round((Math.round(product.Protein * 100) / 100)*100)),
+                Fat:(Math.round((Math.round(product.Fat * 100) / 100)*100)),
+                Carb:(Math.round((Math.round(product.Carb * 100) / 100)*100))}
 
     this.service.updateProduct(val).subscribe(res=>{
-      this.closing.closeClick2();
+      this.closing.closeClickFromOutside();
       this.toastr.success("Updated successfully", "Product Management");
     },
     (error) => {
@@ -104,6 +119,10 @@ export class AddEditProductComponent implements OnInit {
 
   public validateControl = (controlName: string) => {
     return this.productForm.controls[controlName].invalid && this.productForm.controls[controlName].touched
+  }
+
+  Close(){
+    this.closing.closeClickFromOutside();
   }
 
 }

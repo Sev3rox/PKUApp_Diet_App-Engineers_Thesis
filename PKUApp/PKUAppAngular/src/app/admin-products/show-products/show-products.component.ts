@@ -14,6 +14,8 @@ export class ShowProductsComponent implements OnInit {
   ProductsList:any=[];
   ModalTitle:string;
   ActivateAddEditProductComp:boolean=false;
+  ActivateDetailsProductComp:boolean=false;
+  ActivateDeleteProductComp:boolean=false;
   product:any;
 
   ngOnInit(): void {
@@ -27,8 +29,8 @@ export class ShowProductsComponent implements OnInit {
       Phe:null,
       Calories:null,
       Protein:null,
-      TotalFat:null,
-      TotalCarb:null
+      Fat:null,
+      Carb:null
 
     }
     this.ModalTitle="Add Product";
@@ -41,19 +43,25 @@ export class ShowProductsComponent implements OnInit {
     this.ActivateAddEditProductComp=true;
   }
 
+  detailsClick(item){
+    this.product=item;
+    this.ModalTitle="Product Details";
+    this.ActivateDetailsProductComp=true;
+  }
+
   deleteClick(item){
-    if(confirm('Are you sure?')){
-      this.service.deleteProduct(item.ProductId).subscribe(data=>{
-        this.refreshProductsList();
-        this.toastr.success("Deleted successfully", "Product Management");
-      })
-    }
+    this.product=item;
+    this.ModalTitle="Delete Product";
+    this.ActivateDeleteProductComp=true;
   }
 
   @ViewChild('mybutton') mybutton: ElementRef<HTMLElement>;
 
-  closeClick2(){
+  closeClickFromOutside(){
     this.ActivateAddEditProductComp=false;
+    this.ActivateAddEditProductComp=false;
+    this.ActivateDetailsProductComp=false;
+    this.ActivateDeleteProductComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
     this.refreshProductsList();
@@ -61,6 +69,8 @@ export class ShowProductsComponent implements OnInit {
 
   closeClick(){
     this.ActivateAddEditProductComp=false;
+    this.ActivateDetailsProductComp=false;
+    this.ActivateDeleteProductComp=false;
     this.refreshProductsList();
   }
 

@@ -25,4 +25,8 @@ export class AdminProductsService {
   deleteProduct(val:any){
     return this.http.delete(this.APIUrl+'/Products/'+val);
   }
+
+  getAllCategoriesNames(){
+    return this.http.get<any>(this.APIUrl+'/Products/GetAllCategories');
+  }
 }

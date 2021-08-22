@@ -22,7 +22,6 @@ export class AuthenticationService {
   }
 
   public loginUser = (route: string, body: UserForAuthenticationDto) => {
-    console.log(route+"   "+body+"   "+environment.urlAddress)
     return this._http.post<AuthResponseDto>(this.createCompleteRoute(route, environment.urlAddress), body);
   }
 
@@ -49,7 +48,6 @@ export class AuthenticationService {
     const token = localStorage.getItem("token");
     const decodedToken = this._jwtHelper.decodeToken(token);
     const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
-    console.log(role === 'Administrator');
     return role === 'Administrator';
   }
 

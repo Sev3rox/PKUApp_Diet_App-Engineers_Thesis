@@ -47,7 +47,15 @@ namespace PKUAppAPI
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<PKUAppDbContext>();
+            services.AddIdentity<User, IdentityRole>(options =>options.Password = 
+            new PasswordOptions
+            {
+                RequireDigit = false,
+                RequiredLength = 6,
+                RequireLowercase = false,
+                RequireUppercase = false,
+                RequireNonAlphanumeric= false
+            }).AddErrorDescriber<AppErrorDescriber>().AddEntityFrameworkStores<PKUAppDbContext>();
 
             var jwtSettings = Configuration.GetSection("JwtSettings");
             services.AddAuthentication(opt =>

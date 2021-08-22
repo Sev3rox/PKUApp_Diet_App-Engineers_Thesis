@@ -11,4 +11,14 @@ namespace PKUAppAPI.Models
         public string Name { get; set; }
 
     }
+
+    public class AppErrorDescriber : IdentityErrorDescriber
+    {
+        public override IdentityError DuplicateUserName(string userName)
+        {
+            var error = base.DuplicateUserName(userName);
+            error.Description = "This email is already taken.";
+            return error;
+        }
+    }
 }

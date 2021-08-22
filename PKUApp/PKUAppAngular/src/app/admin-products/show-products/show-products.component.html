@@ -3,7 +3,7 @@
 <div class="panel panel-primary">
       <div class="panel-body">
 
-<button type="button" class="btn btn-primary float-right m-2" 
+<button type="button" class="btn btn-success float-right m-2" 
 data-toggle="modal" data-target="#exampleModal"
 (click)="addClick()"
 data-backdrop="static" data-keyboard="false"
@@ -26,6 +26,10 @@ data-backdrop="static" data-keyboard="false"
         <div class="modal-body">
             <app-add-edit-product [product]="product" *ngIf="ActivateAddEditProductComp">
             </app-add-edit-product>
+            <app-details-product [product]="product" *ngIf="ActivateDetailsProductComp">
+            </app-details-product>
+            <app-delete-product [product]="product" *ngIf="ActivateDeleteProductComp">
+            </app-delete-product>
         </div>
       </div>
     </div>
@@ -38,11 +42,12 @@ data-backdrop="static" data-keyboard="false"
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>Phe</th>
-            <th>Calories</th>
-            <th>Protein</th>
-            <th>TotalFat</th>
-            <th>TotalCarb</th>
+            <th>Category</th>
+            <th>Phe (mg/100g)</th>
+            <th>Calories (kcal/100g)</th>
+            <th>Protein (g/100g)</th>
+            <th>Fat (g/100g)</th>
+            <th>Carb (g/100g)</th>
             <th>Options</th>
         </tr>
     </thead>
@@ -50,12 +55,19 @@ data-backdrop="static" data-keyboard="false"
         <tr *ngFor="let dataItem of ProductsList">
             <td>{{dataItem.ProductId}}</td>
             <td>{{dataItem.Name}}</td>
-            <td>{{dataItem.Phe}}</td>
-            <td>{{dataItem.Calories}}</td>
-            <td>{{dataItem.Protein}}</td>
-            <td>{{dataItem.TotalFat}}</td>
-            <td>{{dataItem.TotalCarb}}</td>
+            <td>{{dataItem.Category}}</td>
+            <td>{{dataItem.Phe/100}}</td>
+            <td>{{dataItem.Calories/100}}</td>
+            <td>{{dataItem.Protein/100}}</td>
+            <td>{{dataItem.Fat/100}}</td>
+            <td>{{dataItem.Carb/100}}</td>
             <td>
+              <button type="button" class="btn btn-info"
+                (click)="detailsClick(dataItem)"
+                data-toggle="modal" data-target="#exampleModal"
+                data-backdrop="static" data-keyboard="false"
+                >Details
+                </button>
                 <button type="button" class="btn btn-warning"
                 (click)="editClick(dataItem)"
                 data-toggle="modal" data-target="#exampleModal"
@@ -64,6 +76,8 @@ data-backdrop="static" data-keyboard="false"
                 </button>
                 <button type="button" class="btn btn-danger"
                 (click)="deleteClick(dataItem)"
+                data-toggle="modal" data-target="#exampleModal"
+                data-backdrop="static" data-keyboard="false"
                 >Delete
                 </button>
             </td>

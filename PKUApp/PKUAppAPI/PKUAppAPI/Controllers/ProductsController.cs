@@ -11,7 +11,6 @@ using PKUAppAPI.Models;
 namespace PKUAppAPI.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -46,47 +45,68 @@ namespace PKUAppAPI.Controllers
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
-            if (id != product.ProductId)
+            var check = _context.Products.Any(e => e.Name == product.Name&&e.ProductId!=product.ProductId);
+            if (check == true)
             {
-                return BadRequest();
+                ModelState.AddModelError("Name", "Name already in use");
+                return BadRequest(ModelState);
             }
-
-            _context.Entry(product).State = EntityState.Modified;
-
-            try
+            else
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
+                if (id != product.ProductId)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                _context.Entry(product).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return NoContent();
+            }
         }
 
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            var check = _context.Products.Any(e => e.Name == product.Name);
+            if (check == true)
+            {
+                ModelState.AddModelError("Name", "Name already in use");
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+                return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            }
         }
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -104,6 +124,20 @@ namespace PKUAppAPI.Controllers
         private bool ProductExists(int id)
         {
             return _context.Products.Any(e => e.ProductId == id);
+        }
+
+        [Route("GetAllCategories")]
+        [HttpGet]
+        public async Task<ActionResult<List<string>>> GetAllCategories()
+        {
+            var categories = await _context.Categories.Select(a => a.Name).ToListAsync();
+
+            if (categories == null)
+            {
+                return NotFound();
+            }
+
+            return categories;
         }
 
         [HttpGet("Privacy")]

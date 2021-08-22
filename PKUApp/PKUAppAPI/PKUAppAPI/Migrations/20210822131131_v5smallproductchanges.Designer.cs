@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PKUAppAPI.Models;
 
 namespace PKUAppAPI.Migrations
 {
     [DbContext(typeof(PKUAppDbContext))]
-    partial class PKUAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210822131131_v5smallproductchanges")]
+    partial class v5smallproductchanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,22 +152,6 @@ namespace PKUAppAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PKUAppAPI.Models.Category", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CategoryId");
-
-                    b.ToTable("Categories");
-                });
-
             modelBuilder.Entity("PKUAppAPI.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -178,10 +164,6 @@ namespace PKUAppAPI.Migrations
 
                     b.Property<int>("Carb")
                         .HasColumnType("int");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Fat")
                         .HasColumnType("int");

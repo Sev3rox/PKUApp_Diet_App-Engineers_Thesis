@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PKUAppAPI.Models;
 
 namespace PKUAppAPI.Migrations
 {
     [DbContext(typeof(PKUAppDbContext))]
-    partial class PKUAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210822144757_v6productcategories")]
+    partial class v6productcategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,6 +166,48 @@ namespace PKUAppAPI.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            Name = "Fruits"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            Name = "Vegetables"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            Name = "Dairy"
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            Name = "Grains"
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            Name = "Protein Foods"
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            Name = "Drinks"
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            Name = "Snacks"
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            Name = "Other"
+                        });
                 });
 
             modelBuilder.Entity("PKUAppAPI.Models.Product", b =>
@@ -178,10 +222,6 @@ namespace PKUAppAPI.Migrations
 
                     b.Property<int>("Carb")
                         .HasColumnType("int");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Fat")
                         .HasColumnType("int");

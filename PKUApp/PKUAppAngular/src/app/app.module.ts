@@ -21,6 +21,8 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { AdminProductsComponent } from './admin-products/admin-products.component';
 import { ShowProductsComponent } from './admin-products/show-products/show-products.component';
 import { AddEditProductComponent } from './admin-products/add-edit-product/add-edit-product.component';
+import { DetailsProductComponent } from './admin-products/details-product/details-product.component';
+import { DeleteProductComponent } from './admin-products/delete-product/delete-product.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -39,7 +41,9 @@ export function tokenGetter() {
     ForbiddenComponent,
     AdminProductsComponent,
     ShowProductsComponent,
-    AddEditProductComponent
+    AddEditProductComponent,
+    DetailsProductComponent,
+    DeleteProductComponent
   ],
   imports: [
     BrowserModule,
