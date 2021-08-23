@@ -43,7 +43,7 @@ export function tokenGetter() {
     ShowProductsComponent,
     AddEditProductComponent,
     DetailsProductComponent,
-    DeleteProductComponent
+    DeleteProductComponent,
   ],
   imports: [
     BrowserModule,
