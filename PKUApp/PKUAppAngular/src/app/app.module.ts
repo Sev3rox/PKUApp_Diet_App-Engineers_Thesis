@@ -60,7 +60,7 @@ export function tokenGetter() {
     }),
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      positionClass :'toast-top-right'
+      positionClass :'toast-bottom-right'
     })
   ],
   providers: [

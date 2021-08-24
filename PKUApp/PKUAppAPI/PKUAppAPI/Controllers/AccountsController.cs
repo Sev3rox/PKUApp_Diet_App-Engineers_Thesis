@@ -20,12 +20,14 @@ namespace PKUAppAPI.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
+        private readonly PKUAppDbContext _context;
 
-        public AccountsController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler)
+        public AccountsController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler, PKUAppDbContext context)
         {
             _userManager = userManager;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
+            _context = context;
         }
 
         [HttpPost("Registration")]
@@ -64,5 +66,36 @@ namespace PKUAppAPI.Controllers
 
             return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
         }
+
+        [HttpGet("GetName")]
+        public JsonResult GetName()
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user= _context.Users.FirstOrDefault(a => a.Email == claims[0].Value);
+            return new JsonResult(user.Name);
+        }
+
+        [HttpGet("IsAdmin")]
+        public JsonResult IsAdmin()
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(false);
+            }
+            if(claims[1].Value=="Administrator")
+            return new JsonResult(true);
+            else
+                return new JsonResult(false);
+        }
     }
 }
+

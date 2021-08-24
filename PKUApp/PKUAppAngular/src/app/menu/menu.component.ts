@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../shared/services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from './../shared/services/user.service';
 
 @Component({
   selector: 'app-menu',
@@ -11,7 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 export class MenuComponent implements OnInit {
 
   public isUserAuthenticated: boolean;
-  constructor(private _authService: AuthenticationService, private _router: Router,
+  public isAdmin: boolean;
+  public Name: string;
+  constructor(private _authService: AuthenticationService, private _router: Router,private userService: UserService,
     private toastr: ToastrService) { 
     this._authService.authChanged
     .subscribe(res => {
@@ -21,7 +24,13 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this._authService.authChanged
-    .subscribe(res =>this.isUserAuthenticated = res)
+    .subscribe(res =>{this.isUserAuthenticated = res;
+      this.userService.getName()
+    .subscribe(res =>{this.Name=res; console.log(this.Name);});
+    this.userService.isAdmin()
+    .subscribe(res =>{this.isAdmin=res; console.log(this.isAdmin);});
+    })
+
   }
 
   public logout = () => {
