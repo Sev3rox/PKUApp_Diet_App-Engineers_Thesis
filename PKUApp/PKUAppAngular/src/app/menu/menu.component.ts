@@ -17,8 +17,11 @@ export class MenuComponent implements OnInit {
   constructor(private _authService: AuthenticationService, private _router: Router,private userService: UserService,
     private toastr: ToastrService) { 
     this._authService.authChanged
-    .subscribe(res => {
-      this.isUserAuthenticated = res;
+    .subscribe(res =>{this.isUserAuthenticated = res;
+      this.userService.getName()
+    .subscribe(res =>{this.Name=res; console.log(this.Name);});
+    this.userService.isAdmin()
+    .subscribe(res =>{this.isAdmin=res; console.log(this.isAdmin);});
     })
   }
 
