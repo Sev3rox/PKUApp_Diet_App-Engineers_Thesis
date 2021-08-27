@@ -40,15 +40,15 @@ data-backdrop="static" data-keyboard="false"
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Phe (mg/100g)</th>
-            <th>Calories (kcal/100g)</th>
-            <th>Protein (g/100g)</th>
-            <th>Fat (g/100g)</th>
-            <th>Carb (g/100g)</th>
-            <th>Options</th>
+          <th (click)="sortResult('ProductId')" style="cursor: pointer;">Id</th>
+          <th (click)="sortResult('Name')" style="cursor: pointer;">Name</th>
+          <th (click)="sortResult('Category')" style="cursor: pointer;">Category</th>
+          <th (click)="sortResult('Phe')" style="cursor: pointer;">Phe (mg/100g)</th>
+          <th (click)="sortResult('Calories')" style="cursor: pointer;">Calories (kcal/100g)</th>
+          <th (click)="sortResult('Protein')" style="cursor: pointer;">Protein (g/100g)</th>
+          <th (click)="sortResult('Fat')" style="cursor: pointer;">Fat (g/100g)</th>
+          <th (click)="sortResult('Carb')" style="cursor: pointer;">Carb (g/100g)</th>
+          <th>Options</th>
         </tr>
     </thead>
     <tbody>

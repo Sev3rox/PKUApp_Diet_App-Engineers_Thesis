@@ -25,7 +25,7 @@ namespace PKUAppAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Where(a=>a.UserId==null).ToListAsync();
         }
 
         // GET: api/Products/5
@@ -48,7 +48,7 @@ namespace PKUAppAPI.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
-            var check = _context.Products.Any(e => e.Name == product.Name&&e.ProductId!=product.ProductId);
+            var check = _context.Products.Any(e => e.Name == product.Name && e.ProductId!=product.ProductId && e.UserId == null);
             if (check == true)
             {
                 ModelState.AddModelError("Name", "Name already in use");
@@ -89,7 +89,7 @@ namespace PKUAppAPI.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
-            var check = _context.Products.Any(e => e.Name == product.Name);
+            var check = _context.Products.Any(e => e.Name == product.Name && e.UserId == null);
             if (check == true)
             {
                 ModelState.AddModelError("Name", "Name already in use");
@@ -138,6 +138,178 @@ namespace PKUAppAPI.Controllers
             }
 
             return categories;
+        }
+
+        [HttpGet("GetUserProducts")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<Product>>> GetUserProducts()
+        {
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user =  await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var list=await _context.Products.Where(a => a.UserId == null).ToListAsync();
+
+            var ownlist= await _context.Products.Where(a => a.UserId == user.Id).ToListAsync();
+
+            list.AddRange(ownlist);
+
+            return list;
+        }
+
+        [HttpGet("GetUserOwnProducts")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<Product>>> GetUserOwnProducts()
+        {
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var ownlist = await _context.Products.Where(a => a.UserId == user.Id).ToListAsync();
+
+
+            return ownlist;
+        }
+
+        [HttpDelete("OwnDelete/{id}")]
+        [Authorize]
+        public async Task<IActionResult> OwnDelete(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            if (user.Id != product.UserId)
+            {
+                return new JsonResult("Not your product");
+            }
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPost("OwnAdd")]
+        [Authorize]
+        public async Task<ActionResult<Product>> OwnAdd(Product product)
+        {
+
+            var check = _context.Products.Any(e => e.Name == product.Name && e.UserId == null);
+            if (check == true)
+            {
+                ModelState.AddModelError("Name", "Name already in use");
+                return BadRequest(ModelState);
+            }
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var owncheck = _context.Products.Any(e => e.Name == product.Name && e.UserId == user.Id);
+            if (owncheck == true)
+            {
+                ModelState.AddModelError("Name", "Name already in use in your Own Products");
+                return BadRequest(ModelState);
+            }
+
+            product.UserId = user.Id;
+
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            
+        }
+
+        [HttpPut("OwnUpdate/{id}")]
+        [Authorize]
+        public async Task<IActionResult> OwnUpdate(int id, Product product)
+        {
+            var check = _context.Products.Any(e => e.Name == product.Name && e.ProductId != product.ProductId && e.UserId == null);
+            if (check == true)
+            {
+                ModelState.AddModelError("Name", "Name already in use");
+                return BadRequest(ModelState);
+            }
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var owncheck = _context.Products.Any(e => e.Name == product.Name && e.UserId == user.Id);
+            if (owncheck == true)
+            {
+                ModelState.AddModelError("Name", "Name already in use in your Own Products");
+                return BadRequest(ModelState);
+            }
+
+            if (user.Id != product.UserId)
+            {
+                return new JsonResult("Not your product");
+            }
+
+            product.UserId = user.Id;
+
+            if (id != product.ProductId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(product).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+            
         }
 
         [HttpGet("Privacy")]

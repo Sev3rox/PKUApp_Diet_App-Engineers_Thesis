@@ -23,6 +23,14 @@ import { ShowProductsComponent } from './admin-products/show-products/show-produ
 import { AddEditProductComponent } from './admin-products/add-edit-product/add-edit-product.component';
 import { DetailsProductComponent } from './admin-products/details-product/details-product.component';
 import { DeleteProductComponent } from './admin-products/delete-product/delete-product.component';
+import { UserProductsComponent } from './user-products/user-products.component';
+import { OwnProductsComponent } from './user-products/own-products/own-products.component';
+import { UserDetailsProductComponent } from './user-products/user-details-product/user-details-product.component';
+import { UserShowProductsComponent } from './user-products/user-show-products/user-show-products.component';
+import { OwnAddEditProductComponent } from './user-products/own-products/own-add-edit-product/own-add-edit-product.component';
+import { OwnDeleteProductComponent } from './user-products/own-products/own-delete-product/own-delete-product.component';
+import { OwnDetailsProductComponent } from './user-products/own-products/own-details-product/own-details-product.component';
+import { OwnShowProductsComponent } from './user-products/own-products/own-show-products/own-show-products.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -44,6 +52,14 @@ export function tokenGetter() {
     AddEditProductComponent,
     DetailsProductComponent,
     DeleteProductComponent,
+    UserProductsComponent,
+    OwnProductsComponent,
+    UserDetailsProductComponent,
+    UserShowProductsComponent,
+    OwnAddEditProductComponent,
+    OwnDeleteProductComponent,
+    OwnDetailsProductComponent,
+    OwnShowProductsComponent,
   ],
   imports: [
     BrowserModule,

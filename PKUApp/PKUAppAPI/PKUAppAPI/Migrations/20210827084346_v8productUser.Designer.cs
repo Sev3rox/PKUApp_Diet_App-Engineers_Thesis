@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PKUAppAPI.Models;
 
 namespace PKUAppAPI.Migrations
 {
     [DbContext(typeof(PKUAppDbContext))]
-    partial class PKUAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210827084346_v8productUser")]
+    partial class v8productUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,8 +198,8 @@ namespace PKUAppAPI.Migrations
                     b.Property<int>("Protein")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("ProductId");
 

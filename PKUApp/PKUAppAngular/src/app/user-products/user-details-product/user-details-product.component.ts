@@ -1,14 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ShowProductsComponent } from 'src/app/admin-products/show-products/show-products.component'
+import { UserShowProductsComponent } from 'src/app/user-products/user-show-products/user-show-products.component'
 
 @Component({
-  selector: 'app-details-product',
-  templateUrl: './details-product.component.html',
-  styleUrls: ['./details-product.component.css']
+  selector: 'app-user-details-product',
+  templateUrl: './user-details-product.component.html',
+  styleUrls: ['./user-details-product.component.css']
 })
-export class DetailsProductComponent implements OnInit {
-
-  constructor(private closing:ShowProductsComponent) { }
+export class UserDetailsProductComponent implements OnInit {
+  constructor(private closing:UserShowProductsComponent) { }
 
   @Input() 
       product:any;

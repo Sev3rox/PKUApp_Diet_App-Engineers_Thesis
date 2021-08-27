@@ -1,15 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AdminProductsService } from 'src/app/shared/services/admin-products.service';
+import { UserProductsService } from 'src/app/shared/services/user-products.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-show-products',
-  templateUrl: './show-products.component.html',
-  styleUrls: ['./show-products.component.css']
+  selector: 'app-own-show-products',
+  templateUrl: './own-show-products.component.html',
+  styleUrls: ['./own-show-products.component.css']
 })
-export class ShowProductsComponent implements OnInit {
+export class OwnShowProductsComponent implements OnInit {
 
-  constructor(private service:AdminProductsService,
+  constructor(private service:UserProductsService,
     private toastr: ToastrService) { }
   ProductsList:any=[];
   ModalTitle:string;
@@ -40,7 +40,6 @@ export class ShowProductsComponent implements OnInit {
       Protein:null,
       Fat:null,
       Carb:null
-
     }
     this.ModalTitle="Add Product";
     this.ActivateAddEditProductComp=true;
@@ -176,7 +175,7 @@ export class ShowProductsComponent implements OnInit {
   }
 
   refreshProductsList(){
-    this.service.getProductsList().subscribe(data=>{
+    this.service.getOwnProductsList().subscribe(data=>{
       this.ProductsList=data;
     });
   }
