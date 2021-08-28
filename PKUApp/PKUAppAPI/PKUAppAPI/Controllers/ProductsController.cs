@@ -28,6 +28,12 @@ namespace PKUAppAPI.Controllers
             return await _context.Products.Where(a=>a.UserId==null).ToListAsync();
         }
 
+        [HttpGet("GetProductsByCategory/{name}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string name)
+        {
+            return await _context.Products.Where(a => a.UserId == null && a.Category==name).ToListAsync();
+        }
+
         // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
@@ -310,6 +316,49 @@ namespace PKUAppAPI.Controllers
 
             return NoContent();
             
+        }
+
+        [HttpGet("GetUserProductsByCategory/{name}")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<Product>>> GetUserProductsByCategory(string name)
+        {
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var list = await _context.Products.Where(a => a.UserId == null && a.Category==name).ToListAsync();
+
+            var ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == name).ToListAsync();
+
+            list.AddRange(ownlist);
+
+            return list;
+        }
+
+        [HttpGet("GetUserOwnProductsByCategory/{name}")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<Product>>> GetUserOwnProductsByCategory(string name)
+        {
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == name).ToListAsync();
+
+
+            return ownlist;
         }
 
         [HttpGet("Privacy")]

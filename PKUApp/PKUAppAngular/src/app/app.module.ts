@@ -15,7 +15,6 @@ import { RegisterUserComponent } from './authentication/register-user/register-u
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { environment } from 'src/environments/environment';
-import { ProductComponent } from './products/product/product.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { AdminProductsComponent } from './admin-products/admin-products.component';
@@ -31,6 +30,9 @@ import { OwnAddEditProductComponent } from './user-products/own-products/own-add
 import { OwnDeleteProductComponent } from './user-products/own-products/own-delete-product/own-delete-product.component';
 import { OwnDetailsProductComponent } from './user-products/own-products/own-details-product/own-details-product.component';
 import { OwnShowProductsComponent } from './user-products/own-products/own-show-products/own-show-products.component';
+import { ProductsComponent } from './products/products.component';
+import { NotlogedShowProductsComponent } from './products/notloged-show-products/notloged-show-products.component';
+import { NotlogedDetailsProductComponent } from './products/notloged-details-product/notloged-details-product.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -44,7 +46,6 @@ export function tokenGetter() {
     RegisterUserComponent,
     NotFoundComponent,
     LoginComponent,
-    ProductComponent,
     PrivacyComponent,
     ForbiddenComponent,
     AdminProductsComponent,
@@ -60,6 +61,9 @@ export function tokenGetter() {
     OwnDeleteProductComponent,
     OwnDetailsProductComponent,
     OwnShowProductsComponent,
+    ProductsComponent,
+    NotlogedShowProductsComponent,
+    NotlogedDetailsProductComponent,
   ],
   imports: [
     BrowserModule,

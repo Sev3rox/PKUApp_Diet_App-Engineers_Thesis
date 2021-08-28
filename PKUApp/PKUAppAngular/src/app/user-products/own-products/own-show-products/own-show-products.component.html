@@ -3,13 +3,7 @@
 <div class="panel panel-primary">
     <div class="panel-body">
 
-<button type="button" class="btn btn-success float-right m-2" 
-data-toggle="modal" data-target="#exampleModal"
-(click)="addClick()"
-data-backdrop="static" data-keyboard="false"
->
-  Add Product
-</button>
+
 
 <!-- Modal -->
 <div class="modal fade bg-dark" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -36,6 +30,40 @@ data-backdrop="static" data-keyboard="false"
 </div>
 
 
+<div style="align-content: center;">
+  <button *ngIf="categoryFruits" (click)="categoryResult('Fruits')" style="width:10%; margin-left: 1%;" type="button" class="btn btn-primary">Fruits</button>
+  <button *ngIf="!categoryFruits" (click)="categoryResult('Fruits')" style="width:10%; margin-left: 1%;" type="button" class="btn btn-light">Fruits</button>
+  <button *ngIf="categoryVegetables" (click)="categoryResult('Vegetables')" style="width:10%;" type="button" class="btn btn-primary">Vegetables</button>
+  <button *ngIf="!categoryVegetables" (click)="categoryResult('Vegetables')" style="width:10%;" type="button" class="btn btn-light">Vegetables</button>
+  <button *ngIf="categoryDairy" (click)="categoryResult('Dairy')" style="width:10%;" type="button" class="btn btn-primary">Dairy</button>
+  <button *ngIf="!categoryDairy" (click)="categoryResult('Dairy')" style="width:10%;" type="button" class="btn btn-light">Dairy</button>
+  <button *ngIf="categoryGrains" (click)="categoryResult('Grains')" style="width:10%;" type="button" class="btn btn-primary">Grains</button>
+  <button *ngIf="!categoryGrains" (click)="categoryResult('Grains')" style="width:10%;" type="button" class="btn btn-light">Grains</button>
+  <button *ngIf="categoryProteinFoods" (click)="categoryResult('ProteinFoods')" style="width:10%;" type="button" class="btn btn-primary">Protein Foods</button>
+  <button *ngIf="!categoryProteinFoods" (click)="categoryResult('ProteinFoods')" style="width:10%;" type="button" class="btn btn-light">Protein Foods</button>
+  <button *ngIf="categoryDrinks" (click)="categoryResult('Drinks')" style="width:10%;" type="button" class="btn btn-primary">Drinks</button>
+  <button *ngIf="!categoryDrinks" (click)="categoryResult('Drinks')" style="width:10%;" type="button" class="btn btn-light">Drinks</button>
+  <button *ngIf="categorySnacks" (click)="categoryResult('Snacks')" style="width:10%;" type="button" class="btn btn-primary">Snacks</button>
+  <button *ngIf="!categorySnacks" (click)="categoryResult('Snacks')" style="width:10%;" type="button" class="btn btn-light">Snacks</button>
+  <button *ngIf="categoryDishes" (click)="categoryResult('Dishes')" style="width:10%;" type="button" class="btn btn-primary">Dishes</button>
+  <button *ngIf="!categoryDishes" (click)="categoryResult('Dishes')" style="width:10%;" type="button" class="btn btn-light">Dishes</button>
+  <button *ngIf="categoryOther" (click)="categoryResult('Other')" style="width:10%;" type="button" class="btn btn-primary">Other</button>
+  <button *ngIf="!categoryOther" (click)="categoryResult('Other')" style="width:10%;" type="button" class="btn btn-light">Other</button>
+</div>
+<div style="margin-top:10px; margin-left: 1%; align-content: center;" >
+  <div style="width: 40%; margin: 0 auto;" class="d-flex flex-row" >
+    <input [(ngModel)]="productSearch" class="form-control" placeholder="Search" (keyup.enter)="searchProduct()">
+    <button (click)="searchProduct()" type="button" class="btn btn-primary" style="margin-left: 1rem;">Search</button>
+    <button (click)="clearSearch()" type="button" class="btn btn-secondary" [disabled]="!productSearch">Clear</button>
+  </div>
+</div>
+<button type="button" class="btn btn-success float-right m-2" 
+data-toggle="modal" data-target="#exampleModal"
+(click)="addClick()"
+data-backdrop="static" data-keyboard="false"
+>
+  Add Product
+</button>
 
 <table class="table table-striped">
   <thead>

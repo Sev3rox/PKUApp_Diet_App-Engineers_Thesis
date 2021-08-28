@@ -14,6 +14,9 @@ export class AdminProductsService {
     return this.http.get<any>(this.APIUrl+'/Products');
   }
 
+  getProductsListByCategory(name:string):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetProductsByCategory/'+name);
+  }
   addProduct(val:any){
     return this.http.post(this.APIUrl+'/Products',val);
   }

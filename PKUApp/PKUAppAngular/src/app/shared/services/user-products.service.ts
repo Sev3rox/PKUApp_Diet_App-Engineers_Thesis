@@ -14,8 +14,16 @@ export class UserProductsService {
     return this.http.get<any>(this.APIUrl+'/Products/GetUserProducts');
   }
 
+  getProductsListByCategory(name:string):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserProductsByCategory/'+name);
+  }
+
   getOwnProductsList():Observable<any[]>{
     return this.http.get<any>(this.APIUrl+'/Products/GetUserOwnProducts');
+  }
+
+  getOwnProductsListByCategory(name:string):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserOwnProductsByCategory/'+name);
   }
 
   deleteProduct(val:any){

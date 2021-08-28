@@ -40,8 +40,10 @@ namespace PKUAppAPI.Models
                 new Category { CategoryId = 5, Name = "Protein Foods" },
                 new Category { CategoryId = 6, Name = "Drinks" },
                 new Category { CategoryId = 7, Name = "Snacks" },
-                new Category { CategoryId = 8, Name = "Other" }
-                
+                new Category { CategoryId = 8, Name = "Dishes" },
+                new Category { CategoryId = 9, Name = "Other" }
+
+
                 );
         }
     }

@@ -12,11 +12,13 @@ export class ShowProductsComponent implements OnInit {
   constructor(private service:AdminProductsService,
     private toastr: ToastrService) { }
   ProductsList:any=[];
+  ProductsListWithoutSearch:any=[];
   ModalTitle:string;
   ActivateAddEditProductComp:boolean=false;
   ActivateDetailsProductComp:boolean=false;
   ActivateDeleteProductComp:boolean=false;
   product:any;
+  productSearch:string="";
 
   sortId:boolean=false;
   sortName:boolean=false;
@@ -27,8 +29,18 @@ export class ShowProductsComponent implements OnInit {
   sortFat:boolean=false;
   sortCarb:boolean=false;
 
+  categoryFruits:boolean=false;
+  categoryVegetables:boolean=false;
+  categoryDairy:boolean=false;
+  categoryGrains:boolean=false;
+  categoryProteinFoods:boolean=false;
+  categoryDrinks:boolean=false;
+  categorySnacks:boolean=false;
+  categoryDishes:boolean=false;
+  categoryOther:boolean=false;
+
   ngOnInit(): void {
-    this.refreshProductsList();
+    this.refreshProductsList(undefined);
   }
 
   addClick(){
@@ -72,14 +84,14 @@ export class ShowProductsComponent implements OnInit {
     this.ActivateDeleteProductComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
-    this.refreshProductsList();
+    this.refreshProductsList(undefined);
   }
 
   closeClick(){
     this.ActivateAddEditProductComp=false;
     this.ActivateDetailsProductComp=false;
     this.ActivateDeleteProductComp=false;
-    this.refreshProductsList();
+    this.refreshProductsList(undefined);
   }
 
   sortResult(prop){
@@ -175,10 +187,149 @@ export class ShowProductsComponent implements OnInit {
 
   }
 
-  refreshProductsList(){
-    this.service.getProductsList().subscribe(data=>{
-      this.ProductsList=data;
+  categoryRefresh(){
+    this.categoryFruits=false;
+    this.categoryVegetables=false;
+    this.categoryDairy=false;
+    this.categoryGrains=false;
+    this.categoryProteinFoods=false;
+    this.categoryDrinks=false;
+    this.categorySnacks=false;
+    this.categoryDishes=false;
+    this.categoryOther=false;
+  }
+
+  categoryResult(name){
+    if(name=="Fruits"){
+      if(this.categoryFruits==false){
+        this.refreshProductsList(name);
+        this.categoryRefresh();
+        this.categoryFruits=true;
+      }
+      else{
+        this.refreshProductsList(undefined);
+        this.categoryFruits=false;
+      }
+    }
+    else if(name=="Vegetables"){
+      if(this.categoryVegetables==false){
+        this.refreshProductsList(name);
+        this.categoryRefresh();
+        this.categoryVegetables=true;
+      }
+      else{
+        this.refreshProductsList(undefined);
+        this.categoryVegetables=false;
+      }
+    }
+    else if(name=="Dairy"){
+      if(this.categoryDairy==false){
+        this.refreshProductsList(name);
+        this.categoryRefresh();
+        this.categoryDairy=true;
+      }
+      else{
+        this.refreshProductsList(undefined);
+        this.categoryDairy=false;
+      }
+    }
+    else if(name=="Grains"){
+      if(this.categoryGrains==false){
+        this.refreshProductsList(name);
+        this.categoryRefresh();
+        this.categoryGrains=true;
+      }
+      else{
+        this.refreshProductsList(undefined);
+        this.categoryGrains=false;
+      }
+    }
+    else if(name=="ProteinFoods"){
+      if(this.categoryProteinFoods==false){
+        this.refreshProductsList(name);
+        this.categoryRefresh();
+        this.categoryProteinFoods=true;
+      }
+      else{
+        this.refreshProductsList(undefined);
+        this.categoryProteinFoods=false;
+      }
+    }
+    else if(name=="Drinks"){
+      if(this.categoryDrinks==false){
+        this.refreshProductsList(name);
+        this.categoryRefresh();
+        this.categoryDrinks=true;
+      }
+      else{
+        this.refreshProductsList(undefined);
+        this.categoryDrinks=false;
+      }
+    }
+    else if(name=="Snacks"){
+      if(this.categorySnacks==false){
+        this.refreshProductsList(name);
+        this.categoryRefresh();
+        this.categorySnacks=true;
+      }
+      else{
+        this.refreshProductsList(undefined);
+        this.categorySnacks=false;
+      }
+    }
+    else if(name=="Dishes"){
+      if(this.categoryDishes==false){
+        this.refreshProductsList(name);
+        this.categoryRefresh();
+        this.categoryDishes=true;
+      }
+      else{
+        this.refreshProductsList(undefined);
+        this.categoryDishes=false;
+      }
+    }
+    else if(name=="Other"){
+      if(this.categoryOther==false){
+        this.refreshProductsList(name);
+        this.categoryRefresh();
+        this.categoryOther=true;
+      }
+      else{
+        this.refreshProductsList(undefined);
+        this.categoryOther=false;
+      }
+    }
+  }
+
+  searchProduct(){
+    var productSearch = this.productSearch;
+
+    this.ProductsList = this.ProductsListWithoutSearch.filter(function (el){
+        return el.Name.toString().toLowerCase().includes(
+          productSearch.toString().trim().toLowerCase()
+        )
     });
   }
+
+  clearSearch(){
+    this.productSearch="";
+    this.searchProduct()
+  }
+
+  refreshProductsList(name){
+    if(name==undefined){
+    this.service.getProductsList().subscribe(data=>{
+      this.ProductsList=data;
+      this.ProductsListWithoutSearch=data;
+      this.searchProduct()
+    });}
+    else{
+      this.service.getProductsListByCategory(name).subscribe(data=>{
+        this.ProductsList=data;
+        this.ProductsListWithoutSearch=data;
+        this.searchProduct()
+      });}
+    }
+
 
 }

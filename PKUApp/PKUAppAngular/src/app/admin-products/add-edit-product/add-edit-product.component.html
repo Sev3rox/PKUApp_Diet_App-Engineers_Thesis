@@ -99,8 +99,8 @@
 
             <div class="form-group row">
                 <div class="col-md-3">
-                    <button *ngIf="product.ProductId==0" type="submit" class="btn btn-info" [disabled]="!productForm.valid">Add</button>
-                    <button *ngIf="product.ProductId!=0" type="submit" class="btn btn-info" [disabled]="!productForm.valid">Update</button>
+                    <button *ngIf="product.ProductId==0" type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Add</button>
+                    <button *ngIf="product.ProductId!=0" type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Update</button>
                     <button type="button" class="btn btn-secondary" (click)='Close()'>Close</button>
                 </div>
             </div>
