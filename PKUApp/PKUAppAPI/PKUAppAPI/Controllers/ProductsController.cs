@@ -25,13 +25,13 @@ namespace PKUAppAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Products.Where(a=>a.UserId==null).ToListAsync();
+            return await _context.Products.Where(a => a.UserId == null).ToListAsync();
         }
 
         [HttpGet("GetProductsByCategory/{name}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string name)
         {
-            return await _context.Products.Where(a => a.UserId == null && a.Category==name).ToListAsync();
+            return await _context.Products.Where(a => a.UserId == null && a.Category == name).ToListAsync();
         }
 
         // GET: api/Products/5
@@ -54,7 +54,7 @@ namespace PKUAppAPI.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
-            var check = _context.Products.Any(e => e.Name == product.Name && e.ProductId!=product.ProductId && e.UserId == null);
+            var check = _context.Products.Any(e => e.Name == product.Name && e.ProductId != product.ProductId && e.UserId == null);
             if (check == true)
             {
                 ModelState.AddModelError("Name", "Name already in use");
@@ -158,13 +158,22 @@ namespace PKUAppAPI.Controllers
             {
                 return new JsonResult(null);
             }
-            var user =  await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
-            var list=await _context.Products.Where(a => a.UserId == null).ToListAsync();
+            var list = await _context.Products.Where(a => a.UserId == null).ToListAsync();
 
-            var ownlist= await _context.Products.Where(a => a.UserId == user.Id).ToListAsync();
+            var ownlist = await _context.Products.Where(a => a.UserId == user.Id).ToListAsync();
+
+            var favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
 
             list.AddRange(ownlist);
+            foreach (Product prod in list)
+            {
+                if (favlist.Any(a => a.ProductId == prod.ProductId))
+                {
+                    prod.isFav = true;
+                }
+            }
 
             return list;
         }
@@ -249,12 +258,13 @@ namespace PKUAppAPI.Controllers
             }
 
             product.UserId = user.Id;
+            product.isFav = null;
 
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
-            
+
         }
 
         [HttpPut("OwnUpdate/{id}")]
@@ -290,6 +300,7 @@ namespace PKUAppAPI.Controllers
             }
 
             product.UserId = user.Id;
+            product.isFav = null;
 
             if (id != product.ProductId)
             {
@@ -315,7 +326,7 @@ namespace PKUAppAPI.Controllers
             }
 
             return NoContent();
-            
+
         }
 
         [HttpGet("GetUserProductsByCategory/{name}")]
@@ -332,11 +343,21 @@ namespace PKUAppAPI.Controllers
             }
             var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
-            var list = await _context.Products.Where(a => a.UserId == null && a.Category==name).ToListAsync();
+            var list = await _context.Products.Where(a => a.UserId == null && a.Category == name).ToListAsync();
 
             var ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == name).ToListAsync();
 
             list.AddRange(ownlist);
+
+            var favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
+
+            foreach (Product prod in list)
+            {
+                if (favlist.Any(a => a.ProductId == prod.ProductId))
+                {
+                    prod.isFav = true;
+                }
+            }
 
             return list;
         }
@@ -361,14 +382,124 @@ namespace PKUAppAPI.Controllers
             return ownlist;
         }
 
-        [HttpGet("Privacy")]
-        [Authorize(Roles = "Administrator")]
-        public IActionResult Privacy()
+        [Route("AddFav/{id}")]
+        [HttpPost]
+        public async Task<ActionResult<List<string>>> AddFav(int id)
         {
             var claims = User.Claims
                 .Select(c => new { c.Type, c.Value })
                 .ToList();
-            return Ok(claims);
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var UserFav = new UserProductFav
+            {
+                UserId = user.Id,
+                ProductId = id
+            };
+
+            _context.UserProductFavs.Add(UserFav);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [Route("DeleteFav/{id}")]
+        [HttpDelete]
+        public async Task<ActionResult<List<string>>> DeleteFav(int id)
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+            var userproduct = await _context.UserProductFavs.FirstOrDefaultAsync(a=>a.UserId==user.Id && a.ProductId==id);
+            if (userproduct == null)
+            {
+                return NotFound();
+            }
+
+            _context.UserProductFavs.Remove(userproduct);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpGet("GetUserFavProducts")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<Product>>> GetUserFavProducts()
+        {
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var list = await _context.Products.Where(a => a.UserId == null).ToListAsync();
+
+            var ownlist = await _context.Products.Where(a => a.UserId == user.Id).ToListAsync();
+
+            var favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
+
+            List<Product> finallist = new List<Product>();
+
+            list.AddRange(ownlist);
+            foreach (Product prod in list)
+            {
+                if (favlist.Any(a => a.ProductId == prod.ProductId))
+                {
+                    finallist.Add(prod);
+                }
+            }
+
+            return finallist;
+        }
+
+        [HttpGet("GetUserFavProductsByCategory/{name}")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<Product>>> GetUserFavProductsByCategory(string name)
+        {
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var list = await _context.Products.Where(a => a.UserId == null && a.Category == name).ToListAsync();
+
+            var ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == name).ToListAsync();
+
+            list.AddRange(ownlist);
+
+            var favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
+
+            List<Product> finallist = new List<Product>();
+
+            list.AddRange(ownlist);
+            foreach (Product prod in list)
+            {
+                if (favlist.Any(a => a.ProductId == prod.ProductId))
+                {
+                    finallist.Add(prod);
+                }
+            }
+
+            return finallist;
+
         }
     }
 }

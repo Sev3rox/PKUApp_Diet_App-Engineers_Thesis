@@ -85,7 +85,7 @@ export class OwnAddEditProductComponent implements OnInit {
 
     this.service.addProduct(val).subscribe(res=>{
       this.closing.closeClickFromOutside();
-      this.toastr.success("Added successfully", "oWN Product Management");
+      this.toastr.success("Added successfully", "Own Product Management");
     },
     (error) => {
       this.errorMessage = error;

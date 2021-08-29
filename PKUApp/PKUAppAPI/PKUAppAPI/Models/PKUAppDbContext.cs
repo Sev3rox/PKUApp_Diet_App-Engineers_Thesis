@@ -17,15 +17,33 @@ namespace PKUAppAPI.Models
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<UserProductFav> UserProductFavs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<User>()
+                .HasMany(c => c.Products)
+                .WithOne(e => e.User);
+
+            modelBuilder.Entity<UserProductFav>()
+                .HasKey(bc => new { bc.UserId, bc.ProductId });
+            modelBuilder.Entity<UserProductFav>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.UserProductFavs)
+                .HasForeignKey(bc => bc.UserId);
+            modelBuilder.Entity<UserProductFav>()
+                .HasOne(bc => bc.Product)
+                .WithMany(c => c.UserProductFavs)
+                .HasForeignKey(bc => bc.ProductId);
+
+
+
             //modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
-           //categorySeed(modelBuilder);
+            //categorySeed(modelBuilder);
 
             // Code to seed data
         }

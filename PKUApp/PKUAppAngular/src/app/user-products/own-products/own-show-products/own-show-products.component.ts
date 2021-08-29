@@ -19,6 +19,8 @@ export class OwnShowProductsComponent implements OnInit {
   ActivateDeleteProductComp:boolean=false;
   product:any;
   productSearch:string="";
+  catName:string="";
+  sortNameHelp:string="";
 
   sortId:boolean=false;
   sortName:boolean=false;
@@ -83,20 +85,33 @@ export class OwnShowProductsComponent implements OnInit {
     this.ActivateDeleteProductComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
-    this.refreshProductsList(undefined);
+    this.refreshProductsListClose(undefined);
   }
 
   closeClick(){
     this.ActivateAddEditProductComp=false;
     this.ActivateDetailsProductComp=false;
     this.ActivateDeleteProductComp=false;
-    this.refreshProductsList(undefined);
+    this.refreshProductsListClose(undefined);
+  }
+
+  sortRefresh(){
+    this.sortId=false;
+    this.sortName=false;
+    this.sortCategory=false;
+    this.sortPhe=false;
+    this.sortCalories=false;
+    this.sortProtein=false;
+    this.sortFat=false;
+    this.sortCarb=false;
   }
 
   sortResult(prop){
     var asc=false;
+    this.sortNameHelp=prop;
     if(prop==="ProductId"){
         if(this.sortId===false){
+          this.sortRefresh();
           this.sortId=true;
           asc=true;
         }
@@ -107,6 +122,7 @@ export class OwnShowProductsComponent implements OnInit {
     }
     else if(prop==="Name"){
       if(this.sortName===false){
+        this.sortRefresh();
         this.sortName=true;
         asc=true;
       }
@@ -117,6 +133,7 @@ export class OwnShowProductsComponent implements OnInit {
   }
     else if(prop==="Category"){
       if(this.sortCategory===false){
+        this.sortRefresh();
         this.sortCategory=true;
         asc=true;
       }
@@ -127,6 +144,7 @@ export class OwnShowProductsComponent implements OnInit {
   }    
         else if(prop==="Phe"){
       if(this.sortPhe===false){
+        this.sortRefresh();
         this.sortPhe=true;
         asc=true;
       }
@@ -137,6 +155,7 @@ export class OwnShowProductsComponent implements OnInit {
   }
         else if(prop==="Calories"){
       if(this.sortCalories===false){
+        this.sortRefresh();
         this.sortCalories=true;
         asc=true;
       }
@@ -147,6 +166,7 @@ export class OwnShowProductsComponent implements OnInit {
   }
         else if(prop==="Protein"){
       if(this.sortProtein===false){
+        this.sortRefresh();
         this.sortProtein=true;
         asc=true;
       }
@@ -157,6 +177,7 @@ export class OwnShowProductsComponent implements OnInit {
   }
         else if(prop==="Fat"){
       if(this.sortFat===false){
+        this.sortRefresh();
         this.sortFat=true;
         asc=true;
       }
@@ -167,6 +188,7 @@ export class OwnShowProductsComponent implements OnInit {
   }
         else if(prop==="Carb"){
       if(this.sortCarb===false){
+        this.sortRefresh();
         this.sortCarb=true;
         asc=true;
       }
@@ -177,6 +199,14 @@ export class OwnShowProductsComponent implements OnInit {
   }
   
     this.ProductsList = this.ProductsList.sort(function(a,b){
+      if(asc){
+          return (a[prop]>b[prop])?1 : ((a[prop]<b[prop]) ?-1 :0);
+      }else{
+        return (b[prop]>a[prop])?1 : ((b[prop]<a[prop]) ?-1 :0);
+      }
+    })
+
+    this.ProductsListWithoutSearch  = this.ProductsListWithoutSearch.sort(function(a,b){
       if(asc){
           return (a[prop]>b[prop])?1 : ((a[prop]<b[prop]) ?-1 :0);
       }else{
@@ -204,10 +234,12 @@ export class OwnShowProductsComponent implements OnInit {
         this.refreshProductsList(name);
         this.categoryRefresh();
         this.categoryFruits=true;
+        this.catName='Fruits';
       }
       else{
         this.refreshProductsList(undefined);
         this.categoryFruits=false;
+        this.catName='';
       }
     }
     else if(name=="Vegetables"){
@@ -215,10 +247,12 @@ export class OwnShowProductsComponent implements OnInit {
         this.refreshProductsList(name);
         this.categoryRefresh();
         this.categoryVegetables=true;
+        this.catName='Vegetables';
       }
       else{
         this.refreshProductsList(undefined);
         this.categoryVegetables=false;
+        this.catName='';
       }
     }
     else if(name=="Dairy"){
@@ -226,10 +260,12 @@ export class OwnShowProductsComponent implements OnInit {
         this.refreshProductsList(name);
         this.categoryRefresh();
         this.categoryDairy=true;
+        this.catName='Dairy';
       }
       else{
         this.refreshProductsList(undefined);
         this.categoryDairy=false;
+        this.catName='';
       }
     }
     else if(name=="Grains"){
@@ -237,10 +273,12 @@ export class OwnShowProductsComponent implements OnInit {
         this.refreshProductsList(name);
         this.categoryRefresh();
         this.categoryGrains=true;
+        this.catName='Grains';
       }
       else{
         this.refreshProductsList(undefined);
         this.categoryGrains=false;
+        this.catName='';
       }
     }
     else if(name=="ProteinFoods"){
@@ -248,10 +286,12 @@ export class OwnShowProductsComponent implements OnInit {
         this.refreshProductsList(name);
         this.categoryRefresh();
         this.categoryProteinFoods=true;
+        this.catName='ProteinFoods';
       }
       else{
         this.refreshProductsList(undefined);
         this.categoryProteinFoods=false;
+        this.catName='';
       }
     }
     else if(name=="Drinks"){
@@ -259,10 +299,12 @@ export class OwnShowProductsComponent implements OnInit {
         this.refreshProductsList(name);
         this.categoryRefresh();
         this.categoryDrinks=true;
+        this.catName='Drinks';
       }
       else{
         this.refreshProductsList(undefined);
         this.categoryDrinks=false;
+        this.catName='';
       }
     }
     else if(name=="Snacks"){
@@ -270,10 +312,12 @@ export class OwnShowProductsComponent implements OnInit {
         this.refreshProductsList(name);
         this.categoryRefresh();
         this.categorySnacks=true;
+        this.catName='Snacks';
       }
       else{
         this.refreshProductsList(undefined);
         this.categorySnacks=false;
+        this.catName='';
       }
     }
     else if(name=="Dishes"){
@@ -281,10 +325,12 @@ export class OwnShowProductsComponent implements OnInit {
         this.refreshProductsList(name);
         this.categoryRefresh();
         this.categoryDishes=true;
+        this.catName='Dishes';
       }
       else{
         this.refreshProductsList(undefined);
         this.categoryDishes=false;
+        this.catName='';
       }
     }
     else if(name=="Other"){
@@ -292,10 +338,12 @@ export class OwnShowProductsComponent implements OnInit {
         this.refreshProductsList(name);
         this.categoryRefresh();
         this.categoryOther=true;
+        this.catName='Other';
       }
       else{
         this.refreshProductsList(undefined);
         this.categoryOther=false;
+        this.catName='';
       }
     }
   }
@@ -317,17 +365,43 @@ export class OwnShowProductsComponent implements OnInit {
 
   refreshProductsList(name){
     if(name==undefined){
-    this.service.getOwnProductsList().subscribe(data=>{
+    this.service.getProductsList().subscribe(data=>{
       this.ProductsList=data;
       this.ProductsListWithoutSearch=data;
       this.searchProduct()
+      this.sortResult(this.sortNameHelp);
+      this.sortResult(this.sortNameHelp);
     });}
     else{
-      this.service.getOwnProductsListByCategory(name).subscribe(data=>{
+      this.service.getProductsListByCategory(name).subscribe(data=>{
         this.ProductsList=data;
         this.ProductsListWithoutSearch=data;
         this.searchProduct()
+        this.sortResult(this.sortNameHelp);
+        this.sortResult(this.sortNameHelp);
       });}
     }
+  
+    refreshProductsListClose(name){
+      if(name==undefined){
+      this.service.getProductsList().subscribe(data=>{
+        this.ProductsList=data;
+        this.ProductsListWithoutSearch=data;
+        this.searchProduct()
+        this.refreshProductsList(this.catName);
+        this.sortResult(this.sortNameHelp);
+        this.sortResult(this.sortNameHelp);
+        
+      });}
+      else{
+        this.service.getProductsListByCategory(name).subscribe(data=>{
+          this.ProductsList=data;
+          this.ProductsListWithoutSearch=data;
+          this.searchProduct()
+          this.refreshProductsList(this.catName);
+          this.sortResult(this.sortNameHelp);
+          this.sortResult(this.sortNameHelp);
+        });}
+      }
 
 }

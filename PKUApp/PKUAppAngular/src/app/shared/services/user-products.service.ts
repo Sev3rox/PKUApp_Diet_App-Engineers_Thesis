@@ -18,6 +18,14 @@ export class UserProductsService {
     return this.http.get<any>(this.APIUrl+'/Products/GetUserProductsByCategory/'+name);
   }
 
+  getFavProductsList():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserFavProducts');
+  }
+
+  getFavProductsListByCategory(name:string):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserFavProductsByCategory/'+name);
+  }
+
   getOwnProductsList():Observable<any[]>{
     return this.http.get<any>(this.APIUrl+'/Products/GetUserOwnProducts');
   }
@@ -38,6 +46,13 @@ export class UserProductsService {
     return this.http.put(this.APIUrl+'/Products/OwnUpdate/'+val.ProductId,val);
   }
 
+  addFavProduct(val:any){
+    return this.http.post(this.APIUrl+'/Products/AddFav/'+val,null);
+  }
+
+  deleteFavProduct(val:any){
+    return this.http.delete(this.APIUrl+'/Products/DeleteFav/'+val);
+  }
   getAllCategoriesNames(){
     return this.http.get<any>(this.APIUrl+'/Products/GetAllCategories');
   }

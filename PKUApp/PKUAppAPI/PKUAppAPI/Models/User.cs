@@ -9,6 +9,8 @@ namespace PKUAppAPI.Models
     public class User : IdentityUser
     {
         public string Name { get; set; }
+        public ICollection<Product> Products { get; set; }
+        public ICollection<UserProductFav> UserProductFavs { get; set; }
 
     }
 

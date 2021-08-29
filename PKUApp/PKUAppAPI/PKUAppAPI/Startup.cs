@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 using PKUAppAPI.JwtFeatures;
 using PKUAppAPI.Models;
 using System;
@@ -33,8 +34,6 @@ namespace PKUAppAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            
 
             services.AddDbContext<PKUAppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
 
@@ -80,7 +79,13 @@ namespace PKUAppAPI
 
             services.AddCors();
 
-            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
+            services.AddControllers().AddNewtonsoftJson(options => {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+
+        }
+                   );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

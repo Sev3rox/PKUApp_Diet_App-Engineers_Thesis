@@ -3,12 +3,11 @@ import { UserProductsService } from 'src/app/shared/services/user-products.servi
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-user-show-products',
-  templateUrl: './user-show-products.component.html',
-  styleUrls: ['./user-show-products.component.css']
+  selector: 'app-fav-show-products',
+  templateUrl: './fav-show-products.component.html',
+  styleUrls: ['./fav-show-products.component.css']
 })
-
-export class UserShowProductsComponent implements OnInit {
+export class FavShowProductsComponent implements OnInit {
 
     constructor(private service:UserProductsService,private toastr: ToastrService) { }
     ProductsList:any=[];
@@ -334,16 +333,16 @@ export class UserShowProductsComponent implements OnInit {
       this.searchProduct()
     }
 
-    favClick(product){
-    this.service.addFavProduct(product.ProductId).subscribe(res=>{
-      this.toastr.success("Added to Fav successfully","Product Management");
+    unFavClick(product){
+    this.service.deleteFavProduct(product.ProductId).subscribe(res=>{
+      this.toastr.success("Deleted from Fav successfully","Product Management");
       this.refreshProductsListClose(undefined);
     });
     }
 
     refreshProductsList(name){
       if(name==undefined){
-      this.service.getProductsList().subscribe(data=>{
+      this.service.getFavProductsList().subscribe(data=>{
         this.ProductsList=data;
         this.ProductsListWithoutSearch=data;
         this.searchProduct()
@@ -351,7 +350,7 @@ export class UserShowProductsComponent implements OnInit {
         this.sortResult(this.sortNameHelp);
       });}
       else{
-        this.service.getProductsListByCategory(name).subscribe(data=>{
+        this.service.getFavProductsListByCategory(name).subscribe(data=>{
           this.ProductsList=data;
           this.ProductsListWithoutSearch=data;
           this.searchProduct()
@@ -362,7 +361,7 @@ export class UserShowProductsComponent implements OnInit {
     
       refreshProductsListClose(name){
         if(name==undefined){
-        this.service.getProductsList().subscribe(data=>{
+        this.service.getFavProductsList().subscribe(data=>{
           this.ProductsList=data;
           this.ProductsListWithoutSearch=data;
           this.searchProduct()
@@ -372,10 +371,9 @@ export class UserShowProductsComponent implements OnInit {
           
         });}
         else{
-          this.service.getProductsListByCategory(name).subscribe(data=>{
+          this.service.getFavProductsListByCategory(name).subscribe(data=>{
             this.ProductsList=data;
             this.ProductsListWithoutSearch=data;
-            this.searchProduct()
             this.refreshProductsList(this.catName);
             this.sortResult(this.sortNameHelp);
             this.sortResult(this.sortNameHelp);

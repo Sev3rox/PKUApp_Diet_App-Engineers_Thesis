@@ -15,7 +15,6 @@ import { RegisterUserComponent } from './authentication/register-user/register-u
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { environment } from 'src/environments/environment';
-import { PrivacyComponent } from './privacy/privacy.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { AdminProductsComponent } from './admin-products/admin-products.component';
 import { ShowProductsComponent } from './admin-products/show-products/show-products.component';
@@ -33,6 +32,9 @@ import { OwnShowProductsComponent } from './user-products/own-products/own-show-
 import { ProductsComponent } from './products/products.component';
 import { NotlogedShowProductsComponent } from './products/notloged-show-products/notloged-show-products.component';
 import { NotlogedDetailsProductComponent } from './products/notloged-details-product/notloged-details-product.component';
+import { FavProductsComponent } from './user-products/fav-products/fav-products.component';
+import { FavShowProductsComponent } from './user-products/fav-products/fav-show-products/fav-show-products.component';
+import { FavDetailsProductsComponent } from './user-products/fav-products/fav-details-products/fav-details-products.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -46,7 +48,6 @@ export function tokenGetter() {
     RegisterUserComponent,
     NotFoundComponent,
     LoginComponent,
-    PrivacyComponent,
     ForbiddenComponent,
     AdminProductsComponent,
     ShowProductsComponent,
@@ -64,6 +65,9 @@ export function tokenGetter() {
     ProductsComponent,
     NotlogedShowProductsComponent,
     NotlogedDetailsProductComponent,
+    FavProductsComponent,
+    FavShowProductsComponent,
+    FavDetailsProductsComponent,
   ],
   imports: [
     BrowserModule,

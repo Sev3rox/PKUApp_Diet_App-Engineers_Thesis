@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrivacyComponent } from './privacy.component';
+import { FavDetailsProductsComponent } from './fav-details-products.component';
 
-describe('PrivacyComponent', () => {
-  let component: PrivacyComponent;
-  let fixture: ComponentFixture<PrivacyComponent>;
+describe('FavDetailsProductsComponent', () => {
+  let component: FavDetailsProductsComponent;
+  let fixture: ComponentFixture<FavDetailsProductsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PrivacyComponent ]
+      declarations: [ FavDetailsProductsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PrivacyComponent);
+    fixture = TestBed.createComponent(FavDetailsProductsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

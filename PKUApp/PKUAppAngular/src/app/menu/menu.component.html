@@ -20,10 +20,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark h5" style="margin-bottom:20px; padding:0px; padding-left:20px;">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto" >
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/privacy']" routerLinkActive="active" 
-                [routerLinkActiveOptions]="{exact: true}"> Privacy </a>
-            </li>
           </ul>
           <div *ngIf='Name!=null' style="color: white;">Hello <b>{{Name}}</b>!</div>
       </div>
@@ -97,10 +93,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark h5" style="margin-bottom:20px; padding:0px; padding-left:20px;">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto" >
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/privacy']" routerLinkActive="active" 
-                [routerLinkActiveOptions]="{exact: true}"> Privacy </a>
-            </li>
           </ul>
           <div *ngIf='Name!=null' style="color: white;">Hello <b>{{Name}}</b>!</div>
       </div>
@@ -158,6 +150,10 @@
                     <a class="nav-link"[routerLink]="['/own-products']" routerLinkActive="active" 
                     [routerLinkActiveOptions]="{exact: true}">Your Products</a>
                   </li>
+                  <li>
+                    <a class="nav-link"[routerLink]="['/fav-products']" routerLinkActive="active" 
+                    [routerLinkActiveOptions]="{exact: true}">Favourite Products</a>
+                  </li>
               </ul>
           </li>
       </ul>
@@ -167,10 +163,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark h5" style="margin-bottom:20px; padding:0px; padding-left:20px;">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto" >
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/privacy']" routerLinkActive="active" 
-                [routerLinkActiveOptions]="{exact: true}"> Privacy </a>
-            </li>
           </ul>
           <div *ngIf='Name!=null' style="color: white;">Hello <b>{{Name}}</b>!</div>
       </div>
