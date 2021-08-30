@@ -489,7 +489,6 @@ namespace PKUAppAPI.Controllers
 
             List<Product> finallist = new List<Product>();
 
-            list.AddRange(ownlist);
             foreach (Product prod in list)
             {
                 if (favlist.Any(a => a.ProductId == prod.ProductId))

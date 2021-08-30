@@ -365,7 +365,7 @@ export class OwnShowProductsComponent implements OnInit {
 
   refreshProductsList(name){
     if(name==undefined){
-    this.service.getProductsList().subscribe(data=>{
+    this.service.getOwnProductsList().subscribe(data=>{
       this.ProductsList=data;
       this.ProductsListWithoutSearch=data;
       this.searchProduct()
@@ -373,7 +373,7 @@ export class OwnShowProductsComponent implements OnInit {
       this.sortResult(this.sortNameHelp);
     });}
     else{
-      this.service.getProductsListByCategory(name).subscribe(data=>{
+      this.service.getOwnProductsListByCategory(name).subscribe(data=>{
         this.ProductsList=data;
         this.ProductsListWithoutSearch=data;
         this.searchProduct()
@@ -384,7 +384,7 @@ export class OwnShowProductsComponent implements OnInit {
   
     refreshProductsListClose(name){
       if(name==undefined){
-      this.service.getProductsList().subscribe(data=>{
+      this.service.getOwnProductsList().subscribe(data=>{
         this.ProductsList=data;
         this.ProductsListWithoutSearch=data;
         this.searchProduct()
@@ -394,7 +394,7 @@ export class OwnShowProductsComponent implements OnInit {
         
       });}
       else{
-        this.service.getProductsListByCategory(name).subscribe(data=>{
+        this.service.getOwnProductsListByCategory(name).subscribe(data=>{
           this.ProductsList=data;
           this.ProductsListWithoutSearch=data;
           this.searchProduct()
