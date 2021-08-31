@@ -19,6 +19,7 @@ export class UserShowProductsComponent implements OnInit {
     productSearch:string="";
     catName:string="";
     sortNameHelp="";
+    asc:boolean=false;
     
 
     sortId:boolean=false;
@@ -78,112 +79,97 @@ export class UserShowProductsComponent implements OnInit {
     }
   
     sortResult(prop){
-      var asc=false;
       this.sortNameHelp=prop;
       if(prop==="ProductId"){
           if(this.sortId===false){
             this.sortRefresh();
             this.sortId=true;
-            asc=true;
+            this.asc=true;
           }
           else{
             this.sortId=false;
-            asc=false;
+            this.asc=false;
           }
       }
       else if(prop==="Name"){
         if(this.sortName===false){
           this.sortRefresh();
           this.sortName=true;
-          asc=true;
+          this.asc=true;
         }
         else{
           this.sortName=false;
-          asc=false;
+          this.asc=false;
         }
     }
       else if(prop==="Category"){
         if(this.sortCategory===false){
           this.sortRefresh();
           this.sortCategory=true;
-          asc=true;
+          this.asc=true;
         }
         else{
           this.sortCategory=false;
-          asc=false;
+          this.asc=false;
         }
     }    
           else if(prop==="Phe"){
         if(this.sortPhe===false){
           this.sortRefresh();
           this.sortPhe=true;
-          asc=true;
+          this.asc=true;
         }
         else{
           this.sortPhe=false;
-          asc=false;
+          this.asc=false;
         }
     }
           else if(prop==="Calories"){
         if(this.sortCalories===false){
           this.sortRefresh();
           this.sortCalories=true;
-          asc=true;
+          this.asc=true;
         }
         else{
           this.sortCalories=false;
-          asc=false;
+          this.asc=false;
         }
     }
           else if(prop==="Protein"){
         if(this.sortProtein===false){
           this.sortRefresh();
           this.sortProtein=true;
-          asc=true;
+          this.asc=true;
         }
         else{
           this.sortProtein=false;
-          asc=false;
+          this.asc=false;
         }
     }
           else if(prop==="Fat"){
         if(this.sortFat===false){
           this.sortRefresh();
           this.sortFat=true;
-          asc=true;
+          this.asc=true;
         }
         else{
           this.sortFat=false;
-          asc=false;
+          this.asc=false;
         }
     }
           else if(prop==="Carb"){
         if(this.sortCarb===false){
           this.sortRefresh();
           this.sortCarb=true;
-          asc=true;
+          this.asc=true;
         }
         else{
           this.sortCarb=false;
-          asc=false;
+          this.asc=false;
         }
     }
     
-      this.ProductsList = this.ProductsList.sort(function(a,b){
-        if(asc){
-            return (a[prop]>b[prop])?1 : ((a[prop]<b[prop]) ?-1 :0);
-        }else{
-          return (b[prop]>a[prop])?1 : ((b[prop]<a[prop]) ?-1 :0);
-        }
-      })
-  
-      this.ProductsListWithoutSearch  = this.ProductsListWithoutSearch.sort(function(a,b){
-        if(asc){
-            return (a[prop]>b[prop])?1 : ((a[prop]<b[prop]) ?-1 :0);
-        }else{
-          return (b[prop]>a[prop])?1 : ((b[prop]<a[prop]) ?-1 :0);
-        }
-      })
+      this.refreshProductsList(undefined);
   
     }
   
@@ -320,13 +306,7 @@ export class UserShowProductsComponent implements OnInit {
     }
 
     searchProduct(){
-      var productSearch = this.productSearch;
-  
-      this.ProductsList = this.ProductsListWithoutSearch.filter(function (el){
-          return el.Name.toString().toLowerCase().includes(
-            productSearch.toString().trim().toLowerCase()
-          )
-      });
+   this.refreshProductsList(undefined);
     }
 
     clearSearch(){
@@ -343,42 +323,30 @@ export class UserShowProductsComponent implements OnInit {
 
     refreshProductsList(name){
       if(name==undefined){
-      this.service.getProductsList().subscribe(data=>{
+      this.service.getProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc).subscribe(data=>{
         this.ProductsList=data;
         this.ProductsListWithoutSearch=data;
-        this.searchProduct()
-        this.sortResult(this.sortNameHelp);
-        this.sortResult(this.sortNameHelp);
       });}
       else{
         this.service.getProductsListByCategory(name).subscribe(data=>{
           this.ProductsList=data;
           this.ProductsListWithoutSearch=data;
-          this.searchProduct()
-          this.sortResult(this.sortNameHelp);
-          this.sortResult(this.sortNameHelp);
         });}
       }
     
       refreshProductsListClose(name){
         if(name==undefined){
-        this.service.getProductsList().subscribe(data=>{
+        this.service.getProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc).subscribe(data=>{
           this.ProductsList=data;
           this.ProductsListWithoutSearch=data;
-          this.searchProduct()
           this.refreshProductsList(this.catName);
-          this.sortResult(this.sortNameHelp);
-          this.sortResult(this.sortNameHelp);
           
         });}
         else{
           this.service.getProductsListByCategory(name).subscribe(data=>{
             this.ProductsList=data;
             this.ProductsListWithoutSearch=data;
-            this.searchProduct()
             this.refreshProductsList(this.catName);
-            this.sortResult(this.sortNameHelp);
-            this.sortResult(this.sortNameHelp);
           });}
         }
 

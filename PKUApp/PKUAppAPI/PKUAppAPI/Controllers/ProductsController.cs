@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PKUAppAPI.Models;
@@ -148,7 +146,7 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserProducts")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Product>>> GetUserProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetUserProducts(string search=null, string sort=null, bool asc=false)
         {
 
             var claims = User.Claims
@@ -160,13 +158,27 @@ namespace PKUAppAPI.Controllers
             }
             var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
-            var list = await _context.Products.Where(a => a.UserId == null).ToListAsync();
+            List<Product> list = new List<Product>();
+            List<Product> ownlist = new List<Product>();
+            List<UserProductFav> favlist = new List<UserProductFav>();
 
-            var ownlist = await _context.Products.Where(a => a.UserId == user.Id).ToListAsync();
+                list = await _context.Products.Where(a => a.UserId == null && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
 
-            var favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
+                ownlist = await _context.Products.Where(a => a.UserId == user.Id && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+                favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
 
             list.AddRange(ownlist);
+
+            if (sort != null)
+            {
+               if(asc==true)
+                    list = list.OrderBy(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+                else
+                    list = list.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+
+            }
+
             foreach (Product prod in list)
             {
                 if (favlist.Any(a => a.ProductId == prod.ProductId))

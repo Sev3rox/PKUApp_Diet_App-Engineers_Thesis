@@ -19,9 +19,9 @@ export class MenuComponent implements OnInit {
     this._authService.authChanged
     .subscribe(res =>{this.isUserAuthenticated = res;
       this.userService.getName()
-    .subscribe(res =>{this.Name=res; console.log(this.Name);});
+    .subscribe(res =>{this.Name=res;});
     this.userService.isAdmin()
-    .subscribe(res =>{this.isAdmin=res; console.log(this.isAdmin);});
+    .subscribe(res =>{this.isAdmin=res;});
     })
   }
 
@@ -29,9 +29,9 @@ export class MenuComponent implements OnInit {
     this._authService.authChanged
     .subscribe(res =>{this.isUserAuthenticated = res;
       this.userService.getName()
-    .subscribe(res =>{this.Name=res; console.log(this.Name);});
+    .subscribe(res =>{this.Name=res;});
     this.userService.isAdmin()
-    .subscribe(res =>{this.isAdmin=res; console.log(this.isAdmin);});
+    .subscribe(res =>{this.isAdmin=res;});
     })
 
   }
