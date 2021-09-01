@@ -21,15 +21,29 @@ namespace PKUAppAPI.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts(string search = null, string sort = null, bool asc = false, string cat = null)
         {
-            return await _context.Products.Where(a => a.UserId == null).ToListAsync();
-        }
 
-        [HttpGet("GetProductsByCategory/{name}")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string name)
-        {
-            return await _context.Products.Where(a => a.UserId == null && a.Category == name).ToListAsync();
+            List<Product> list = new List<Product>();
+
+            if (cat == null)
+            {
+                list = await _context.Products.Where(a => a.UserId == null && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+            }
+            else
+            {
+                list = await _context.Products.Where(a => a.UserId == null && a.Category == cat && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+            }
+
+            if (sort != null)
+            {
+                if (asc == true)
+                    list = list.OrderBy(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+                else
+                    list = list.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+            }
+
+            return list;
         }
 
         // GET: api/Products/5
@@ -146,7 +160,7 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserProducts")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Product>>> GetUserProducts(string search=null, string sort=null, bool asc=false)
+        public async Task<ActionResult<IEnumerable<Product>>> GetUserProducts(string search=null, string sort=null, bool asc=false, string cat=null)
         {
 
             var claims = User.Claims
@@ -162,11 +176,22 @@ namespace PKUAppAPI.Controllers
             List<Product> ownlist = new List<Product>();
             List<UserProductFav> favlist = new List<UserProductFav>();
 
+
+            if (cat == null)
+            {
                 list = await _context.Products.Where(a => a.UserId == null && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
 
                 ownlist = await _context.Products.Where(a => a.UserId == user.Id && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
 
-                favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
+            }
+            else 
+            {
+                list = await _context.Products.Where(a => a.UserId == null && a.Category == cat && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+                ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == cat && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+            }
+
+            favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
 
             list.AddRange(ownlist);
 
@@ -176,7 +201,6 @@ namespace PKUAppAPI.Controllers
                     list = list.OrderBy(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
                 else
                     list = list.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
-
             }
 
             foreach (Product prod in list)
@@ -192,7 +216,7 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserOwnProducts")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Product>>> GetUserOwnProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetUserOwnProducts(string search = null, string sort = null, bool asc = false, string cat = null)
         {
 
             var claims = User.Claims
@@ -204,8 +228,25 @@ namespace PKUAppAPI.Controllers
             }
             var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
-            var ownlist = await _context.Products.Where(a => a.UserId == user.Id).ToListAsync();
+            List<Product> ownlist = new List<Product>();
 
+            if (cat == null)
+            {
+                ownlist = await _context.Products.Where(a => a.UserId == user.Id && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+            }
+            else
+            {
+                ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == cat && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+            }
+
+
+            if (sort != null)
+            {
+                if (asc == true)
+                    ownlist = ownlist.OrderBy(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+                else
+                    ownlist = ownlist.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+            }
 
             return ownlist;
         }
@@ -341,59 +382,6 @@ namespace PKUAppAPI.Controllers
 
         }
 
-        [HttpGet("GetUserProductsByCategory/{name}")]
-        [Authorize]
-        public async Task<ActionResult<IEnumerable<Product>>> GetUserProductsByCategory(string name)
-        {
-
-            var claims = User.Claims
-                .Select(c => new { c.Type, c.Value })
-                .ToList();
-            if (claims.Count() == 0)
-            {
-                return new JsonResult(null);
-            }
-            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
-
-            var list = await _context.Products.Where(a => a.UserId == null && a.Category == name).ToListAsync();
-
-            var ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == name).ToListAsync();
-
-            list.AddRange(ownlist);
-
-            var favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
-
-            foreach (Product prod in list)
-            {
-                if (favlist.Any(a => a.ProductId == prod.ProductId))
-                {
-                    prod.isFav = true;
-                }
-            }
-
-            return list;
-        }
-
-        [HttpGet("GetUserOwnProductsByCategory/{name}")]
-        [Authorize]
-        public async Task<ActionResult<IEnumerable<Product>>> GetUserOwnProductsByCategory(string name)
-        {
-
-            var claims = User.Claims
-                .Select(c => new { c.Type, c.Value })
-                .ToList();
-            if (claims.Count() == 0)
-            {
-                return new JsonResult(null);
-            }
-            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
-
-            var ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == name).ToListAsync();
-
-
-            return ownlist;
-        }
-
         [Route("AddFav/{id}")]
         [HttpPost]
         public async Task<ActionResult<List<string>>> AddFav(int id)
@@ -445,61 +433,41 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserFavProducts")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Product>>> GetUserFavProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetUserFavProducts(string search = null, string sort = null, bool asc = false, string cat = null)
         {
 
             var claims = User.Claims
-                .Select(c => new { c.Type, c.Value })
-                .ToList();
+                           .Select(c => new { c.Type, c.Value })
+                           .ToList();
             if (claims.Count() == 0)
             {
                 return new JsonResult(null);
             }
             var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
-            var list = await _context.Products.Where(a => a.UserId == null).ToListAsync();
-
-            var ownlist = await _context.Products.Where(a => a.UserId == user.Id).ToListAsync();
-
-            var favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
-
+            List<Product> list = new List<Product>();
+            List<Product> ownlist = new List<Product>();
+            List<UserProductFav> favlist = new List<UserProductFav>();
             List<Product> finallist = new List<Product>();
 
-            list.AddRange(ownlist);
-            foreach (Product prod in list)
+
+            if (cat == null)
             {
-                if (favlist.Any(a => a.ProductId == prod.ProductId))
-                {
-                    finallist.Add(prod);
-                }
+                list = await _context.Products.Where(a => a.UserId == null && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+                ownlist = await _context.Products.Where(a => a.UserId == user.Id && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+            }
+            else
+            {
+                list = await _context.Products.Where(a => a.UserId == null && a.Category == cat && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+                ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == cat && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
             }
 
-            return finallist;
-        }
-
-        [HttpGet("GetUserFavProductsByCategory/{name}")]
-        [Authorize]
-        public async Task<ActionResult<IEnumerable<Product>>> GetUserFavProductsByCategory(string name)
-        {
-
-            var claims = User.Claims
-                .Select(c => new { c.Type, c.Value })
-                .ToList();
-            if (claims.Count() == 0)
-            {
-                return new JsonResult(null);
-            }
-            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
-
-            var list = await _context.Products.Where(a => a.UserId == null && a.Category == name).ToListAsync();
-
-            var ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == name).ToListAsync();
+            favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
 
             list.AddRange(ownlist);
-
-            var favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
-
-            List<Product> finallist = new List<Product>();
 
             foreach (Product prod in list)
             {
@@ -509,8 +477,16 @@ namespace PKUAppAPI.Controllers
                 }
             }
 
-            return finallist;
+            if (sort != null)
+            {
+                if (asc == true)
+                    finallist = finallist.OrderBy(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+                else
+                    finallist = finallist.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+            }
 
+            return finallist;
         }
+
     }
 }

@@ -10,28 +10,16 @@ export class UserProductsService {
   readonly APIUrl=environment.urlAddress+"/api";
   constructor(private http:HttpClient) { }
 
-  getProductsList(search:string, sort:string, asc:boolean):Observable<any[]>{
-    return this.http.get<any>(this.APIUrl+'/Products/GetUserProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc);
+  getProductsList(search:string, sort:string, asc:boolean, cat:string):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat);
   }
 
-  getProductsListByCategory(name:string):Observable<any[]>{
-    return this.http.get<any>(this.APIUrl+'/Products/GetUserProductsByCategory/'+name);
+  getFavProductsList(search:string, sort:string, asc:boolean, cat:string):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserFavProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat);
   }
 
-  getFavProductsList():Observable<any[]>{
-    return this.http.get<any>(this.APIUrl+'/Products/GetUserFavProducts');
-  }
-
-  getFavProductsListByCategory(name:string):Observable<any[]>{
-    return this.http.get<any>(this.APIUrl+'/Products/GetUserFavProductsByCategory/'+name);
-  }
-
-  getOwnProductsList():Observable<any[]>{
-    return this.http.get<any>(this.APIUrl+'/Products/GetUserOwnProducts');
-  }
-
-  getOwnProductsListByCategory(name:string):Observable<any[]>{
-    return this.http.get<any>(this.APIUrl+'/Products/GetUserOwnProductsByCategory/'+name);
+  getOwnProductsList(search:string, sort:string, asc:boolean, cat:string):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserOwnProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat);
   }
 
   deleteProduct(val:any){

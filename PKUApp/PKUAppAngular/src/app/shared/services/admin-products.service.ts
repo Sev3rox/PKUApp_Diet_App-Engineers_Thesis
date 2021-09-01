@@ -10,8 +10,8 @@ export class AdminProductsService {
   readonly APIUrl=environment.urlAddress+"/api";
   constructor(private http:HttpClient) { }
 
-  getProductsList():Observable<any[]>{
-    return this.http.get<any>(this.APIUrl+'/Products');
+  getProductsList(search:string, sort:string, asc:boolean, cat:string):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'/Products'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat);
   }
 
   getProductsListByCategory(name:string):Observable<any[]>{
