@@ -80,7 +80,13 @@ data-backdrop="static" data-keyboard="false"
       </tr>
   </thead>
   <tbody>
-      <tr *ngFor="let dataItem of ProductsList">
+    <tr *ngFor="let dataItem of ProductsList | paginate : {
+      itemsPerPage:pageSize,
+      currentPage: page,
+      totalItems: count
+    };
+    let i = index"
+      [class.active]="i==page">
           <td>{{dataItem.ProductId}}</td>
           <td>{{dataItem.Name}}</td>
           <td>{{dataItem.Category}}</td>
@@ -112,5 +118,15 @@ data-backdrop="static" data-keyboard="false"
       </tr>
   </tbody>
 </table>
+
+<div class="d-flex justify-content-center">
+  <pagination-controls 
+  [responsive]="true"
+    previousLabel="Prev" 
+    nextLabel="Next" 
+(pageChange)="onPageChange($event)">
+</pagination-controls>
+</div>
+
 </div>
 </div>

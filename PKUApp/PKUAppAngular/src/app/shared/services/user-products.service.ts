@@ -10,16 +10,16 @@ export class UserProductsService {
   readonly APIUrl=environment.urlAddress+"/api";
   constructor(private http:HttpClient) { }
 
-  getProductsList(search:string, sort:string, asc:boolean, cat:string):Observable<any[]>{
-    return this.http.get<any>(this.APIUrl+'/Products/GetUserProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat);
+  getProductsList(search:string, sort:string, asc:boolean, cat:string, page:number):Observable<any>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page);
   }
 
-  getFavProductsList(search:string, sort:string, asc:boolean, cat:string):Observable<any[]>{
-    return this.http.get<any>(this.APIUrl+'/Products/GetUserFavProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat);
+  getFavProductsList(search:string, sort:string, asc:boolean, cat:string, page:number):Observable<any>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserFavProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page);
   }
 
-  getOwnProductsList(search:string, sort:string, asc:boolean, cat:string):Observable<any[]>{
-    return this.http.get<any>(this.APIUrl+'/Products/GetUserOwnProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat);
+  getOwnProductsList(search:string, sort:string, asc:boolean, cat:string, page:number):Observable<any>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserOwnProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page);
   }
 
   deleteProduct(val:any){

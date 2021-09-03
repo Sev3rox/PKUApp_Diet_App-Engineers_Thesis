@@ -12,7 +12,6 @@ export class OwnShowProductsComponent implements OnInit {
   constructor(private service:UserProductsService,
     private toastr: ToastrService) { }
   ProductsList:any=[];
-  ProductsListWithoutSearch:any=[];
   ModalTitle:string;
   ActivateAddEditProductComp:boolean=false;
   ActivateDetailsProductComp:boolean=false;
@@ -22,6 +21,9 @@ export class OwnShowProductsComponent implements OnInit {
   catName:string="";
   sortNameHelp:string="";
   asc:boolean=false;
+  page:number=1;
+  count:number=1;
+  pageSize:number=1;
 
   sortId:boolean=false;
   sortName:boolean=false;
@@ -323,10 +325,17 @@ export class OwnShowProductsComponent implements OnInit {
     this.searchProduct()
   }
 
+  onPageChange(event){
+    this.page=event;
+    this.refreshProductsList();
+  }
+
   refreshProductsList(){
-    this.service.getOwnProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc, this.catName).subscribe(data=>{
-      this.ProductsList=data;
-      this.ProductsListWithoutSearch=data;
+    this.service.getOwnProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc, this.catName, this.page).subscribe(data=>{
+      this.ProductsList=data.Items;
+      this.page=data.PageIndex;
+      this.count=data.Count;
+      this.pageSize=data.PageSize;
     });
     }
 

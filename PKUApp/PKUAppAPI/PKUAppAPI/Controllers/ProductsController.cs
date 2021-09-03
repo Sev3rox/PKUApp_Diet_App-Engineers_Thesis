@@ -12,6 +12,16 @@ namespace PKUAppAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+
+        public class Result<T>
+        {
+            public int Count { get; set; }
+            public int PageIndex { get; set; }
+            public int PageSize { get; set; }
+            public List<T> Items { get; set; }
+        }
+
+        private static int pagesize = 5;
         private readonly PKUAppDbContext _context;
 
         public ProductsController(PKUAppDbContext context)
@@ -21,10 +31,11 @@ namespace PKUAppAPI.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts(string search = null, string sort = null, bool asc = false, string cat = null)
+        public async Task<ActionResult<Result<Product>>> GetProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page=1)
         {
 
             List<Product> list = new List<Product>();
+            List<Product> finallist = new List<Product>();
 
             if (cat == null)
             {
@@ -43,7 +54,14 @@ namespace PKUAppAPI.Controllers
                     list = list.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
             }
 
-            return list;
+            Result<Product> result = new Result<Product>
+            {
+                Count = list.Count(),
+                PageIndex = page,
+                PageSize = pagesize,
+                Items = list.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+            };
+            return Ok(result);
         }
 
         // GET: api/Products/5
@@ -160,7 +178,7 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserProducts")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Product>>> GetUserProducts(string search=null, string sort=null, bool asc=false, string cat=null)
+        public async Task<ActionResult<Result<Product>>> GetUserProducts(string search=null, string sort=null, bool asc=false, string cat=null, int page=1)
         {
 
             var claims = User.Claims
@@ -211,12 +229,20 @@ namespace PKUAppAPI.Controllers
                 }
             }
 
-            return list;
+            Result<Product> result = new Result<Product>
+            {
+                Count = list.Count(),
+                PageIndex = page,
+                PageSize = pagesize,
+                Items = list.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+            };
+
+            return result;
         }
 
         [HttpGet("GetUserOwnProducts")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Product>>> GetUserOwnProducts(string search = null, string sort = null, bool asc = false, string cat = null)
+        public async Task<ActionResult<Result<Product>>> GetUserOwnProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page=1)
         {
 
             var claims = User.Claims
@@ -248,7 +274,15 @@ namespace PKUAppAPI.Controllers
                     ownlist = ownlist.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
             }
 
-            return ownlist;
+            Result<Product> result = new Result<Product>
+            {
+                Count = ownlist.Count(),
+                PageIndex = page,
+                PageSize = pagesize,
+                Items = ownlist.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+            };
+
+            return result;
         }
 
         [HttpDelete("OwnDelete/{id}")]
@@ -433,7 +467,7 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserFavProducts")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Product>>> GetUserFavProducts(string search = null, string sort = null, bool asc = false, string cat = null)
+        public async Task<ActionResult<Result<Product>>> GetUserFavProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page = 1)
         {
 
             var claims = User.Claims
@@ -485,7 +519,15 @@ namespace PKUAppAPI.Controllers
                     finallist = finallist.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
             }
 
-            return finallist;
+            Result<Product> result = new Result<Product>
+            {
+                Count = finallist.Count(),
+                PageIndex = page,
+                PageSize = pagesize,
+                Items = finallist.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+            };
+
+            return result;
         }
 
     }

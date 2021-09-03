@@ -11,7 +11,6 @@ export class FavShowProductsComponent implements OnInit {
 
     constructor(private service:UserProductsService,private toastr: ToastrService) { }
     ProductsList:any=[];
-    ProductsListWithoutSearch:any=[];
     ModalTitle:string;
     ActivateDetailsProductComp:boolean=false;
     product:any;
@@ -19,6 +18,9 @@ export class FavShowProductsComponent implements OnInit {
     catName:string="";
     sortNameHelp="";
     asc:boolean=false;
+    page:number=1;
+    count:number=1;
+    pageSize:number=1;
     
 
     sortId:boolean=false;
@@ -302,10 +304,17 @@ export class FavShowProductsComponent implements OnInit {
       });
       }
   
+      onPageChange(event){
+        this.page=event;
+        this.refreshProductsList();
+      }
+
     refreshProductsList(){
-      this.service.getFavProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc, this.catName).subscribe(data=>{
-        this.ProductsList=data;
-        this.ProductsListWithoutSearch=data;
+      this.service.getFavProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc, this.catName, this.page).subscribe(data=>{
+        this.ProductsList=data.Items;
+        this.page=data.PageIndex;
+        this.count=data.Count;
+        this.pageSize=data.PageSize;
       });
       }
 
