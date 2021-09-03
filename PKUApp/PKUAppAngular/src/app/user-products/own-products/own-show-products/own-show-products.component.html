@@ -119,6 +119,8 @@ data-backdrop="static" data-keyboard="false"
   </tbody>
 </table>
 
+<div *ngIf="count==0" style="text-align: center; padding-left: 20px;"><h5><b>No Results</b></h5><br><br></div>
+
 <div class="d-flex justify-content-center">
   <pagination-controls 
   [responsive]="true"
