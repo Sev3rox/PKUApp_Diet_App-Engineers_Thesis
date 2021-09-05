@@ -93,6 +93,20 @@ export class ErrorHandlerService implements HttpInterceptor {
 
       return message.slice(0, -4);
     }
+    else if(this._router.url.includes('/user-plan')){
+      let message = '';
+      if(error.error.errors!=undefined){
+      const values = Object.values(error.error.errors);
+      values.map((m: any) => {
+         message += m + '<br>';
+      })}
+      if(error.error.errors===undefined&&error.error.Count!=undefined){
+      message+=error.error.Count;
+      return message;
+      }
+
+      return message.slice(0, -4);
+    }
     else
     return error.error ? error.error : error.message;
   }

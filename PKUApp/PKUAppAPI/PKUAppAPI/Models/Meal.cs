@@ -15,5 +15,6 @@ namespace PKUAppAPI.Models
         public DateTime Date { get; set; }
         public ICollection<MealProduct> MealProducts { get; set; }
         public ICollection<UserMeal> UserMeals { get; set; }
+
     }
 }

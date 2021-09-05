@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +12,24 @@ namespace PKUAppAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MealsController : ControllerBase
     {
+
+        public string[] MealsNames = new string[]
+        {
+            "First Meal",
+            "Second Meal",
+            "Third Meal",
+            "Fourth Meal",
+            "Fifth Meal",
+            "Sixth Meal",
+            "Seventh Meal",
+            "Eight Meal",
+            "Nineth Meal",
+            "Tenth Meal"
+        };
+
         private readonly PKUAppDbContext _context;
 
         public MealsController(PKUAppDbContext context)
@@ -22,9 +39,10 @@ namespace PKUAppAPI.Controllers
 
         // GET: api/Meals
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Meal>>> GetMeals()
-        {
-            return await _context.Meals.ToListAsync();
+        public async Task<ActionResult<IEnumerable<Meal>>> GetMeals(DateTime date)
+        { 
+                var helpdate = new DateTime(date.Year, date.Month, date.Day);
+                return await _context.Meals.Where(a => a.Date == helpdate).ToListAsync();
         }
 
         // GET: api/Meals/5
@@ -75,9 +93,52 @@ namespace PKUAppAPI.Controllers
         // POST: api/Meals
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Meal>> PostMeal(Meal meal)
+        public async Task<ActionResult<Meal>> PostMeal(DateTime date)
         {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var Meals = _context.Meals.
+                Join(
+                _context.UserMeals,
+                a => a.MealId,
+                b => b.MealId,
+                (a, b) => new
+                {
+                    MealId = a.MealId,
+                    UserId = b.UserId,
+                    Date = a.Date
+                }).Where(a => a.UserId == user.Id && a.Date == date).ToList();
+
+            var count = Meals.Count();
+
+            if (count>=10)
+            {
+                ModelState.AddModelError("Count", "You can have maximally 10 Meals for day");
+                return BadRequest(ModelState);
+            }
+
+            var meal = new Meal
+            {
+                Name = MealsNames[count],
+                Date = date
+            };
             _context.Meals.Add(meal);
+            await _context.SaveChangesAsync();
+
+            var usermeal = new UserMeal
+            {
+                UserId=user.Id,
+                MealId=meal.MealId
+            };
+            _context.UserMeals.Add(usermeal);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMeal", new { id = meal.MealId }, meal);

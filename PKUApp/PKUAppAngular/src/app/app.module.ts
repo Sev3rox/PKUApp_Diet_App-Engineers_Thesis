@@ -6,6 +6,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { DatePipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,6 +37,10 @@ import { NotlogedDetailsProductComponent } from './products/notloged-details-pro
 import { FavProductsComponent } from './user-products/fav-products/fav-products.component';
 import { FavShowProductsComponent } from './user-products/fav-products/fav-show-products/fav-show-products.component';
 import { FavDetailsProductsComponent } from './user-products/fav-products/fav-details-products/fav-details-products.component';
+import { UserPlanComponent } from './user-plan/user-plan.component';
+import { UserMealsComponent } from './user-plan/user-meals/user-meals.component';
+import { UserShowMealsComponent } from './user-plan/user-meals/user-show-meals/user-show-meals.component';
+import { UserAddEditMealComponent } from './user-plan/user-meals/user-add-edit-meal/user-add-edit-meal.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -69,6 +74,10 @@ export function tokenGetter() {
     FavProductsComponent,
     FavShowProductsComponent,
     FavDetailsProductsComponent,
+    UserPlanComponent,
+    UserMealsComponent,
+    UserShowMealsComponent,
+    UserAddEditMealComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,6 +99,7 @@ export function tokenGetter() {
     })
   ],
   providers: [
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlerService,

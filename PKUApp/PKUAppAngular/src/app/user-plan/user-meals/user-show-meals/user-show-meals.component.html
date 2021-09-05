@@ -1,0 +1,25 @@
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <button type="button" (click)="dateClick(-1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()===minDate.getTime()">Prev</button>
+            {{date | date:'MM-dd-yyyy'}}
+        <button type="button" (click)="dateClick(1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()===maxDate.getTime()">Next</button>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <button type="button" class="btn btn-success float-right m-2" 
+        data-toggle="modal" data-target="#exampleModal"
+        (click)="addMealClick()"
+        data-backdrop="static" data-keyboard="false">
+        Add Meal
+        </button>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center;" *ngIf="showError" class="alert alert-danger" role="alert">
+        {{errorMessage}}
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <table class="table table-striped" style="width: 50%">
+            <tbody>
+                <tr *ngFor="let dataItem of MealsList">
+                    <td>{{dataItem.Name}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
