@@ -23,6 +23,7 @@ export class DeleteProductComponent implements OnInit {
       this.closing.closeClickFromOutside();
       this.toastr.success("Deleted successfully", "Product Management")});
   }
+  
 
   Close(){
     this.closing.closeClickFromOutside();

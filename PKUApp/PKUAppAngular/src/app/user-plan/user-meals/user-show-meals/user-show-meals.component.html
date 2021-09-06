@@ -1,3 +1,23 @@
+    
+      <div class="modal fade bg-dark" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">{{ModalTitle}}</h5>
+              <button #mybutton type="button" class="close" 
+              data-dismiss="modal" aria-label="Close"
+              (click)="closeClick()" >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <app-user-delete-meal [meal]="meal" *ngIf="ActivateDeleteMealComp">
+                </app-user-delete-meal>
+            </div>
+          </div>
+        </div>
+      </div>
+
     <div style="display: flex; justify-content: center; align-items: center;">
         <button type="button" (click)="dateClick(-1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()===minDate.getTime()">Prev</button>
             {{date | date:'MM-dd-yyyy'}}
@@ -5,9 +25,7 @@
     </div>
     <div style="display: flex; justify-content: center; align-items: center;">
         <button type="button" class="btn btn-success float-right m-2" 
-        data-toggle="modal" data-target="#exampleModal"
-        (click)="addMealClick()"
-        data-backdrop="static" data-keyboard="false">
+        (click)="addMealClick()">
         Add Meal
         </button>
     </div>
@@ -15,10 +33,26 @@
         {{errorMessage}}
     </div>
     <div style="display: flex; justify-content: center; align-items: center;">
-        <table class="table table-striped" style="width: 50%">
+        <table class="table table-striped" style="width: 40%">
             <tbody>
                 <tr *ngFor="let dataItem of MealsList">
-                    <td>{{dataItem.Name}}</td>
+                    <td style="width:20%"><button type="button" class="btn btn-danger"
+                    (click)="deleteClick(dataItem)"
+                    data-toggle="modal" data-target="#exampleModal"
+                    data-backdrop="static" data-keyboard="false"
+                    >Delete
+                    </button></td>
+                    <td style="width:60%; text-align: center; justify-content:center;">{{dataItem.Name}}</td>
+                    <div style=" justify-content:right;">
+                    <td style="width:55%"></td>
+                    <td style="width:5%"><button type="button" class="btn btn-warning"
+                    (click)="editClick(dataItem)"
+                    data-toggle="modal" data-target="#exampleModal"
+                    data-backdrop="static" data-keyboard="false"
+                    >Edit
+                    </button>
+                    </td>
+                    </div>
                 </tr>
             </tbody>
         </table>

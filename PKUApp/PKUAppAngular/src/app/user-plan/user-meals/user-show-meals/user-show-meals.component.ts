@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserPlanService } from 'src/app/shared/services/user-plan.service';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
@@ -17,6 +17,9 @@ export class UserShowMealsComponent implements OnInit {
   maxDate:Date;
   public errorMessage: string = '';
   public showError: boolean;
+  meal:any;
+  ModalTitle:string;
+  ActivateDeleteMealComp:boolean=false;
 
   ngOnInit(): void {
     this.minDate=new Date();
@@ -42,6 +45,31 @@ export class UserShowMealsComponent implements OnInit {
       this.errorMessage = error;
       this.showError = true;
     });
+  }
+
+  deleteClick(item:any){
+    this.meal=item;
+    this.ModalTitle="Delete Meal";
+    this.ActivateDeleteMealComp=true;
+  }
+
+  editClick(item:any){
+
+  }
+
+
+  @ViewChild('mybutton') mybutton: ElementRef<HTMLElement>;
+
+  closeClickFromOutside(){
+    this.ActivateDeleteMealComp=false;
+    let el: HTMLElement = this.mybutton.nativeElement;
+    el.click();
+    this.refreshMealsList();
+  }
+
+  closeClick(){
+    this.ActivateDeleteMealComp=false;
+    this.refreshMealsList();
   }
 
   refreshMealsList(){

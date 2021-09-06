@@ -85,6 +85,8 @@ export class ShowProductsComponent implements OnInit {
   
   closeClickFromOutside(){
     this.ActivateDetailsProductComp=false;
+    this.ActivateAddEditProductComp=false;
+    this.ActivateDeleteProductComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
     this.refreshProductsList();
@@ -92,6 +94,8 @@ export class ShowProductsComponent implements OnInit {
 
   closeClick(){
     this.ActivateDetailsProductComp=false;
+    this.ActivateAddEditProductComp=false;
+    this.ActivateDeleteProductComp=false;
     this.refreshProductsList();
   }
 

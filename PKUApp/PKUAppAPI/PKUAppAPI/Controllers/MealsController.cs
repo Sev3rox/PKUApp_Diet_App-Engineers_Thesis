@@ -25,8 +25,8 @@ namespace PKUAppAPI.Controllers
             "Fifth Meal",
             "Sixth Meal",
             "Seventh Meal",
-            "Eight Meal",
-            "Nineth Meal",
+            "Eighth Meal",
+            "Ninth Meal",
             "Tenth Meal"
         };
 
@@ -105,17 +105,7 @@ namespace PKUAppAPI.Controllers
             }
             var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
-            var Meals = _context.Meals.
-                Join(
-                _context.UserMeals,
-                a => a.MealId,
-                b => b.MealId,
-                (a, b) => new
-                {
-                    MealId = a.MealId,
-                    UserId = b.UserId,
-                    Date = a.Date
-                }).Where(a => a.UserId == user.Id && a.Date == date).ToList();
+            var Meals = _context.Meals.Where(a => a.UserId == user.Id && a.Date == date).ToList();
 
             var count = Meals.Count();
 
@@ -128,17 +118,11 @@ namespace PKUAppAPI.Controllers
             var meal = new Meal
             {
                 Name = MealsNames[count],
-                Date = date
+                Date = date,
+                UserId= user.Id
             };
-            _context.Meals.Add(meal);
-            await _context.SaveChangesAsync();
 
-            var usermeal = new UserMeal
-            {
-                UserId=user.Id,
-                MealId=meal.MealId
-            };
-            _context.UserMeals.Add(usermeal);
+            _context.Meals.Add(meal);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMeal", new { id = meal.MealId }, meal);
@@ -152,6 +136,47 @@ namespace PKUAppAPI.Controllers
             if (meal == null)
             {
                 return NotFound();
+            }
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var Meals = _context.Meals.Where(a => a.UserId == user.Id && a.Date == meal.Date).ToList();
+            var count = 0;
+            var position = 0;
+
+            foreach(var m in Meals){
+                if (m == meal)
+                {
+                    position = 1;
+                }
+                if (position == 1)
+                {
+                    m.Name = MealsNames[count-1];
+                    _context.Entry(m).State = EntityState.Modified;
+                    try
+                    {
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!MealExists(id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+                count++;
             }
 
             _context.Meals.Remove(meal);

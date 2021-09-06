@@ -13,8 +13,9 @@ namespace PKUAppAPI.Models
         public string Name { get; set; }
         [Required(ErrorMessage = "Date is required.")]
         public DateTime Date { get; set; }
+        public string UserId { get; set; }
+        public User User { get; set; }
         public ICollection<MealProduct> MealProducts { get; set; }
-        public ICollection<UserMeal> UserMeals { get; set; }
 
     }
 }

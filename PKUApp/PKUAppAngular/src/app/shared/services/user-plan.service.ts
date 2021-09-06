@@ -17,4 +17,8 @@ export class UserPlanService {
   addMeal(date:any){
     return this.http.post<any>(this.APIUrl+'/Meals'+'?date='+date, null);
   }
+
+  deleteMeal(id:any){
+    return this.http.delete(this.APIUrl+'/Meals/'+id);
+  }
 }
