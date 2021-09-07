@@ -42,6 +42,9 @@ import { UserMealsComponent } from './user-plan/user-meals/user-meals.component'
 import { UserShowMealsComponent } from './user-plan/user-meals/user-show-meals/user-show-meals.component';
 import { UserAddEditMealComponent } from './user-plan/user-meals/user-add-edit-meal/user-add-edit-meal.component';
 import { UserDeleteMealComponent } from './user-plan/user-meals/user-delete-meal/user-delete-meal.component';
+import { UserEditMealComponent } from './user-plan/user-meals/user-edit-meal/user-edit-meal.component';
+import { UserMealDetailsProductComponent } from './user-plan/user-meals/user-meal-details-product/user-meal-details-product.component';
+import { UserDeleteProductMealComponent } from './user-plan/user-meals/user-delete-product-meal/user-delete-product-meal.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -80,6 +83,9 @@ export function tokenGetter() {
     UserShowMealsComponent,
     UserAddEditMealComponent,
     UserDeleteMealComponent,
+    UserEditMealComponent,
+    UserMealDetailsProductComponent,
+    UserDeleteProductMealComponent,
   ],
   imports: [
     BrowserModule,

@@ -21,4 +21,17 @@ export class UserPlanService {
   deleteMeal(id:any){
     return this.http.delete(this.APIUrl+'/Meals/'+id);
   }
+
+  deleteMealProduct(mealid:number, productid:number){
+    return this.http.delete(this.APIUrl+'/Meals/DeleteMealProducts'+'?mealid='+mealid+'&&'+'productid='+productid);
+  }
+
+  addProductToMeal(productid:number, weight:number, mealid:number){
+    return this.http.post(this.APIUrl+'/Meals/AddProductToMeal'+'?productid='+productid+'&&'+'weight='+weight+'&&'+'mealid='+mealid ,null);
+  }
+
+  getMealProductsList(id:any):Observable<any>{
+    return this.http.get<any>(this.APIUrl+'/Meals/GetMealProducts/'+id);
+  }
+
 }

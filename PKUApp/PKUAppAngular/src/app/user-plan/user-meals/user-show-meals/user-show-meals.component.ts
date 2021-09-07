@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserPlanService } from 'src/app/shared/services/user-plan.service';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-show-meals',
@@ -10,7 +11,7 @@ import { DatePipe } from '@angular/common';
 })
 export class UserShowMealsComponent implements OnInit {
 
-  constructor(private service:UserPlanService,private toastr: ToastrService,private datePipe: DatePipe) { }
+  constructor(private service:UserPlanService,private toastr: ToastrService,private datePipe: DatePipe,private router:Router) { }
   MealsList:any=[];
   date:Date;
   minDate:Date;
@@ -54,7 +55,7 @@ export class UserShowMealsComponent implements OnInit {
   }
 
   editClick(item:any){
-
+    this.router.navigate(['/user-edit-meal', item.MealId]);
   }
 
 

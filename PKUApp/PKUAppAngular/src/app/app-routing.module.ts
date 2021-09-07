@@ -13,6 +13,7 @@ import { OwnProductsComponent } from './user-products/own-products/own-products.
 import { ProductsComponent } from './products/products.component';
 import { FavProductsComponent } from './user-products/fav-products/fav-products.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
+import { UserEditMealComponent } from './user-plan/user-meals/user-edit-meal/user-edit-meal.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'own-products', component: OwnProductsComponent, canActivate: [AuthGuard] },
   { path: 'fav-products', component: FavProductsComponent, canActivate: [AuthGuard] },
   { path: 'user-plan', component: UserPlanComponent, canActivate: [AuthGuard] },
+  { path: 'user-edit-meal/:id', component: UserEditMealComponent, canActivate: [AuthGuard] },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'authentication/register', component : RegisterUserComponent},
   { path: 'authentication/login', component : LoginComponent},

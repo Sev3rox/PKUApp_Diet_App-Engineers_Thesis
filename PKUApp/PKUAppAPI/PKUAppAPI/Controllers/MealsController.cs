@@ -16,6 +16,12 @@ namespace PKUAppAPI.Controllers
     public class MealsController : ControllerBase
     {
 
+        public class ProductMeal
+        {
+            public int Weight { get; set; }
+            public Product Product { get; set; }
+        }
+
         public string[] MealsNames = new string[]
         {
             "First Meal",
@@ -125,7 +131,7 @@ namespace PKUAppAPI.Controllers
             _context.Meals.Add(meal);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMeal", new { id = meal.MealId }, meal);
+            return CreatedAtAction("PostMeal", new { id = meal.MealId }, meal);
         }
 
         // DELETE: api/Meals/5
@@ -185,9 +191,85 @@ namespace PKUAppAPI.Controllers
             return NoContent();
         }
 
+
+        [HttpPost("AddProductToMeal")]
+        public async Task<IActionResult> AddProductToMeal(int productid, int weight, int mealid)
+        {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var mealpro = new MealProduct
+            {
+                MealId = mealid,
+                ProductId = productid,
+                Weight= weight
+            };
+
+            _context.MealProducts.Add(mealpro);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+
+        }
+
+        [HttpGet("GetMealProducts/{id}")]
+        public async Task<ActionResult<ProductMeal>> GetMealProducts(int id)
+        {
+            List<ProductMeal> mealproducts = new List<ProductMeal>();
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var mproducts = await _context.MealProducts.Where(a => a.MealId == id).ToListAsync();
+
+            foreach(var mealprod in mproducts)
+            {
+                var prod = await _context.Products.FindAsync(mealprod.ProductId);
+                var temp = new ProductMeal
+                {
+                    Product = prod,
+                    Weight = mealprod.Weight
+                };
+                mealproducts.Add(temp);
+            }
+
+            return Ok(mealproducts);
+        }
+
+        [HttpDelete("DeleteMealProducts")]
+        public async Task<ActionResult<ProductMeal>> DeleteMealProducts(int mealid, int productid)
+        {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var mealpro = await _context.MealProducts.FirstOrDefaultAsync(a=>a.MealId== mealid && a.ProductId==productid);
+            _context.MealProducts.Remove(mealpro);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private bool MealExists(int id)
         {
             return _context.Meals.Any(e => e.MealId == id);
         }
+            
     }
 }

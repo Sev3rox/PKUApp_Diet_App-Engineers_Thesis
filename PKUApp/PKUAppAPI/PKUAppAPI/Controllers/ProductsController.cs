@@ -21,7 +21,7 @@ namespace PKUAppAPI.Controllers
             public List<T> Items { get; set; }
         }
 
-        private static int pagesize = 5;
+        private static int pagesize = 10;
         private readonly PKUAppDbContext _context;
 
         public ProductsController(PKUAppDbContext context)
@@ -162,8 +162,7 @@ namespace PKUAppAPI.Controllers
             return _context.Products.Any(e => e.ProductId == id);
         }
 
-        [Route("GetAllCategories")]
-        [HttpGet]
+        [HttpGet("GetAllCategories")]
         public async Task<ActionResult<List<string>>> GetAllCategories()
         {
             var categories = await _context.Categories.Select(a => a.Name).ToListAsync();
@@ -193,7 +192,14 @@ namespace PKUAppAPI.Controllers
             List<Product> list = new List<Product>();
             List<Product> ownlist = new List<Product>();
             List<UserProductFav> favlist = new List<UserProductFav>();
+            List<Product> finallist = new List<Product>();
 
+            int helpcat = 0;
+            if (cat == "Fav")
+            {
+                cat = null;
+                helpcat = 1;
+            }
 
             if (cat == null)
             {
@@ -221,14 +227,28 @@ namespace PKUAppAPI.Controllers
                     list = list.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
             }
 
-            foreach (Product prod in list)
+
+            if (helpcat != 1)
             {
-                if (favlist.Any(a => a.ProductId == prod.ProductId))
+                foreach (Product prod in list)
                 {
-                    prod.isFav = true;
+                    if (favlist.Any(a => a.ProductId == prod.ProductId))
+                    {
+                        prod.isFav = true;
+                    }
                 }
             }
-
+            else
+            {
+                foreach (Product prod in list)
+                {
+                    if (favlist.Any(a => a.ProductId == prod.ProductId))
+                    {
+                        finallist.Add(prod);
+                    }
+                }
+                list = finallist;
+            }
             Result<Product> result = new Result<Product>
             {
                 Count = list.Count(),
@@ -529,6 +549,98 @@ namespace PKUAppAPI.Controllers
 
             return result;
         }
+
+        [HttpGet("GetUserMealProducts")]
+        [Authorize]
+        public async Task<ActionResult<Result<Product>>> GetUserMealProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page = 1, int id=0)
+        {
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            List<Product> list = new List<Product>();
+            List<Product> ownlist = new List<Product>();
+            List<UserProductFav> favlist = new List<UserProductFav>();
+            List<MealProduct> onmeallist = new List<MealProduct>();
+            List<Product> finallist = new List<Product>();
+
+            int helpcat = 0;
+            if (cat == "Fav")
+            {
+                cat = null;
+                helpcat = 1;
+            }
+
+            if (cat == null)
+            {
+                list = await _context.Products.Where(a => a.UserId == null && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+                ownlist = await _context.Products.Where(a => a.UserId == user.Id && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+            }
+            else
+            {
+                list = await _context.Products.Where(a => a.UserId == null && a.Category == cat && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+                ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == cat && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+            }
+
+            favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
+
+            onmeallist = await _context.MealProducts.Where(a => a.MealId == id).ToListAsync();
+
+            list.AddRange(ownlist);
+
+            if (sort != null)
+            {
+                if (asc == true)
+                    list = list.OrderBy(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+                else
+                    list = list.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+            }
+
+            if (id != 0)
+            {
+                foreach (var mprod in list)
+                {
+                    if (onmeallist.Any(a => a.ProductId == mprod.ProductId))
+                    {
+                        mprod.isFav = true;
+                    }
+                }
+            }
+
+            if (helpcat != 1)
+            {
+            }
+            else
+            {
+                foreach (Product prod in list)
+                {
+                    if (favlist.Any(a => a.ProductId == prod.ProductId))
+                    {
+                        finallist.Add(prod);
+                    }
+                }
+                list = finallist;
+            }
+            Result<Product> result = new Result<Product>
+            {
+                Count = list.Count(),
+                PageIndex = page,
+                PageSize = pagesize,
+                Items = list.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+            };
+
+            return result;
+        }
+
 
     }
 }

@@ -14,6 +14,10 @@ export class UserProductsService {
     return this.http.get<any>(this.APIUrl+'/Products/GetUserProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page);
   }
 
+  getMealProductsList(search:string, sort:string, asc:boolean, cat:string, page:number, id:number):Observable<any>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserMealProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page+'&&'+'id='+id);
+  }
+
   getFavProductsList(search:string, sort:string, asc:boolean, cat:string, page:number):Observable<any>{
     return this.http.get<any>(this.APIUrl+'/Products/GetUserFavProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page);
   }

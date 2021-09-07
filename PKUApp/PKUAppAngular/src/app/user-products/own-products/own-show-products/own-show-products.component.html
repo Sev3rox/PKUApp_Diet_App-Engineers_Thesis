@@ -1,11 +1,6 @@
-<!-- Button trigger modal -->
-  
-<div class="panel panel-primary">
+ <div class="panel panel-primary">
     <div class="panel-body">
 
-
-
-<!-- Modal -->
 <div class="modal fade bg-dark" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
     <div class="modal-content">
@@ -68,15 +63,15 @@ data-backdrop="static" data-keyboard="false"
 <table class="table table-striped">
   <thead>
       <tr>
-        <th (click)="sortResult('ProductId')" style="cursor: pointer;">Id</th>
-        <th (click)="sortResult('Name')" style="cursor: pointer;">Name</th>
-        <th (click)="sortResult('Category')" style="cursor: pointer;">Category</th>
-        <th (click)="sortResult('Phe')" style="cursor: pointer;">Phe (mg/100g)</th>
-        <th (click)="sortResult('Calories')" style="cursor: pointer;">Calories (kcal/100g)</th>
-        <th (click)="sortResult('Protein')" style="cursor: pointer;">Protein (g/100g)</th>
-        <th (click)="sortResult('Fat')" style="cursor: pointer;">Fat (g/100g)</th>
-        <th (click)="sortResult('Carb')" style="cursor: pointer;">Carb (g/100g)</th>
-        <th>Options</th>
+          <th (click)="sortResult('ProductId')" style="cursor: pointer; text-align: center;">Id</th>
+          <th (click)="sortResult('Name')" style="cursor: pointer; text-align: center;">Name</th>
+          <th (click)="sortResult('Category')" style="cursor: pointer; text-align: center;">Category</th>
+          <th (click)="sortResult('Phe')" style="cursor: pointer; text-align: center;">Phe (mg/100g)</th>
+          <th (click)="sortResult('Calories')" style="cursor: pointer; text-align: center;">Calories (kcal/100g)</th>
+          <th (click)="sortResult('Protein')" style="cursor: pointer; text-align: center;">Protein (g/100g)</th>
+          <th (click)="sortResult('Fat')" style="cursor: pointer; text-align: center;">Fat (g/100g)</th>
+          <th (click)="sortResult('Carb')" style="cursor: pointer; text-align: center;">Carb (g/100g)</th>
+          <th style="text-align: center;">Options</th>
       </tr>
   </thead>
   <tbody>
@@ -87,15 +82,15 @@ data-backdrop="static" data-keyboard="false"
     };
     let i = index"
       [class.active]="i==page">
-          <td>{{dataItem.ProductId}}</td>
-          <td>{{dataItem.Name}}</td>
-          <td>{{dataItem.Category}}</td>
-          <td>{{dataItem.Phe/100}}</td>
-          <td>{{dataItem.Calories/100}}</td>
-          <td>{{dataItem.Protein/100}}</td>
-          <td>{{dataItem.Fat/100}}</td>
-          <td>{{dataItem.Carb/100}}</td>
-          <td>
+          <td style="text-align: center;">{{dataItem.ProductId}}</td>
+          <td style="text-align: center;">{{dataItem.Name}}</td>
+          <td style="text-align: center;">{{dataItem.Category}}</td>
+          <td style="text-align: center;">{{dataItem.Phe/100}}</td>
+          <td style="text-align: center;">{{dataItem.Calories/100}}</td>
+          <td style="text-align: center;">{{dataItem.Protein/100}}</td>
+          <td style="text-align: center;">{{dataItem.Fat/100}}</td>
+          <td style="text-align: center;">{{dataItem.Carb/100}}</td>
+          <td style="display: flex; justify-content: center; align-items: center;">
             <button type="button" class="btn btn-info"
               (click)="detailsClick(dataItem)"
               data-toggle="modal" data-target="#exampleModal"

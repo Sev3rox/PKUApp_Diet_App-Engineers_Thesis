@@ -22,7 +22,7 @@ export class UserDeleteMealComponent implements OnInit {
     Delete(){
       this.service.deleteMeal(this.meal.MealId).subscribe(_=>{
         this.closing.closeClickFromOutside();
-        this.toastr.success("Deleted successfully", "Product Management")});
+        this.toastr.success("Deleted successfully", "Meal Management")});
     }
   
     Close(){
