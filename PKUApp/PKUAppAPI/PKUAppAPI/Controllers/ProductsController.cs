@@ -21,6 +21,12 @@ namespace PKUAppAPI.Controllers
             public List<T> Items { get; set; }
         }
 
+        public class ProductParam
+        {
+            public bool param { get; set; }
+            public Product Product { get; set; }
+        }
+
         private static int pagesize = 10;
         private readonly PKUAppDbContext _context;
 
@@ -177,7 +183,7 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserProducts")]
         [Authorize]
-        public async Task<ActionResult<Result<Product>>> GetUserProducts(string search=null, string sort=null, bool asc=false, string cat=null, int page=1)
+        public async Task<ActionResult<Result<ProductParam>>> GetUserProducts(string search=null, string sort=null, bool asc=false, string cat=null, int page=1)
         {
 
             var claims = User.Claims
@@ -193,13 +199,7 @@ namespace PKUAppAPI.Controllers
             List<Product> ownlist = new List<Product>();
             List<UserProductFav> favlist = new List<UserProductFav>();
             List<Product> finallist = new List<Product>();
-
-            int helpcat = 0;
-            if (cat == "Fav")
-            {
-                cat = null;
-                helpcat = 1;
-            }
+            List<ProductParam> prodparamlist = new List<ProductParam>();
 
             if (cat == null)
             {
@@ -227,34 +227,29 @@ namespace PKUAppAPI.Controllers
                     list = list.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
             }
 
+            foreach (Product prod in list)
+            {
+                var prodparam = new ProductParam
+                {
+                    param = false,
+                    Product = prod
 
-            if (helpcat != 1)
-            {
-                foreach (Product prod in list)
+                };
+
+                if (favlist.Any(a => a.ProductId == prod.ProductId))
                 {
-                    if (favlist.Any(a => a.ProductId == prod.ProductId))
-                    {
-                        prod.isFav = true;
-                    }
+                    prodparam.param = true;
                 }
-            }
-            else
+
+                prodparamlist.Add(prodparam);
+            }   
+
+            Result<ProductParam> result = new Result<ProductParam>
             {
-                foreach (Product prod in list)
-                {
-                    if (favlist.Any(a => a.ProductId == prod.ProductId))
-                    {
-                        finallist.Add(prod);
-                    }
-                }
-                list = finallist;
-            }
-            Result<Product> result = new Result<Product>
-            {
-                Count = list.Count(),
+                Count = prodparamlist.Count(),
                 PageIndex = page,
                 PageSize = pagesize,
-                Items = list.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+                Items = prodparamlist.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
             };
 
             return result;
@@ -365,7 +360,6 @@ namespace PKUAppAPI.Controllers
             }
 
             product.UserId = user.Id;
-            product.isFav = null;
 
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
@@ -407,7 +401,6 @@ namespace PKUAppAPI.Controllers
             }
 
             product.UserId = user.Id;
-            product.isFav = null;
 
             if (id != product.ProductId)
             {
@@ -552,7 +545,7 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserMealProducts")]
         [Authorize]
-        public async Task<ActionResult<Result<Product>>> GetUserMealProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page = 1, int id=0)
+        public async Task<ActionResult<Result<ProductParam>>> GetUserMealProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page = 1, int id=0)
         {
 
             var claims = User.Claims
@@ -569,6 +562,7 @@ namespace PKUAppAPI.Controllers
             List<UserProductFav> favlist = new List<UserProductFav>();
             List<MealProduct> onmeallist = new List<MealProduct>();
             List<Product> finallist = new List<Product>();
+            List<ProductParam> prodparamlist = new List<ProductParam>();
 
             int helpcat = 0;
             if (cat == "Fav")
@@ -605,17 +599,6 @@ namespace PKUAppAPI.Controllers
                     list = list.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
             }
 
-            if (id != 0)
-            {
-                foreach (var mprod in list)
-                {
-                    if (onmeallist.Any(a => a.ProductId == mprod.ProductId))
-                    {
-                        mprod.isFav = true;
-                    }
-                }
-            }
-
             if (helpcat != 1)
             {
             }
@@ -623,6 +606,7 @@ namespace PKUAppAPI.Controllers
             {
                 foreach (Product prod in list)
                 {
+
                     if (favlist.Any(a => a.ProductId == prod.ProductId))
                     {
                         finallist.Add(prod);
@@ -630,12 +614,33 @@ namespace PKUAppAPI.Controllers
                 }
                 list = finallist;
             }
-            Result<Product> result = new Result<Product>
+
+            if (id != 0)
             {
-                Count = list.Count(),
+                foreach (var mprod in list)
+                {
+                    var prodparam = new ProductParam
+                    {
+                        param = false,
+                        Product = mprod
+
+                    };
+
+                    if (onmeallist.Any(a => a.ProductId == mprod.ProductId))
+                    {
+                        prodparam.param = true;
+                    }
+
+                    prodparamlist.Add(prodparam);
+                }
+            }
+
+            Result<ProductParam> result = new Result<ProductParam>
+            {
+                Count = prodparamlist.Count(),
                 PageIndex = page,
                 PageSize = pagesize,
-                Items = list.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+                Items = prodparamlist.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
             };
 
             return result;

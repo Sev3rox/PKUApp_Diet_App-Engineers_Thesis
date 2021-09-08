@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UserEditMealComponent } from '../user-edit-meal/user-edit-meal.component'
+import { UserEditMealComponent } from '../user-edit-meal.component'
 
 @Component({
   selector: 'app-user-meal-details-product',

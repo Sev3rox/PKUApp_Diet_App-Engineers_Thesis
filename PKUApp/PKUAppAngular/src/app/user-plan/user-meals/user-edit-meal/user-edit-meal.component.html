@@ -82,10 +82,10 @@
     };
     let i = index"
       [class.active]="i==page">
-          <td style="text-align: center;">{{dataItem.Name}}</td>
-          <td style="text-align: center;">{{dataItem.Category}}</td>
-          <td style="text-align: center;">{{dataItem.Phe/100}}</td>
-          <td style="text-align: center;">{{dataItem.Calories/100}}</td>
+          <td style="text-align: center;">{{dataItem.Product.Name}}</td>
+          <td style="text-align: center;">{{dataItem.Product.Category}}</td>
+          <td style="text-align: center;">{{dataItem.Product.Phe/100}}</td>
+          <td style="text-align: center;">{{dataItem.Product.Calories/100}}</td>
           <td style="display: flex; justify-content: center; align-items: center;">
             <button type="button" class="btn btn-info"
               (click)="detailsClick(dataItem)"
@@ -93,7 +93,7 @@
               data-backdrop="static" data-keyboard="false"
               >Details
               </button>
-            <button *ngIf="!dataItem.isFav" type="button" class="btn btn-success"
+            <button *ngIf="!dataItem.param" type="button" class="btn btn-success"
               (click)="addClick(dataItem)"
               >Add
               </button>

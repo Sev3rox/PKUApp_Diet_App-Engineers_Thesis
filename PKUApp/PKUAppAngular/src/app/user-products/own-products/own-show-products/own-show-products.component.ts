@@ -217,6 +217,7 @@ export class OwnShowProductsComponent implements OnInit {
   }
 
   categoryResult(name){
+    this.page=1;
     if(name=="Fruits"){
       if(this.categoryFruits==false){
         this.categoryRefresh();
@@ -321,10 +322,12 @@ export class OwnShowProductsComponent implements OnInit {
   }
 
   searchProduct(){
- this.refreshProductsList();
+    this.page=1;
+    this.refreshProductsList();
   }
 
   clearSearch(){
+    this.page=1;
     this.productSearch="";
     this.searchProduct()
   }

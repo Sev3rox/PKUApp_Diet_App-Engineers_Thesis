@@ -25,7 +25,6 @@ namespace PKUAppAPI.Models
         public int Fat { get; set; }
         [Required(ErrorMessage = "Carb is required."), Range(0, 100 * 100, ErrorMessage = "Please enter a Carb value >= 0 and <= 100")]
         public int Carb { get; set; }
-        public bool? isFav { get; set; }
 
         //Navigation properties
         public string UserId { get; set; }

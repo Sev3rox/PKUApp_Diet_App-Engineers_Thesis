@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UserEditMealComponent } from '../user-edit-meal/user-edit-meal.component'
+import { UserEditMealComponent } from '../user-edit-meal.component'
 import { ToastrService } from 'ngx-toastr';
 import { UserPlanService } from 'src/app/shared/services/user-plan.service';
 

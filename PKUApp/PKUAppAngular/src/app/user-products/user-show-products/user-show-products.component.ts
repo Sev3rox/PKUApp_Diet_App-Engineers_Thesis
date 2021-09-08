@@ -47,10 +47,8 @@ export class UserShowProductsComponent implements OnInit {
       this.refreshProductsList();
     }
   
-
-  
     detailsClick(item){
-      this.product=item;
+      this.product=item.Product;
       this.ModalTitle="Product Details";
       this.ActivateDetailsProductComp=true;
     }
@@ -170,7 +168,6 @@ export class UserShowProductsComponent implements OnInit {
           this.asc=false;
         }
     }
-    
       this.refreshProductsList();
   
     }
@@ -188,6 +185,7 @@ export class UserShowProductsComponent implements OnInit {
     }
 
     categoryResult(name){
+      this.page=1;
       if(name=="Fruits"){
         if(this.categoryFruits==false){
           this.categoryRefresh();
@@ -286,22 +284,25 @@ export class UserShowProductsComponent implements OnInit {
           this.categoryOther=false;
           this.catName='';
         }
+
       }
 
       this.refreshProductsList();
     }
 
     searchProduct(){
-   this.refreshProductsList();
+      this.page=1;
+      this.refreshProductsList();
     }
 
     clearSearch(){
+      this.page=1;
       this.productSearch="";
       this.searchProduct()
     }
 
     favClick(product){
-    this.service.addFavProduct(product.ProductId).subscribe(res=>{
+    this.service.addFavProduct(product.Product.ProductId).subscribe(res=>{
       this.toastr.success("Added to Fav successfully","Product Management");
       this.refreshProductsList();
     });

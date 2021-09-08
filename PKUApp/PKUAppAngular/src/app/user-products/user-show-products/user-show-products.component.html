@@ -68,14 +68,14 @@
     };
     let i = index"
       [class.active]="i==page">
-          <td style="text-align: center;">{{dataItem.ProductId}}</td>
-          <td style="text-align: center;">{{dataItem.Name}}</td>
-          <td style="text-align: center;">{{dataItem.Category}}</td>
-          <td style="text-align: center;">{{dataItem.Phe/100}}</td>
-          <td style="text-align: center;">{{dataItem.Calories/100}}</td>
-          <td style="text-align: center;">{{dataItem.Protein/100}}</td>
-          <td style="text-align: center;">{{dataItem.Fat/100}}</td>
-          <td style="text-align: center;">{{dataItem.Carb/100}}</td>
+          <td style="text-align: center;">{{dataItem.Product.ProductId}}</td>
+          <td style="text-align: center;">{{dataItem.Product.Name}}</td>
+          <td style="text-align: center;">{{dataItem.Product.Category}}</td>
+          <td style="text-align: center;">{{dataItem.Product.Phe/100}}</td>
+          <td style="text-align: center;">{{dataItem.Product.Calories/100}}</td>
+          <td style="text-align: center;">{{dataItem.Product.Protein/100}}</td>
+          <td style="text-align: center;">{{dataItem.Product.Fat/100}}</td>
+          <td style="text-align: center;">{{dataItem.Product.Carb/100}}</td>
           <td style="display: flex; justify-content: center; align-items: center;">
             <button type="button" class="btn btn-info"
               (click)="detailsClick(dataItem)"
@@ -83,7 +83,7 @@
               data-backdrop="static" data-keyboard="false"
               >Details
               </button>
-            <button type="button" class="btn btn-warning" *ngIf="!dataItem.isFav"
+            <button type="button" class="btn btn-warning" *ngIf="!dataItem.param"
               (click)="favClick(dataItem)"
               >Fav
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">

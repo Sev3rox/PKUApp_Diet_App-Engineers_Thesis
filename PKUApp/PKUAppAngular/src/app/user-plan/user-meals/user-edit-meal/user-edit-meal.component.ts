@@ -58,7 +58,7 @@ export class UserEditMealComponent implements OnInit {
 
 
   detailsClick(item){
-    this.product=item;
+    this.product=item.Product;
     this.ModalTitle="Product Details";
     this.ActivateDetailsProductComp=true;
   }
@@ -200,6 +200,7 @@ export class UserEditMealComponent implements OnInit {
   }
 
   categoryResult(name){
+    this.page=1;
     if(name=="Fruits"){
       if(this.categoryFruits==false){
         this.categoryRefresh();
@@ -315,10 +316,12 @@ export class UserEditMealComponent implements OnInit {
   }
 
   searchProduct(){
- this.refreshProductsList();
+    this.page=1;
+    this.refreshProductsList();
   }
 
   clearSearch(){
+    this.page=1;
     this.productSearch="";
     this.searchProduct()
   }
@@ -329,7 +332,7 @@ export class UserEditMealComponent implements OnInit {
   }
   
   addClick(item:any){
-    this.service.addProductToMeal(item.ProductId, 100, this.mealid).subscribe(res=>{
+    this.service.addProductToMeal(item.Product.ProductId, 100, this.mealid).subscribe(res=>{
       this.refreshProductsList();
       this.refreshMealProductsList();
       this.toastr.success("Added successfully", "Product Management");
