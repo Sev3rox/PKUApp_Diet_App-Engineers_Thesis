@@ -34,9 +34,6 @@ import { OwnShowProductsComponent } from './user-products/own-products/own-show-
 import { ProductsComponent } from './products/products.component';
 import { NotlogedShowProductsComponent } from './products/notloged-show-products/notloged-show-products.component';
 import { NotlogedDetailsProductComponent } from './products/notloged-details-product/notloged-details-product.component';
-import { FavProductsComponent } from './user-products/fav-products/fav-products.component';
-import { FavShowProductsComponent } from './user-products/fav-products/fav-show-products/fav-show-products.component';
-import { FavDetailsProductsComponent } from './user-products/fav-products/fav-details-products/fav-details-products.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
 import { UserMealsComponent } from './user-plan/user-meals/user-meals.component';
 import { UserShowMealsComponent } from './user-plan/user-meals/user-show-meals/user-show-meals.component';
@@ -44,8 +41,9 @@ import { UserDeleteMealComponent } from './user-plan/user-meals/user-delete-meal
 import { UserEditMealComponent } from './user-plan/user-meals/user-edit-meal/user-edit-meal.component';
 import { UserMealDetailsProductComponent } from './user-plan/user-meals/user-edit-meal/user-meal-details-product/user-meal-details-product.component';
 import { UserDeleteProductMealComponent } from './user-plan/user-meals/user-edit-meal/user-delete-product-meal/user-delete-product-meal.component';
-import { UserAddProductMealComponent } from './user-plan/user-meals/user-edit-meal/user-add-product-meal/user-add-product-meal.component';
-import { UserEditProductMealComponent } from './user-plan/user-meals/user-edit-meal/user-edit-product-meal/user-edit-product-meal.component';
+import { UserAddEditProductMealComponent } from './user-plan/user-meals/user-edit-meal/user-add-edit-product-meal/user-add-edit-product-meal.component';
+import { UserMealSummaryDetailsComponent } from './user-plan/user-meals/user-edit-meal/user-meal-summary-details/user-meal-summary-details.component';
+import { UserProductInMealDetailsComponent } from './user-plan/user-meals/user-edit-meal/user-product-in-meal-details/user-product-in-meal-details.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -76,9 +74,6 @@ export function tokenGetter() {
     ProductsComponent,
     NotlogedShowProductsComponent,
     NotlogedDetailsProductComponent,
-    FavProductsComponent,
-    FavShowProductsComponent,
-    FavDetailsProductsComponent,
     UserPlanComponent,
     UserMealsComponent,
     UserShowMealsComponent,
@@ -86,8 +81,10 @@ export function tokenGetter() {
     UserEditMealComponent,
     UserMealDetailsProductComponent,
     UserDeleteProductMealComponent,
-    UserAddProductMealComponent,
-    UserEditProductMealComponent,
+    UserAddEditProductMealComponent,
+    UserMealSummaryDetailsComponent,
+    UserProductInMealDetailsComponent
+
   ],
   imports: [
     BrowserModule,

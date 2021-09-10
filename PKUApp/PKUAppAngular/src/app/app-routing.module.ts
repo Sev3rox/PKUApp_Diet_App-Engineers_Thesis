@@ -11,7 +11,6 @@ import { AdminProductsComponent } from './admin-products/admin-products.componen
 import { UserProductsComponent } from './user-products/user-products.component';
 import { OwnProductsComponent } from './user-products/own-products/own-products.component';
 import { ProductsComponent } from './products/products.component';
-import { FavProductsComponent } from './user-products/fav-products/fav-products.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
 import { UserEditMealComponent } from './user-plan/user-meals/user-edit-meal/user-edit-meal.component';
 
@@ -23,7 +22,6 @@ const routes: Routes = [
   { path: 'admin-products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'user-products', component: UserProductsComponent, canActivate: [AuthGuard] },
   { path: 'own-products', component: OwnProductsComponent, canActivate: [AuthGuard] },
-  { path: 'fav-products', component: FavProductsComponent, canActivate: [AuthGuard] },
   { path: 'user-plan', component: UserPlanComponent, canActivate: [AuthGuard] },
   { path: 'user-edit-meal/:id', component: UserEditMealComponent, canActivate: [AuthGuard] },
   { path: 'forbidden', component: ForbiddenComponent },

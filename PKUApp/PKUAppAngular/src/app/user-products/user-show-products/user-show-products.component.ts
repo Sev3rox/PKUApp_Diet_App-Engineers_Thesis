@@ -42,6 +42,7 @@ export class UserShowProductsComponent implements OnInit {
     categorySnacks:boolean=false;
     categoryDishes:boolean=false;
     categoryOther:boolean=false;
+    categoryFav:boolean=false;
   
     ngOnInit(): void {
       this.refreshProductsList();
@@ -182,6 +183,7 @@ export class UserShowProductsComponent implements OnInit {
       this.categorySnacks=false;
       this.categoryDishes=false;
       this.categoryOther=false;
+      this.categoryFav=false;
     }
 
     categoryResult(name){
@@ -286,6 +288,17 @@ export class UserShowProductsComponent implements OnInit {
         }
 
       }
+      else if(name=="Fav"){
+        if(this.categoryFav==false){
+          this.categoryRefresh();
+          this.categoryFav=true;
+          this.catName='Fav';
+        }
+      else{
+        this.categoryFav=false;
+        this.catName='';
+      }
+    }
 
       this.refreshProductsList();
     }
@@ -307,6 +320,13 @@ export class UserShowProductsComponent implements OnInit {
       this.refreshProductsList();
     });
     }
+
+    unFavClick(product){
+      this.service.deleteFavProduct(product.Product.ProductId).subscribe(res=>{
+        this.toastr.success("Deleted from Fav successfully","Product Management");
+        this.refreshProductsList();
+      });
+      }
 
     onPageChange(event){
       this.page=event;

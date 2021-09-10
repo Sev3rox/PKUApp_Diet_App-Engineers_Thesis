@@ -19,6 +19,12 @@
           </app-user-meal-details-product>
           <app-user-delete-product-meal [product]="product" [mealid]="mealid" *ngIf="ActivateDeleteProductMealComp">
           </app-user-delete-product-meal>
+          <app-user-add-edit-product-meal [product]="product" [mealid]="mealid" [weight]="weight" *ngIf="ActivateAddEditProductMealComp">
+          </app-user-add-edit-product-meal>
+          <app-user-meal-summary-details [summary]="MealProductsSummary"  *ngIf="ActivateMealSummaryDetailsComp">
+          </app-user-meal-summary-details>
+          <app-user-product-in-meal-details [product]="product" *ngIf="ActivateProductInMealDetailsComp">
+          </app-user-product-in-meal-details>
       </div>
     </div>
   </div>
@@ -46,12 +52,12 @@
         <button *ngIf="categoryOther" (click)="categoryResult('Other')" style="width:15%;" type="button" class="btn btn-primary">Other</button>
         <button *ngIf="!categoryOther" (click)="categoryResult('Other')" style="width:15%;" type="button" class="btn btn-light">Other</button>
 
-        <button *ngIf="categoryFav" (click)="categoryResult('Fav')" style="width:20%; background-color: orange;" type="button" class="btn btn-warning">Favourities
+        <button *ngIf="categoryFav" (click)="categoryResult('Fav')" style="width:20%; background-color: orange;" type="button" class="btn btn-warning">Favourites
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
                 <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
               </svg>
         </button>
-        <button *ngIf="!categoryFav" (click)="categoryResult('Fav')" style="width:20%;" type="button" class="btn btn-warning">Favourities
+        <button *ngIf="!categoryFav" (click)="categoryResult('Fav')" style="width:20%;" type="button" class="btn btn-warning">Favourites
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
                 <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
               </svg>
@@ -86,17 +92,20 @@
           <td style="text-align: center;">{{dataItem.Product.Category}}</td>
           <td style="text-align: center;">{{dataItem.Product.Phe/100}}</td>
           <td style="text-align: center;">{{dataItem.Product.Calories/100}}</td>
-          <td style="display: flex; justify-content: center; align-items: center;">
+          <td>
+            <div style="display: flex; justify-content: center;">
             <button type="button" class="btn btn-info"
               (click)="detailsClick(dataItem)"
               data-toggle="modal" data-target="#exampleModal"
               data-backdrop="static" data-keyboard="false"
               >Details
               </button>
-            <button *ngIf="!dataItem.param" type="button" class="btn btn-success"
-              (click)="addClick(dataItem)"
+            <button *ngIf="!dataItem.param" type="button" class="btn btn-success" 
+              (click)="addClick(dataItem)" data-toggle="modal" data-target="#exampleModal"
+              data-backdrop="static" data-keyboard="false"
               >Add
               </button>
+            </div>
           </td>
       </tr>
   </tbody>
@@ -124,28 +133,40 @@
   <table class="table table-striped">
     <thead>
         <tr>
-            <th (click)="sortResult('Name')" style="cursor: pointer;">Name</th>
-            <th (click)="sortResult('Category')" style="cursor: pointer;">Category</th>
-            <th (click)="sortResult('Phe')" style="cursor: pointer;">Phe (mg/100g)</th>
-            <th (click)="sortResult('Calories')" style="cursor: pointer;">Calories (kcal/100g)</th>
-            <th (click)="sortResult('Calories')" style="cursor: pointer;">Weight (g)</th>
+            <th (click)="sortResult('Name')" style="cursor: pointer; text-align: center;">Name</th>
+            <th (click)="sortResult('Category')" style="cursor: pointer; text-align: center;">Category</th>
+            <th (click)="sortResult('Phe')" style="cursor: pointer; text-align: center;">Phe (mg)</th>
+            <th (click)="sortResult('Calories')" style="cursor: pointer; text-align: center;">Calories (kcal)</th>
+            <th (click)="sortResult('Calories')" style="cursor: pointer; text-align: center;">Weight (g)</th>
             <th style="text-align: center;">Options</th>
         </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let dataItem of MealProductsList | paginate : {
-        itemsPerPage:pageSize,
-        currentPage: page,
-        totalItems: count
+      <tr *ngFor="let dataItem of MealProductsList | paginate : { id: 'pag2',
+        itemsPerPage:pageSizepm,
+        currentPage: pagepm,
+        totalItems: countpm
       };
       let i = index"
         [class.active]="i==page">
             <td style="text-align: center;">{{dataItem.Product.Name}}</td>
             <td style="text-align: center;">{{dataItem.Product.Category}}</td>
-            <td style="text-align: center;">{{dataItem.Product.Phe/100}}</td>
-            <td style="text-align: center;">{{dataItem.Product.Calories/100}}</td>
+            <td style="text-align: center;">{{dataItem.Product.Phe/100*dataItem.Weight/100/100}}</td>
+            <td style="text-align: center;">{{dataItem.Product.Calories/100*dataItem.Weight/100/100}}</td>
             <td style="text-align: center;">{{dataItem.Weight/100}}</td>
             <td style="display: flex; justify-content: center; align-items: center;">
+              <button type="button" class="btn btn-info"
+              (click)="detailsMealProductClick(dataItem)"
+              data-toggle="modal" data-target="#exampleModal"
+              data-backdrop="static" data-keyboard="false"
+              >Details
+              </button>
+              <button type="button" class="btn btn-warning"
+              (click)="editClick(dataItem)"
+              data-toggle="modal" data-target="#exampleModal"
+              data-backdrop="static" data-keyboard="false"
+              >Edit
+              </button>
               <button type="button" class="btn btn-danger"
                 (click)="delClick(dataItem)"
                 data-toggle="modal" data-target="#exampleModal"
@@ -156,6 +177,43 @@
         </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center">
+    <pagination-controls 
+    id="pag2"
+    [responsive]="true"
+      previousLabel="Prev" 
+      nextLabel="Next" 
+  (pageChange)="onPageChange2($event)">
+  </pagination-controls>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+        <tr>
+          <th style="text-align: center;"></th>
+          <th style="text-align: center;">Phe (mg)</th>
+          <th style="text-align: center;">Calories (kcal)</th>
+          <th style="text-align: center;">Weight (g)</th>
+          <th style="text-align: center;">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center;"><h4>Summary</h4></td>
+        <td style="text-align: center;"><h4>{{MealProductsSummary.Product.Phe/100}}</h4></td>
+        <td style="text-align: center;"><h4>{{MealProductsSummary.Product.Calories/100}}</h4></td>
+        <td style="text-align: center;"><h4>{{MealProductsSummary.Weight/100}}</h4></td>
+        <td style="display: flex; justify-content: center; align-items: center;">
+          <button type="button" class="btn btn-info"
+        (click)="detailsSummaryClick()"
+        data-toggle="modal" data-target="#exampleModal"
+        data-backdrop="static" data-keyboard="false" [disabled]="MealProductsSummary.Weight==0"
+        >Details
+        </button></td>
+        </tr>
+    </tbody>
+</table>
 
 </div>
 </div>

@@ -107,6 +107,15 @@ export class ErrorHandlerService implements HttpInterceptor {
 
       return message.slice(0, -4);
     }
+    else if(this._router.url.includes('/user-edit-meal')){
+      let message = '';
+      if(error.error.errors!=undefined){
+      const values = Object.values(error.error.errors);
+      values.map((m: any) => {
+         message += m;
+      })}
+      return message;
+      }
     else
     return error.error ? error.error : error.message;
   }

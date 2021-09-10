@@ -16,9 +16,13 @@ export class UserEditMealComponent implements OnInit {
   onlyFav:boolean=false;
   ProductsList:any=[];
   MealProductsList:any=[];
+  MealProductsSummary:any;
   ModalTitle:string;
   ActivateDetailsProductComp:boolean=false;
+  ActivateAddEditProductMealComp:boolean=false;
   ActivateDeleteProductMealComp:boolean=false;
+  ActivateMealSummaryDetailsComp:boolean=false;
+  ActivateProductInMealDetailsComp:boolean=false;
   product:any;
   productSearch:string="";
   catName:string="";
@@ -27,6 +31,10 @@ export class UserEditMealComponent implements OnInit {
   page:number=1;
   count:number=1;
   pageSize:number=1;
+  pagepm:number=1;
+  countpm:number=1;
+  pageSizepm:number=1;
+  weight:number=0;
   
 
   sortId:boolean=false;
@@ -68,6 +76,9 @@ export class UserEditMealComponent implements OnInit {
   closeClickFromOutside(){
     this.ActivateDetailsProductComp=false;
     this.ActivateDeleteProductMealComp=false;
+    this.ActivateAddEditProductMealComp=false;
+    this.ActivateMealSummaryDetailsComp=false;
+    this.ActivateProductInMealDetailsComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
     this.refreshProductsList();
@@ -77,6 +88,9 @@ export class UserEditMealComponent implements OnInit {
   closeClick(){
     this.ActivateDetailsProductComp=false;
     this.ActivateDeleteProductMealComp=false;
+    this.ActivateAddEditProductMealComp=false;
+    this.ActivateMealSummaryDetailsComp=false;
+    this.ActivateProductInMealDetailsComp=false;
     this.refreshProductsList();
     this.refreshMealProductsList()
   }
@@ -330,16 +344,24 @@ export class UserEditMealComponent implements OnInit {
     this.page=event;
     this.refreshProductsList();
   }
+
+  onPageChange2(event){
+    this.pagepm=event;
+    this.refreshMealProductsList();
+  }
   
   addClick(item:any){
-    this.service.addProductToMeal(item.Product.ProductId, 100, this.mealid).subscribe(res=>{
-      this.refreshProductsList();
-      this.refreshMealProductsList();
-      this.toastr.success("Added successfully", "Product Management");
-      
-    },
-    (error) => {
-    });
+    this.product=item;
+    this.weight=0;
+    this.ModalTitle="Add Product to Meal";
+    this.ActivateAddEditProductMealComp=true;
+  }
+
+  editClick(item:any){
+    this.product=item;
+    this.weight=item.Weight/100;
+    this.ModalTitle="Edit Product in Meal";
+    this.ActivateAddEditProductMealComp=true;
   }
 
   delClick(item:any){
@@ -348,8 +370,16 @@ export class UserEditMealComponent implements OnInit {
     this.ActivateDeleteProductMealComp=true;
   }
 
-  mealSummary(){
+  detailsSummaryClick(){
+    this.ModalTitle="Meal Summary Details";
+    this.ActivateMealSummaryDetailsComp=true;
+  }
 
+  detailsMealProductClick(item){
+    this.product=item;
+    console.log(item)
+    this.ModalTitle="Product in Meal Details";
+    this.ActivateProductInMealDetailsComp=true;
   }
 
   refreshProductsList(){
@@ -362,9 +392,18 @@ export class UserEditMealComponent implements OnInit {
     }
 
     refreshMealProductsList(){
-      this.service.getMealProductsList(this.mealid).subscribe(data=>{
-        this.MealProductsList=data;
-        this.mealSummary();
+      this.service.getMealProductsList(this.mealid,this.pagepm).subscribe(data=>{
+        this.MealProductsList=data.Items;
+        this.pagepm=data.PageIndex;
+        this.countpm=data.Count;
+        this.pageSizepm=data.PageSize;
+        this.refreshMealSummary();
       });
       }
+
+      refreshMealSummary(){
+        this.service.getMealSummary(this.mealid).subscribe(data=>{
+          this.MealProductsSummary=data;
+        });
+        }
 }

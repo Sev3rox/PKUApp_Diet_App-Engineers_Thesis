@@ -43,6 +43,7 @@ export class OwnShowProductsComponent implements OnInit {
   categorySnacks:boolean=false;
   categoryDishes:boolean=false;
   categoryOther:boolean=false;
+  categoryFav:boolean=false;
 
   ngOnInit(): void {
     this.refreshProductsList();
@@ -214,6 +215,7 @@ export class OwnShowProductsComponent implements OnInit {
     this.categorySnacks=false;
     this.categoryDishes=false;
     this.categoryOther=false;
+    this.categoryFav=false;
   }
 
   categoryResult(name){
@@ -317,6 +319,17 @@ export class OwnShowProductsComponent implements OnInit {
         this.catName='';
       }
     }
+    else if(name=="Fav"){
+      if(this.categoryFav==false){
+        this.categoryRefresh();
+        this.categoryFav=true;
+        this.catName='Fav';
+      }
+    else{
+      this.categoryFav=false;
+      this.catName='';
+    }
+  }
 
     this.refreshProductsList();
   }

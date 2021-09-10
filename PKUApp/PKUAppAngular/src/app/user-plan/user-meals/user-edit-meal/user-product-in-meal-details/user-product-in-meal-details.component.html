@@ -1,0 +1,46 @@
+<div class="d-flex flex-row bd-highlight mb-2">
+    <div class="form-group row" style="width: 100%">
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Name: </label>
+        <div class="col-sm-5">{{product.Product.Name}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Phe (g): </label>
+        <div class="col-sm-5">{{product.Product.Phe/100*product.Weight/100/100}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Calories (kcal): </label>
+        <div class="col-sm-5">{{product.Product.Calories/100*product.Weight/100/100}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Weight (g): </label>
+        <div class="col-sm-5">{{product.Weight/100}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Protein (g): </label>
+        <div class="col-sm-5">{{product.Product.Protein/100*product.Weight/100/100}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Fat (g): </label>
+        <div class="col-sm-5">{{product.Product.Fat/100*product.Weight/100/100}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Carb (g): </label>
+        <div class="col-sm-5">{{product.Product.Carb/100*product.Weight/100/100}}</div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-6"></label>
+    <button type="button" class="btn btn-secondary col-sm-1" (click)='Close()'>Close</button>
+    </div>
+</div>
+</div>

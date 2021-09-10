@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +18,13 @@ namespace PKUAppAPI.Controllers
     public class MealsController : ControllerBase
     {
 
+        public class Result<T>
+        {
+            public int Count { get; set; }
+            public int PageIndex { get; set; }
+            public int PageSize { get; set; }
+            public List<T> Items { get; set; }
+        }
         public class ProductMeal
         {
             public int Weight { get; set; }
@@ -35,6 +44,8 @@ namespace PKUAppAPI.Controllers
             "Ninth Meal",
             "Tenth Meal"
         };
+
+        private static int pagesize = 10;
 
         private readonly PKUAppDbContext _context;
 
@@ -193,7 +204,7 @@ namespace PKUAppAPI.Controllers
 
 
         [HttpPost("AddProductToMeal")]
-        public async Task<IActionResult> AddProductToMeal(int productid, int weight, int mealid)
+        public async Task<IActionResult> AddProductToMeal(MealProduct mealpro)
         {
 
             var claims = User.Claims
@@ -204,13 +215,6 @@ namespace PKUAppAPI.Controllers
                 return new JsonResult(null);
             }
 
-            var mealpro = new MealProduct
-            {
-                MealId = mealid,
-                ProductId = productid,
-                Weight= weight
-            };
-
             _context.MealProducts.Add(mealpro);
             await _context.SaveChangesAsync();
 
@@ -218,8 +222,35 @@ namespace PKUAppAPI.Controllers
 
         }
 
-        [HttpGet("GetMealProducts/{id}")]
-        public async Task<ActionResult<ProductMeal>> GetMealProducts(int id)
+        [HttpPut("EditProductToMeal")]
+        public async Task<IActionResult> EditProductToMeal(MealProduct mealpro)
+        {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            _context.Entry(mealpro).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return new JsonResult(null);
+            }
+
+            return NoContent();
+
+        }
+
+        [HttpGet("GetMealProducts")]
+        public async Task<ActionResult<Result<ProductMeal>>> GetMealProducts(int id, int page=1)
         {
             List<ProductMeal> mealproducts = new List<ProductMeal>();
 
@@ -244,7 +275,16 @@ namespace PKUAppAPI.Controllers
                 mealproducts.Add(temp);
             }
 
-            return Ok(mealproducts);
+            Result<ProductMeal> result = new Result<ProductMeal>
+            {
+                Count = mealproducts.Count(),
+                PageIndex = page,
+                PageSize = pagesize,
+                Items = mealproducts.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+            };
+
+            return result;
+
         }
 
         [HttpDelete("DeleteMealProducts")]
@@ -270,6 +310,42 @@ namespace PKUAppAPI.Controllers
         {
             return _context.Meals.Any(e => e.MealId == id);
         }
-            
+
+        [HttpGet("GetMealSummary/{id}")]
+        public async Task<ActionResult<ProductMeal>> GetMealSumarry(int id)
+        {
+            List<ProductMeal> mealproducts = new List<ProductMeal>();
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var mproducts = await _context.MealProducts.Where(a => a.MealId == id).ToListAsync();
+
+            var summary = new ProductMeal
+            {
+                Product = new Product(),
+                Weight = 0
+            };
+
+            foreach (var mealprod in mproducts)
+            {
+                var prod = await _context.Products.FindAsync(mealprod.ProductId);
+                summary.Product.Phe += (int)((prod.Phe / 100 * mealprod.Weight / 100));
+                summary.Product.Calories += (int)((prod.Calories /100 * mealprod.Weight / 100));
+                summary.Product.Protein += (int)((prod.Protein / 100 * mealprod.Weight / 100));
+                summary.Product.Fat += (int)((prod.Fat / 100 * mealprod.Weight / 100));
+                summary.Product.Carb += (int)((prod.Carb / 100 * mealprod.Weight / 100));
+                summary.Weight += mealprod.Weight;  
+            }
+
+            return summary;
+
+        }
+
     }
 }

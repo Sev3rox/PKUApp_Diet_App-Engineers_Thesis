@@ -1,0 +1,60 @@
+  
+<div class="d-flex flex-row bd-highlight mb-2">
+
+    <div class="form-group row" style="width: 100%">
+
+        <div *ngIf="showError" class="alert alert-danger" role="alert">
+            {{errorMessage}}
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th style="text-align: center;">Name</th>
+                  <th style="text-align: center;">Category</th>
+                  <th style="text-align: center;">Phe (mg/100g)</th>
+                  <th style="text-align: center;">Calories (kcal/100g)</th>
+                  <th style="text-align: center;">Protein (g/100g)</th>
+                  <th style="text-align: center;">Fat (g/100g)</th>
+                  <th style="text-align: center;">Carb (g/100g)</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                    <td style="text-align: center;">{{product.Product.Name}}</td>
+                    <td style="text-align: center;">{{product.Product.Category}}</td>
+                    <td style="text-align: center;">{{product.Product.Phe/100}}</td>
+                    <td style="text-align: center;">{{product.Product.Calories/100}}</td>
+                    <td style="text-align: center;">{{product.Product.Protein/100}}</td>
+                    <td style="text-align: center;">{{product.Product.Fat/100}}</td>
+                    <td style="text-align: center;">{{product.Product.Carb/100}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <form [formGroup]="productMealForm" autocomplete="off" novalidate (ngSubmit)="addUpdateMealProduct(productMealForm.value)">
+
+            <div class="form-group row">
+                <label for="Weight" class="col-form-label col-sm-2">Weight (g):</label>
+                <div class="col-sm-5">
+                    <input type="number" class="form-control" formControlName="Weight" id="Weight" value="weight">
+                </div>
+                <div class="col-md-5">
+                    <em *ngIf="validateControl('Weight') && hasError('Weight', 'required')">Weight is required</em>
+                    <em *ngIf="validateControl('Weight') && hasError('Weight', 'min')">Value must be bigger or equal to 1</em>
+                    <em *ngIf="validateControl('Weight') && hasError('Weight', 'max')">Value must be smaller or equal to 10000</em>
+                </div>
+            </div>
+            <br>
+
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <button *ngIf="weight==0" type="submit" class="btn btn-primary" [disabled]="!productMealForm.valid">Add</button>
+                    <button *ngIf="weight!=0" type="submit" class="btn btn-primary" [disabled]="!productMealForm.valid">Update</button>
+                    <button type="button" class="btn btn-secondary" (click)='Close()'>Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

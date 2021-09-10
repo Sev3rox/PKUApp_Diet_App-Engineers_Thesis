@@ -26,12 +26,20 @@ export class UserPlanService {
     return this.http.delete(this.APIUrl+'/Meals/DeleteMealProducts'+'?mealid='+mealid+'&&'+'productid='+productid);
   }
 
-  addProductToMeal(productid:number, weight:number, mealid:number){
-    return this.http.post(this.APIUrl+'/Meals/AddProductToMeal'+'?productid='+productid+'&&'+'weight='+weight+'&&'+'mealid='+mealid ,null);
+  addProductToMeal(val:any){
+    return this.http.post(this.APIUrl+'/Meals/AddProductToMeal',val);
   }
 
-  getMealProductsList(id:any):Observable<any>{
-    return this.http.get<any>(this.APIUrl+'/Meals/GetMealProducts/'+id);
+  editProductToMeal(val:any){
+    return this.http.put(this.APIUrl+'/Meals/EditProductToMeal',val);
+  }
+
+  getMealProductsList(id:any,page:number):Observable<any>{
+    return this.http.get<any>(this.APIUrl+'/Meals/GetMealProducts'+'?id='+id+'&&'+'page='+page);
+  }
+  
+  getMealSummary(id:any){
+    return this.http.get<any>(this.APIUrl+'/Meals/GetMealSummary/'+id);
   }
 
 }
