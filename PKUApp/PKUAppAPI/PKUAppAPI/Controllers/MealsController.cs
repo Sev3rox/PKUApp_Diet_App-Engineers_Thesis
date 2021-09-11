@@ -347,5 +347,51 @@ namespace PKUAppAPI.Controllers
 
         }
 
+        [HttpGet("GetDaySummary")]
+        public async Task<ActionResult<ProductMeal>> GetDaySummary(DateTime date)
+        {
+            List<ProductMeal> mealproducts = new List<ProductMeal>();
+            List<MealProduct> mproducts = new List<MealProduct>();
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+            var meals= await _context.Meals.Where(a => a.Date == helpdate).ToListAsync();
+
+
+
+            foreach (var meal in meals)
+            {
+                var onemeal = await _context.MealProducts.Where(a => a.MealId == meal.MealId).ToListAsync();
+                mproducts.AddRange(onemeal);
+            }
+
+            var summary = new ProductMeal
+            {
+                Product = new Product(),
+                Weight = 0
+            };
+
+            foreach (var mealprod in mproducts)
+            {
+                var prod = await _context.Products.FindAsync(mealprod.ProductId);
+                summary.Product.Phe += (int)((prod.Phe / 100 * mealprod.Weight / 100));
+                summary.Product.Calories += (int)((prod.Calories / 100 * mealprod.Weight / 100));
+                summary.Product.Protein += (int)((prod.Protein / 100 * mealprod.Weight / 100));
+                summary.Product.Fat += (int)((prod.Fat / 100 * mealprod.Weight / 100));
+                summary.Product.Carb += (int)((prod.Carb / 100 * mealprod.Weight / 100));
+                summary.Weight += mealprod.Weight;
+            }
+
+            return summary;
+
+        }
+
     }
 }

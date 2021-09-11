@@ -80,6 +80,7 @@ export class UserShowProductsComponent implements OnInit {
     }
   
     sortResult(prop){
+      this.page=1;
       this.sortNameHelp=prop;
       if(prop==="ProductId"){
           if(this.sortId===false){

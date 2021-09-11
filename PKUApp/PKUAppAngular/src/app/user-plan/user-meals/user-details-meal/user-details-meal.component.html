@@ -1,0 +1,75 @@
+<div>
+    <table class="table table-striped">
+      <thead>
+          <tr>
+              <th  style="text-align: center;">Name</th>
+              <th  style="text-align: center;">Category</th>
+              <th  style="text-align: center;">Phe (mg)</th>
+              <th  style="text-align: center;">Calories (kcal)</th>
+              <th  style="text-align: center;">Weight (g)</th>
+              <th  style="text-align: center;">Protein (g)</th>
+              <th  style="text-align: center;">Fat (g)</th>
+              <th  style="text-align: center;">Carb (g)</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dataItem of MealProductsList | paginate : { id: 'pag2',
+          itemsPerPage:pageSizepm,
+          currentPage: pagepm,
+          totalItems: countpm
+        };
+        let i = index"
+          [class.active]="i==pagepm">
+              <td style="text-align: center;">{{dataItem.Product.Name}}</td>
+              <td style="text-align: center;">{{dataItem.Product.Category}}</td>
+              <td style="text-align: center;">{{dataItem.Product.Phe/100*dataItem.Weight/100/100}}</td>
+              <td style="text-align: center;">{{dataItem.Product.Calories/100*dataItem.Weight/100/100}}</td>
+              <td style="text-align: center;">{{dataItem.Weight/100}}</td>
+              <td style="text-align: center;">{{dataItem.Product.Protein/100*dataItem.Weight/100/100}}</td>
+              <td style="text-align: center;">{{dataItem.Product.Fat/100*dataItem.Weight/100/100}}</td>
+              <td style="text-align: center;">{{dataItem.Product.Carb/100*dataItem.Weight/100/100}}</td>           
+          </tr>
+      </tbody>
+    </table>
+  
+    <div class="d-flex justify-content-center">
+      <pagination-controls 
+      id="pag2"
+      [responsive]="true"
+        previousLabel="Prev" 
+        nextLabel="Next" 
+    (pageChange)="onPageChange2($event)">
+    </pagination-controls>
+    </div>
+  
+    <table class="table table-striped">
+      <thead>
+          <tr>
+            <th style="text-align: center;"></th>
+            <th style="text-align: center;">Phe (mg)</th>
+            <th style="text-align: center;">Calories (kcal)</th>
+            <th style="text-align: center;">Weight (g)</th>
+            <th  style="text-align: center;">Protein (g)</th>
+            <th  style="text-align: center;">Fat (g)</th>
+            <th  style="text-align: center;">Carb (g)</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center;"><h5>Summary</h5></td>
+          <td style="text-align: center;"><h5>{{MealProductsSummary.Product.Phe/100}}</h5></td>
+          <td style="text-align: center;"><h5>{{MealProductsSummary.Product.Calories/100}}</h5></td>
+          <td style="text-align: center;"><h5>{{MealProductsSummary.Weight/100}}</h5></td>
+          <td style="text-align: center;"><h5>{{MealProductsSummary.Product.Protein/100}}</h5></td>
+          <td style="text-align: center;"><h5>{{MealProductsSummary.Product.Fat/100}}</h5></td>
+          <td style="text-align: center;"><h5>{{MealProductsSummary.Product.Carb/100}}</h5></td>
+          </tr>
+      </tbody>
+  </table>
+  <br>
+  <div class="form-group row">
+      <label  class="col-form-label col-sm-6"></label>
+  <button type="button" class="btn btn-secondary col-sm-1" (click)='Close()'>Close</button>
+  </div>
+  
+  </div>

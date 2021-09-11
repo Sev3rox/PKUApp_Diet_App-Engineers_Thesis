@@ -133,12 +133,12 @@
   <table class="table table-striped">
     <thead>
         <tr>
-            <th (click)="sortResult('Name')" style="cursor: pointer; text-align: center;">Name</th>
-            <th (click)="sortResult('Category')" style="cursor: pointer; text-align: center;">Category</th>
-            <th (click)="sortResult('Phe')" style="cursor: pointer; text-align: center;">Phe (mg)</th>
-            <th (click)="sortResult('Calories')" style="cursor: pointer; text-align: center;">Calories (kcal)</th>
-            <th (click)="sortResult('Calories')" style="cursor: pointer; text-align: center;">Weight (g)</th>
-            <th style="text-align: center;">Options</th>
+            <th  style="text-align: center;">Name</th>
+            <th  style="text-align: center;">Category</th>
+            <th  style="text-align: center;">Phe (mg)</th>
+            <th  style="text-align: center;">Calories (kcal)</th>
+            <th  style="text-align: center;">Weight (g)</th>
+            <th  style="text-align: center;">Options</th>
         </tr>
     </thead>
     <tbody>
@@ -148,7 +148,7 @@
         totalItems: countpm
       };
       let i = index"
-        [class.active]="i==page">
+        [class.active]="i==pagepm">
             <td style="text-align: center;">{{dataItem.Product.Name}}</td>
             <td style="text-align: center;">{{dataItem.Product.Category}}</td>
             <td style="text-align: center;">{{dataItem.Product.Phe/100*dataItem.Weight/100/100}}</td>
@@ -215,5 +215,9 @@
     </tbody>
 </table>
 
+<br>
+<div>
+<button style=" float: right; font-size:25px; padding-left:25px; padding-right:25px" (click)="backClick()" type="button" class="btn btn-dark"> Back </button>
+</div>
 </div>
 </div>

@@ -44,6 +44,7 @@ import { UserDeleteProductMealComponent } from './user-plan/user-meals/user-edit
 import { UserAddEditProductMealComponent } from './user-plan/user-meals/user-edit-meal/user-add-edit-product-meal/user-add-edit-product-meal.component';
 import { UserMealSummaryDetailsComponent } from './user-plan/user-meals/user-edit-meal/user-meal-summary-details/user-meal-summary-details.component';
 import { UserProductInMealDetailsComponent } from './user-plan/user-meals/user-edit-meal/user-product-in-meal-details/user-product-in-meal-details.component';
+import { UserDetailsMealComponent } from './user-plan/user-meals/user-details-meal/user-details-meal.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -83,7 +84,8 @@ export function tokenGetter() {
     UserDeleteProductMealComponent,
     UserAddEditProductMealComponent,
     UserMealSummaryDetailsComponent,
-    UserProductInMealDetailsComponent
+    UserProductInMealDetailsComponent,
+    UserDetailsMealComponent
 
   ],
   imports: [

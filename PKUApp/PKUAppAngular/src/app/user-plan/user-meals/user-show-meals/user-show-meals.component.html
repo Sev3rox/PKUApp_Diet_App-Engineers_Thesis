@@ -13,15 +13,17 @@
             <div class="modal-body">
                 <app-user-delete-meal [meal]="meal" *ngIf="ActivateDeleteMealComp">
                 </app-user-delete-meal>
+                <app-user-details-meal [meal]="meal" *ngIf="ActivateDetailsMealComp">
+                </app-user-details-meal>
             </div>
           </div>
         </div>
       </div>
 
     <div style="display: flex; justify-content: center; align-items: center;">
-        <button type="button" (click)="dateClick(-1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()===minDate.getTime()">Prev</button>
+        <button type="button" (click)="dateClick(-1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()<=minDate.getTime()">Prev</button>
             {{date | date:'MM-dd-yyyy'}}
-        <button type="button" (click)="dateClick(1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()===maxDate.getTime()">Next</button>
+        <button type="button" (click)="dateClick(1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()>=maxDate.getTime()">Next</button>
     </div>
     <div style="display: flex; justify-content: center; align-items: center;">
         <button type="button" class="btn btn-success float-right m-2" 
@@ -33,7 +35,7 @@
         {{errorMessage}}
     </div>
     <div style="display: flex; justify-content: center; align-items: center;">
-        <table class="table table-striped" style="width: 40%">
+        <table class="table table-striped" style="width: 45%">
             <tbody>
                 <tr *ngFor="let dataItem of MealsList">
                     <td style="width:20%"><button type="button" class="btn btn-danger"
@@ -41,17 +43,52 @@
                     data-toggle="modal" data-target="#exampleModal"
                     data-backdrop="static" data-keyboard="false"
                     >Delete
-                    </button></td>
-                    <td style="width:60%; text-align: center; justify-content:center;">{{dataItem.Name}}</td>
-                    <div style=" justify-content:right;">
-                    <td style="width:55%"></td>
-                    <td style="width:5%"><button type="button" class="btn btn-warning"
-                    (click)="editClick(dataItem)"
-                    >Edit
                     </button>
                     </td>
+                    <td style="width:70%; text-align: center; justify-content:center; padding-left: 8%;">{{dataItem.Name}}</td>
+                    <div style=" justify-content:right;">
+                      <td style="width:5%"><button type="button" class="btn btn-primary"
+                      (click)="deatailsClick(dataItem)"
+                      data-toggle="modal" data-target="#exampleModal"
+                      data-backdrop="static" data-keyboard="false"
+                      >Deatails
+                      </button>
+                      </td>
+                      <td style="width:5%"><button type="button" class="btn btn-warning"
+                      (click)="editClick(dataItem)"
+                      >Edit
+                      </button>
+                      </td>
                     </div>
                 </tr>
             </tbody>
         </table>
+        <br>
+    </div>
+
+    <div *ngIf="MealsList.length!=0" style="display: flex; justify-content: center; align-items: center;">
+      <table class="table table-striped " style="width: 45%">
+        <thead>
+            <tr>
+              <th style="text-align: center;"></th>
+              <th style="text-align: center;">Phe (mg)</th>
+              <th style="text-align: center;">Calories (kcal)</th>
+              <th style="text-align: center;">Weight (g)</th>
+              <th  style="text-align: center;">Protein (g)</th>
+              <th  style="text-align: center;">Fat (g)</th>
+              <th  style="text-align: center;">Carb (g)</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align: center;"><h5>Summary</h5></td>
+            <td style="text-align: center;"><h5>{{daySummary.Product.Phe/100}}</h5></td>
+            <td style="text-align: center;"><h5>{{daySummary.Product.Calories/100}}</h5></td>
+            <td style="text-align: center;"><h5>{{daySummary.Weight/100}}</h5></td>
+            <td style="text-align: center;"><h5>{{daySummary.Product.Protein/100}}</h5></td>
+            <td style="text-align: center;"><h5>{{daySummary.Product.Fat/100}}</h5></td>
+            <td style="text-align: center;"><h5>{{daySummary.Product.Carb/100}}</h5></td>
+            </tr>
+        </tbody>
+    </table>
     </div>

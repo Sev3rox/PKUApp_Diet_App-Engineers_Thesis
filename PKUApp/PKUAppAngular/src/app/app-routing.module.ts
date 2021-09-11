@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'user-products', component: UserProductsComponent, canActivate: [AuthGuard] },
   { path: 'own-products', component: OwnProductsComponent, canActivate: [AuthGuard] },
   { path: 'user-plan', component: UserPlanComponent, canActivate: [AuthGuard] },
-  { path: 'user-edit-meal/:id', component: UserEditMealComponent, canActivate: [AuthGuard] },
+  { path: 'user-edit-meal', component: UserEditMealComponent, canActivate: [AuthGuard] },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'authentication/register', component : RegisterUserComponent},
   { path: 'authentication/login', component : LoginComponent},

@@ -16,7 +16,6 @@ namespace PKUAppAPI.Models
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
         public DbSet<Meal> Meals { get; set; }
         public DbSet<UserProductFav> UserProductFavs { get; set; }
         public DbSet<MealProduct> MealProducts { get; set; }
@@ -61,27 +60,9 @@ namespace PKUAppAPI.Models
 
             //modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
-            //categorySeed(modelBuilder);
-
             // Code to seed data
         }
 
-        public void categorySeed(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Category>().HasData(
-                new Category { CategoryId = 1, Name = "Fruits" },
-                new Category { CategoryId = 2, Name = "Vegetables" },
-                new Category { CategoryId = 3, Name = "Dairy" },
-                new Category { CategoryId = 4, Name = "Grains" },
-                new Category { CategoryId = 5, Name = "Protein Foods" },
-                new Category { CategoryId = 6, Name = "Drinks" },
-                new Category { CategoryId = 7, Name = "Snacks" },
-                new Category { CategoryId = 8, Name = "Dishes" },
-                new Category { CategoryId = 9, Name = "Other" }
-
-
-                );
-        }
     }
 
 

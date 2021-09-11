@@ -2,7 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserProductsService } from 'src/app/shared/services/user-products.service';
 import { UserPlanService } from 'src/app/shared/services/user-plan.service';
-import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-edit-meal',
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UserEditMealComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,private prodservice:UserProductsService, private service:UserPlanService, private toastr: ToastrService) { }
+  constructor(private route: ActivatedRoute,private prodservice:UserProductsService, private service:UserPlanService, private router:Router) { }
   mealid:number;
   onlyFav:boolean=false;
   ProductsList:any=[];
@@ -35,6 +35,7 @@ export class UserEditMealComponent implements OnInit {
   countpm:number=1;
   pageSizepm:number=1;
   weight:number=0;
+  date:Date;
   
 
   sortId:boolean=false;
@@ -58,7 +59,10 @@ export class UserEditMealComponent implements OnInit {
   categoryFav:boolean=false;
 
   ngOnInit(): void {
-    this.mealid=+this.route.snapshot.paramMap.get('id');
+    this.route.queryParams.subscribe(params => {
+      this.mealid = params.id;
+      this.date=params.date;
+  });
     this.refreshProductsList();
     this.refreshMealProductsList();
   }
@@ -107,6 +111,7 @@ export class UserEditMealComponent implements OnInit {
   }
 
   sortResult(prop){
+    this.page=1;
     this.sortNameHelp=prop;
     if(prop==="ProductId"){
         if(this.sortId===false){
@@ -380,6 +385,10 @@ export class UserEditMealComponent implements OnInit {
     console.log(item)
     this.ModalTitle="Product in Meal Details";
     this.ActivateProductInMealDetailsComp=true;
+  }
+
+  backClick(){
+    this.router.navigate(['/user-plan'],{queryParams:{date: this.date}});
   }
 
   refreshProductsList(){

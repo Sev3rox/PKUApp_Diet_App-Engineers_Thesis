@@ -27,6 +27,19 @@ namespace PKUAppAPI.Controllers
             public Product Product { get; set; }
         }
 
+        public string[] Categories = new string[]
+        {
+                "Fruits",
+                "Vegetables",
+                "Dairy",
+                "Grains",
+                "Protein Foods",
+                "Drinks",
+                "Snacks",
+                "Dishes",
+                "Other"
+        };
+
         private static int pagesize = 10;
         private readonly PKUAppDbContext _context;
 
@@ -171,12 +184,7 @@ namespace PKUAppAPI.Controllers
         [HttpGet("GetAllCategories")]
         public async Task<ActionResult<List<string>>> GetAllCategories()
         {
-            var categories = await _context.Categories.Select(a => a.Name).ToListAsync();
-
-            if (categories == null)
-            {
-                return NotFound();
-            }
+            var categories = Categories.ToList();
 
             return categories;
         }
