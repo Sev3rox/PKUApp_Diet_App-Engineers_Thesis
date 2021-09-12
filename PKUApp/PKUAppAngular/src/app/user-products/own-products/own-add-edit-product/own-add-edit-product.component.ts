@@ -60,6 +60,7 @@ export class OwnAddEditProductComponent implements OnInit {
     loadCategoriesList(){
       this.service.getAllCategoriesNames().subscribe((data:any)=>{
         this.CategoriesList=data;
+        if(this.Category!=undefined)
         this.CategoriesList.splice(this.CategoriesList.indexOf(this.Category), 1);
       });
     }

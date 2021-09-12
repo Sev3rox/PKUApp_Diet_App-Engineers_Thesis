@@ -17,6 +17,8 @@ export class UserShowMealsComponent implements OnInit {
   date:Date;
   minDate:Date;
   maxDate:Date;
+  currDate:Date;
+  isToday:boolean=true;
   public errorMessage: string = '';
   public showError: boolean;
   meal:any;
@@ -34,17 +36,27 @@ export class UserShowMealsComponent implements OnInit {
 
     this.minDate=new Date();
     this.maxDate=new Date();
+    this.currDate=new Date();
 
     if(this.date===undefined)
     {
     this.date=new Date();
     this.maxDate.setDate(this.maxDate.getDate()+6);
+    this.minDate.setDate(this.minDate.getDate()-6);
+    this.currDate.setDate(this.currDate.getDate()-1);
     }
-    else
+    else{
     this.maxDate.setDate(this.maxDate.getDate()+5);
+    this.minDate.setDate(this.minDate.getDate()-6);
+    this.currDate.setDate(this.currDate.getDate()-2);
+    }
 
-    console.log(this.minDate)
-    console.log(this.maxDate)
+    if(this.datePipe.transform(this.date, 'yyyy-MM-dd')!=this.datePipe.transform(new Date(), 'yyyy-MM-dd')){
+      this.isToday=false;
+    }
+    else{
+      this.isToday=true;
+    }
     
     this.refreshMealsList();
     this.refreshDaySummary();
@@ -54,6 +66,12 @@ export class UserShowMealsComponent implements OnInit {
   dateClick(val){
     this.date.setDate(this.date.getDate()+val);
     this.date=new Date(this.date);
+    if(this.datePipe.transform(this.date, 'yyyy-MM-dd')!=this.datePipe.transform(new Date(), 'yyyy-MM-dd')){
+      this.isToday=false;
+    }
+    else{
+      this.isToday=true;
+    }
     this.refreshMealsList();
     this.refreshDaySummary();
   }
