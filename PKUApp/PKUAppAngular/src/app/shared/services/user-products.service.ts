@@ -10,12 +10,12 @@ export class UserProductsService {
   readonly APIUrl=environment.urlAddress+"/api";
   constructor(private http:HttpClient) { }
 
-  getProductsList(search:string, sort:string, asc:boolean, cat:string, page:number):Observable<any>{
-    return this.http.get<any>(this.APIUrl+'/Products/GetUserProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page);
+  getProductsList(search:string, sort:string, asc:boolean, cat:string, page:number, lastAdded:boolean):Observable<any>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page+'&&'+'last='+lastAdded);
   }
 
-  getMealProductsList(search:string, sort:string, asc:boolean, cat:string, page:number, id:number):Observable<any>{
-    return this.http.get<any>(this.APIUrl+'/Products/GetUserMealProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page+'&&'+'id='+id);
+  getMealProductsList(search:string, sort:string, asc:boolean, cat:string, page:number, id:number, lastAdded:boolean):Observable<any>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserMealProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page+'&&'+'id='+id+'&&'+'last='+lastAdded);
   }
 
   getFavProductsList(search:string, sort:string, asc:boolean, cat:string, page:number):Observable<any>{

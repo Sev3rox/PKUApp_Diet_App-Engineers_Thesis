@@ -22,6 +22,7 @@ export class UserShowProductsComponent implements OnInit {
     page:number=1;
     count:number=1;
     pageSize:number=1;
+    lastAdded:boolean=false;
     
 
     sortId:boolean=false;
@@ -334,8 +335,13 @@ export class UserShowProductsComponent implements OnInit {
       this.refreshProductsList();
     }
 
+    lastAddedChange(bol){
+      this.lastAdded=bol;
+      this.refreshProductsList()
+    }
+
     refreshProductsList(){
-      this.service.getProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc, this.catName, this.page).subscribe(data=>{
+      this.service.getProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc, this.catName, this.page, this.lastAdded).subscribe(data=>{
         this.ProductsList=data.Items;
         this.page=data.PageIndex;
         this.count=data.Count;

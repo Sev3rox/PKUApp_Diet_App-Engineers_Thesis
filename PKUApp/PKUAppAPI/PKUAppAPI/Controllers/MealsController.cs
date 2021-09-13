@@ -215,8 +215,42 @@ namespace PKUAppAPI.Controllers
                 return new JsonResult(null);
             }
 
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
             _context.MealProducts.Add(mealpro);
             await _context.SaveChangesAsync();
+
+
+            var userLast = new UserProductLastAdded
+            {
+                UserId = user.Id,
+                ProductId = mealpro.ProductId
+            };
+
+            if (await _context.UserProductLastAddeds.AnyAsync(a=>a.ProductId == userLast.ProductId && a.UserId==userLast.UserId)) 
+            {
+                var userlastdel = await _context.UserProductLastAddeds.FirstOrDefaultAsync(a => a.ProductId == userLast.ProductId && a.UserId == userLast.UserId);
+                _context.UserProductLastAddeds.Remove(userlastdel);
+                await _context.SaveChangesAsync();
+
+                var neworder = 0;
+                if(await _context.UserProductLastAddeds.CountAsync()>0)
+                    neworder = await _context.UserProductLastAddeds.MaxAsync(a => a.Order);
+
+                userLast.Order = neworder + 1;
+                _context.UserProductLastAddeds.Add(userLast);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                var neworder = 0;
+                if (await _context.UserProductLastAddeds.CountAsync() > 0)
+                    neworder = await _context.UserProductLastAddeds.MaxAsync(a=>a.Order);
+
+                userLast.Order = neworder + 1;
+                _context.UserProductLastAddeds.Add(userLast);
+                await _context.SaveChangesAsync();
+            }
 
             return NoContent();
 

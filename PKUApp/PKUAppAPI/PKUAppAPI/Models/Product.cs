@@ -31,6 +31,7 @@ namespace PKUAppAPI.Models
         public User User { get; set; }
         public ICollection<UserProductFav> UserProductFavs { get; set; }
         public ICollection<MealProduct> MealProducts { get; set; }
+        public ICollection<UserProductLastAdded> UserProductLastAddeds { get; set; }
 
     }
 }

@@ -191,7 +191,7 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserProducts")]
         [Authorize]
-        public async Task<ActionResult<Result<ProductParam>>> GetUserProducts(string search=null, string sort=null, bool asc=false, string cat=null, int page=1)
+        public async Task<ActionResult<Result<ProductParam>>> GetUserProducts(string search=null, string sort=null, bool asc=false, string cat=null, int page=1, bool last=false)
         {
 
             var claims = User.Claims
@@ -204,8 +204,10 @@ namespace PKUAppAPI.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
             List<Product> list = new List<Product>();
+            List<Product> templist = new List<Product>();
             List<Product> ownlist = new List<Product>();
             List<UserProductFav> favlist = new List<UserProductFav>();
+            List<UserProductLastAdded> lastlist = new List<UserProductLastAdded>();
             List<Product> finallist = new List<Product>();
             List<ProductParam> prodparamlist = new List<ProductParam>();
 
@@ -256,6 +258,44 @@ namespace PKUAppAPI.Controllers
                     }
                 }
                 list = finallist;
+            }
+
+            finallist.Clear();
+
+            lastlist = await _context.UserProductLastAddeds.Where(a => a.UserId == user.Id).ToListAsync();
+
+            if (last == false)
+            {
+            }
+            else
+            {
+                if (sort == null)
+                {
+
+                    lastlist.OrderByDescending(x => x.Order).ToList();
+
+                    foreach (UserProductLastAdded lastprod in lastlist)
+                    {
+
+                        if (list.Any(a => a.ProductId == lastprod.ProductId))
+                        {
+                            templist.Add(list.Find(a => a.ProductId == lastprod.ProductId));
+                        }
+                    }
+                    list = templist;
+                }
+                else
+                {
+                    foreach (Product prod in list)
+                    {
+
+                        if (lastlist.Any(a => a.ProductId == prod.ProductId))
+                        {
+                            finallist.Add(prod);
+                        }
+                    }
+                    list = finallist;
+                }
             }
 
             foreach (Product prod in list)
@@ -537,7 +577,7 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserMealProducts")]
         [Authorize]
-        public async Task<ActionResult<Result<ProductParam>>> GetUserMealProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page = 1, int id=0)
+        public async Task<ActionResult<Result<ProductParam>>> GetUserMealProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page = 1, int id=0, bool last=false)
         {
 
             var claims = User.Claims
@@ -555,6 +595,8 @@ namespace PKUAppAPI.Controllers
             List<MealProduct> onmeallist = new List<MealProduct>();
             List<Product> finallist = new List<Product>();
             List<ProductParam> prodparamlist = new List<ProductParam>();
+            List<Product> templist = new List<Product>();
+            List<UserProductLastAdded> lastlist = new List<UserProductLastAdded>();
 
             int helpcat = 0;
             if (cat == "Fav")
@@ -606,6 +648,45 @@ namespace PKUAppAPI.Controllers
                 }
                 list = finallist;
             }
+
+            finallist.Clear();
+
+            lastlist = await _context.UserProductLastAddeds.Where(a => a.UserId == user.Id).ToListAsync();
+
+            if (last == false)
+            {
+            }
+            else
+            {
+                if (sort == null)
+                {
+
+                    lastlist.OrderByDescending(x => x.Order).ToList();
+
+                    foreach (UserProductLastAdded lastprod in lastlist)
+                    {
+
+                        if (list.Any(a => a.ProductId == lastprod.ProductId))
+                        {
+                            templist.Add(list.Find(a => a.ProductId == lastprod.ProductId));
+                        }
+                    }
+                    list = templist;
+                }
+                else
+                {
+                    foreach (Product prod in list)
+                    {
+
+                        if (lastlist.Any(a => a.ProductId == prod.ProductId))
+                        {
+                            finallist.Add(prod);
+                        }
+                    }
+                    list = finallist;
+                }
+            }
+
 
             if (id != 0)
             {

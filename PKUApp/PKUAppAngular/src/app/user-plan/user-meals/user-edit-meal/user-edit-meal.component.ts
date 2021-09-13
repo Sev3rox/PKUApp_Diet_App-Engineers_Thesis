@@ -36,6 +36,7 @@ export class UserEditMealComponent implements OnInit {
   pageSizepm:number=1;
   weight:number=0;
   date:Date;
+  lastAdded:boolean=false;
   
 
   sortId:boolean=false;
@@ -334,6 +335,10 @@ export class UserEditMealComponent implements OnInit {
     this.refreshProductsList();
   }
 
+  lastAddedChange(bol){
+    this.lastAdded=bol;
+    this.refreshProductsList()
+  }
   searchProduct(){
     this.page=1;
     this.refreshProductsList();
@@ -392,7 +397,7 @@ export class UserEditMealComponent implements OnInit {
   }
 
   refreshProductsList(){
-    this.prodservice.getMealProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc, this.catName, this.page, this.mealid).subscribe(data=>{
+    this.prodservice.getMealProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc, this.catName, this.page, this.mealid, this.lastAdded).subscribe(data=>{
       this.ProductsList=data.Items;
       this.page=data.PageIndex;
       this.count=data.Count;
