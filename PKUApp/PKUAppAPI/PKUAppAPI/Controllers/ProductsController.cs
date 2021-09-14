@@ -41,6 +41,7 @@ namespace PKUAppAPI.Controllers
         };
 
         private static int pagesize = 10;
+        private static int mealpagesize = 8;
         private readonly PKUAppDbContext _context;
 
         public ProductsController(PKUAppDbContext context)
@@ -260,8 +261,6 @@ namespace PKUAppAPI.Controllers
                 list = finallist;
             }
 
-            finallist.Clear();
-
             lastlist = await _context.UserProductLastAddeds.Where(a => a.UserId == user.Id).ToListAsync();
 
             if (last == false)
@@ -291,10 +290,10 @@ namespace PKUAppAPI.Controllers
 
                         if (lastlist.Any(a => a.ProductId == prod.ProductId))
                         {
-                            finallist.Add(prod);
+                            templist.Add(prod);
                         }
                     }
-                    list = finallist;
+                    list = templist;
                 }
             }
 
@@ -328,7 +327,7 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserOwnProducts")]
         [Authorize]
-        public async Task<ActionResult<Result<Product>>> GetUserOwnProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page=1)
+        public async Task<ActionResult<Result<Product>>> GetUserOwnProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page=1, bool last=false)
         {
 
             var claims = User.Claims
@@ -343,6 +342,8 @@ namespace PKUAppAPI.Controllers
             List<Product> ownlist = new List<Product>();
             List<UserProductFav> favlist = new List<UserProductFav>();
             List<Product> finallist = new List<Product>();
+            List<Product> templist = new List<Product>();
+            List<UserProductLastAdded> lastlist = new List<UserProductLastAdded>();
 
             int helpcat = 0;
             if (cat == "Fav")
@@ -384,6 +385,42 @@ namespace PKUAppAPI.Controllers
                     }
                 }
                 ownlist = finallist;
+            }
+
+            lastlist = await _context.UserProductLastAddeds.Where(a => a.UserId == user.Id).ToListAsync();
+
+            if (last == false)
+            {
+            }
+            else
+            {
+                if (sort == null)
+                {
+
+                    lastlist.OrderByDescending(x => x.Order).ToList();
+
+                    foreach (UserProductLastAdded lastprod in lastlist)
+                    {
+
+                        if (ownlist.Any(a => a.ProductId == lastprod.ProductId))
+                        {
+                            templist.Add(ownlist.Find(a => a.ProductId == lastprod.ProductId));
+                        }
+                    }
+                    ownlist = templist;
+                }
+                else
+                {
+                    foreach (Product prod in ownlist)
+                    {
+
+                        if (lastlist.Any(a => a.ProductId == prod.ProductId))
+                        {
+                            templist.Add(prod);
+                        }
+                    }
+                    ownlist = templist;
+                }
             }
 
             Result<Product> result = new Result<Product>
@@ -649,8 +686,6 @@ namespace PKUAppAPI.Controllers
                 list = finallist;
             }
 
-            finallist.Clear();
-
             lastlist = await _context.UserProductLastAddeds.Where(a => a.UserId == user.Id).ToListAsync();
 
             if (last == false)
@@ -680,10 +715,10 @@ namespace PKUAppAPI.Controllers
 
                         if (lastlist.Any(a => a.ProductId == prod.ProductId))
                         {
-                            finallist.Add(prod);
+                            templist.Add(prod);
                         }
                     }
-                    list = finallist;
+                    list = templist;
                 }
             }
 
@@ -712,8 +747,8 @@ namespace PKUAppAPI.Controllers
             {
                 Count = prodparamlist.Count(),
                 PageIndex = page,
-                PageSize = pagesize,
-                Items = prodparamlist.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+                PageSize = mealpagesize,
+                Items = prodparamlist.Skip((page - 1) * mealpagesize).Take((mealpagesize)).ToList()
             };
 
             return result;

@@ -46,4 +46,8 @@ export class UserPlanService {
     return this.http.get<any>(this.APIUrl+'/Meals/GetDaySummary'+'?date='+date);
   }
 
+  getMeal(id:number){
+    return this.http.get<any>(this.APIUrl+'/Meals/'+id);
+  }
+
 }

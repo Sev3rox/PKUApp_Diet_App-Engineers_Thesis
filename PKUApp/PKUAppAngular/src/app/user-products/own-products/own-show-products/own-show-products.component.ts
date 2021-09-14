@@ -24,6 +24,7 @@ export class OwnShowProductsComponent implements OnInit {
   page:number=1;
   count:number=1;
   pageSize:number=1;
+  lastAdded:boolean=false;
 
   sortId:boolean=false;
   sortName:boolean=false;
@@ -351,8 +352,18 @@ export class OwnShowProductsComponent implements OnInit {
     this.refreshProductsList();
   }
 
+  lastAddedChange(bol){
+    this.lastAdded=bol;
+    if(bol===true){
+    this.sortNameHelp="";
+    this.asc=false;
+    this.sortRefresh();
+    }
+    this.refreshProductsList()
+  }
+
   refreshProductsList(){
-    this.service.getOwnProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc, this.catName, this.page).subscribe(data=>{
+    this.service.getOwnProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc, this.catName, this.page, this.lastAdded).subscribe(data=>{
       this.ProductsList=data.Items;
       this.page=data.PageIndex;
       this.count=data.Count;

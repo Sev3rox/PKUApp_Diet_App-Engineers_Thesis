@@ -1,5 +1,10 @@
 <div style="display: flex; justify-content: center;">
 <div style="width: 40%;">
+
+  <div style="text-align: center; background-color: #212529; color: #38b0ff;" >
+    <h1> Products List</h1>
+   </div>
+
 <div class="panel panel-primary">
     <div class="panel-body">
 
@@ -142,7 +147,9 @@
 
 <div style="width: 60%; padding: 3%; padding-top: 0%;">
 
-
+  <div style="text-align: center; background-color: #212529; color: #38b0ff;" >
+   <h1> {{meal.Date}} {{meal.Name}} </h1>
+  </div>
   <table class="table table-striped">
     <thead>
         <tr>
@@ -167,7 +174,8 @@
             <td style="text-align: center;">{{dataItem.Product.Phe/100*dataItem.Weight/100/100}}</td>
             <td style="text-align: center;">{{dataItem.Product.Calories/100*dataItem.Weight/100/100}}</td>
             <td style="text-align: center;">{{dataItem.Weight/100}}</td>
-            <td style="display: flex; justify-content: center; align-items: center;">
+            <td>
+              <div style="display: flex; justify-content: center;">
               <button type="button" class="btn btn-info"
               (click)="detailsMealProductClick(dataItem)"
               data-toggle="modal" data-target="#exampleModal"
@@ -186,6 +194,7 @@
                 data-backdrop="static" data-keyboard="false"
                 >Delete
                 </button>
+              </div>
             </td>
         </tr>
     </tbody>

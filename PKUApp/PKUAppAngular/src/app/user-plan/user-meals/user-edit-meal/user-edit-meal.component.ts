@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserProductsService } from 'src/app/shared/services/user-products.service';
 import { UserPlanService } from 'src/app/shared/services/user-plan.service';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-edit-meal',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class UserEditMealComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,private prodservice:UserProductsService, private service:UserPlanService, private router:Router) { }
+  constructor(private route: ActivatedRoute,private prodservice:UserProductsService, private service:UserPlanService, private router:Router, private datePipe: DatePipe) { }
   mealid:number;
   onlyFav:boolean=false;
   ProductsList:any=[];
@@ -37,6 +38,7 @@ export class UserEditMealComponent implements OnInit {
   weight:number=0;
   date:Date;
   lastAdded:boolean=false;
+  meal:any;
   
 
   sortId:boolean=false;
@@ -63,6 +65,10 @@ export class UserEditMealComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.mealid = params.id;
       this.date=params.date;
+  });
+  this.service.getMeal(this.mealid).subscribe(data=>{
+    this.meal=data
+    this.meal.Date=this.datePipe.transform(this.meal.Date, 'yyyy-MM-dd')
   });
     this.refreshProductsList();
     this.refreshMealProductsList();
@@ -337,8 +343,14 @@ export class UserEditMealComponent implements OnInit {
 
   lastAddedChange(bol){
     this.lastAdded=bol;
+    if(bol===true){
+    this.sortNameHelp="";
+    this.asc=false;
+    this.sortRefresh();
+    }
     this.refreshProductsList()
   }
+  
   searchProduct(){
     this.page=1;
     this.refreshProductsList();

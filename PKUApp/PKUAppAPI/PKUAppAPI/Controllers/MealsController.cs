@@ -45,7 +45,7 @@ namespace PKUAppAPI.Controllers
             "Tenth Meal"
         };
 
-        private static int pagesize = 10;
+        private static int pagesize = 8;
 
         private readonly PKUAppDbContext _context;
 

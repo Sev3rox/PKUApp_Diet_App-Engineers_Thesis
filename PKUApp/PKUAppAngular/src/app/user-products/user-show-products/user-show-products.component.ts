@@ -337,6 +337,11 @@ export class UserShowProductsComponent implements OnInit {
 
     lastAddedChange(bol){
       this.lastAdded=bol;
+      if(bol===true){
+      this.sortNameHelp="";
+      this.asc=false;
+      this.sortRefresh();
+      }
       this.refreshProductsList()
     }
 

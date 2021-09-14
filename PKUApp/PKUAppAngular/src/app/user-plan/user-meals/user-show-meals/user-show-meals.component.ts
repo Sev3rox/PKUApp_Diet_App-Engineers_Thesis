@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserShowMealsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private service:UserPlanService,private toastr: ToastrService,private datePipe: DatePipe, private router:Router) { }
+  constructor(private route: ActivatedRoute, private service:UserPlanService,private toastr: ToastrService, private datePipe: DatePipe, private router:Router) { }
   MealsList:any=[];
   date:Date;
   minDate:Date;
