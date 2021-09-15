@@ -20,6 +20,7 @@ namespace PKUAppAPI.Models
         public DbSet<UserProductFav> UserProductFavs { get; set; }
         public DbSet<MealProduct> MealProducts { get; set; }
         public DbSet<UserProductLastAdded> UserProductLastAddeds { get; set; }
+        public DbSet<UserProductDish> UserProductDish { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -65,6 +66,17 @@ namespace PKUAppAPI.Models
             modelBuilder.Entity<UserProductLastAdded>()
                 .HasOne(bc => bc.Product)
                 .WithMany(c => c.UserProductLastAddeds)
+                .HasForeignKey(bc => bc.ProductId);
+            
+            modelBuilder.Entity<UserProductDish>()
+                .HasKey(bc => new { bc.UserId, bc.ProductId });
+            modelBuilder.Entity<UserProductDish>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.UserProductDish)
+                .HasForeignKey(bc => bc.UserId);
+            modelBuilder.Entity<UserProductDish>()
+                .HasOne(bc => bc.Product)
+                .WithMany(c => c.UserProductDish)
                 .HasForeignKey(bc => bc.ProductId);
 
 

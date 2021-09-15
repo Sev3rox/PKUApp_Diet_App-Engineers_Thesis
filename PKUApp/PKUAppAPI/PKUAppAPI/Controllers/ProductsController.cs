@@ -755,5 +755,148 @@ namespace PKUAppAPI.Controllers
         }
 
 
+        [HttpGet("GetUserDishProducts")]
+        [Authorize]
+        public async Task<ActionResult<Result<ProductParam>>> GetUserDishProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page = 1, int id = 0, bool last = false)
+        {
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            List<Product> list = new List<Product>();
+            List<Product> ownlist = new List<Product>();
+            List<UserProductFav> favlist = new List<UserProductFav>();
+            List<UserProductDish> ondishlist = new List<UserProductDish>();
+            List<Product> finallist = new List<Product>();
+            List<ProductParam> prodparamlist = new List<ProductParam>();
+            List<Product> templist = new List<Product>();
+            List<UserProductLastAdded> lastlist = new List<UserProductLastAdded>();
+
+            int helpcat = 0;
+            if (cat == "Fav")
+            {
+                cat = null;
+                helpcat = 1;
+            }
+
+            if (cat == null)
+            {
+                list = await _context.Products.Where(a => a.UserId == null && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+                ownlist = await _context.Products.Where(a => a.UserId == user.Id && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+            }
+            else
+            {
+                list = await _context.Products.Where(a => a.UserId == null && a.Category == cat && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+                ownlist = await _context.Products.Where(a => a.UserId == user.Id && a.Category == cat && EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+            }
+
+            favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
+
+            ondishlist = await _context.UserProductDish.ToListAsync();
+
+            list.AddRange(ownlist);
+
+            if (sort != null)
+            {
+                if (asc == true)
+                    list = list.OrderBy(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+                else
+                    list = list.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+            }
+
+            if (helpcat != 1)
+            {
+            }
+            else
+            {
+                foreach (Product prod in list)
+                {
+
+                    if (favlist.Any(a => a.ProductId == prod.ProductId))
+                    {
+                        finallist.Add(prod);
+                    }
+                }
+                list = finallist;
+            }
+
+            lastlist = await _context.UserProductLastAddeds.Where(a => a.UserId == user.Id).ToListAsync();
+
+            if (last == false)
+            {
+            }
+            else
+            {
+                if (sort == null)
+                {
+
+                    lastlist.OrderByDescending(x => x.Order).ToList();
+
+                    foreach (UserProductLastAdded lastprod in lastlist)
+                    {
+
+                        if (list.Any(a => a.ProductId == lastprod.ProductId))
+                        {
+                            templist.Add(list.Find(a => a.ProductId == lastprod.ProductId));
+                        }
+                    }
+                    list = templist;
+                }
+                else
+                {
+                    foreach (Product prod in list)
+                    {
+
+                        if (lastlist.Any(a => a.ProductId == prod.ProductId))
+                        {
+                            templist.Add(prod);
+                        }
+                    }
+                    list = templist;
+                }
+            }
+
+
+            if (id != 0)
+            {
+                foreach (var mprod in list)
+                {
+                    var prodparam = new ProductParam
+                    {
+                        param = false,
+                        Product = mprod
+
+                    };
+
+                    if (ondishlist.Any(a => a.ProductId == mprod.ProductId))
+                    {
+                        prodparam.param = true;
+                    }
+
+                    prodparamlist.Add(prodparam);
+                }
+            }
+
+            Result<ProductParam> result = new Result<ProductParam>
+            {
+                Count = prodparamlist.Count(),
+                PageIndex = page,
+                PageSize = mealpagesize,
+                Items = prodparamlist.Skip((page - 1) * mealpagesize).Take((mealpagesize)).ToList()
+            };
+
+            return result;
+        }
+
+
     }
 }

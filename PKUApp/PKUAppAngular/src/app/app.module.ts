@@ -45,6 +45,12 @@ import { UserAddEditProductMealComponent } from './user-plan/user-meals/user-edi
 import { UserMealSummaryDetailsComponent } from './user-plan/user-meals/user-edit-meal/user-meal-summary-details/user-meal-summary-details.component';
 import { UserProductInMealDetailsComponent } from './user-plan/user-meals/user-edit-meal/user-product-in-meal-details/user-product-in-meal-details.component';
 import { UserDetailsMealComponent } from './user-plan/user-meals/user-details-meal/user-details-meal.component';
+import { UserDishComponent } from './user-dish/user-dish.component';
+import { UserAddEditProductDishComponent } from './user-dish/user-add-edit-product-dish/user-add-edit-product-dish.component';
+import { UserDeleteProductDishComponent } from './user-dish/user-delete-product-dish/user-delete-product-dish.component';
+import { UserDishDetailsProductComponent } from './user-dish/user-dish-details-product/user-dish-details-product.component';
+import { UserDishSummaryDetailsComponent } from './user-dish/user-dish-summary-details/user-dish-summary-details.component';
+import { UserProductInDishDetailsComponent } from './user-dish/user-product-in-dish-details/user-product-in-dish-details.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -85,7 +91,13 @@ export function tokenGetter() {
     UserAddEditProductMealComponent,
     UserMealSummaryDetailsComponent,
     UserProductInMealDetailsComponent,
-    UserDetailsMealComponent
+    UserDetailsMealComponent,
+    UserDishComponent,
+    UserAddEditProductDishComponent,
+    UserDeleteProductDishComponent,
+    UserDishDetailsProductComponent,
+    UserDishSummaryDetailsComponent,
+    UserProductInDishDetailsComponent
 
   ],
   imports: [
