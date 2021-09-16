@@ -18,6 +18,10 @@ export class UserProductsService {
     return this.http.get<any>(this.APIUrl+'/Products/GetUserMealProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page+'&&'+'id='+id+'&&'+'last='+lastAdded);
   }
 
+  getDishProductsList(search:string, sort:string, asc:boolean, cat:string, page:number, lastAdded:boolean):Observable<any>{
+    return this.http.get<any>(this.APIUrl+'/Products/GetUserDishProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page+'&&'+'last='+lastAdded);
+  }
+
   getOwnProductsList(search:string, sort:string, asc:boolean, cat:string, page:number, lastAdded:boolean):Observable<any>{
     return this.http.get<any>(this.APIUrl+'/Products/GetUserOwnProducts'+'?search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'cat='+cat+'&&'+'page='+page+'&&'+'last='+lastAdded);
   }

@@ -399,7 +399,6 @@ export class UserEditMealComponent implements OnInit {
 
   detailsMealProductClick(item){
     this.product=item;
-    console.log(item)
     this.ModalTitle="Product in Meal Details";
     this.ActivateProductInMealDetailsComp=true;
   }

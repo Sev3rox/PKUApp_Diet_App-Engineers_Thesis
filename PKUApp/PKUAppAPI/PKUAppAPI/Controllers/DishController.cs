@@ -60,5 +60,135 @@ namespace PKUAppAPI.Controllers
 
         }
 
+
+        [HttpPut("EditProductToDish")]
+        public async Task<IActionResult> EditProductToDish(UserProductDish dishpro)
+        {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            _context.Entry(dishpro).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return new JsonResult(null);
+            }
+
+            return NoContent();
+
+        }
+
+
+        [HttpGet("GetDishProducts")]
+        public async Task<ActionResult<Result<ProductDish>>> GetDishProducts(int page = 1)
+        {
+            List<ProductDish> dishproducts = new List<ProductDish>();
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var dproducts = await _context.UserProductDish.Where(a => a.UserId == user.Id).ToListAsync();
+
+            foreach (var dishprod in dproducts)
+            {
+                var prod = await _context.Products.FindAsync(dishprod.ProductId);
+                var temp = new ProductDish
+                {
+                    Product = prod,
+                    Weight = dishprod.Weight
+                };
+                dishproducts.Add(temp);
+            }
+
+            Result<ProductDish> result = new Result<ProductDish>
+            {
+                Count = dishproducts.Count(),
+                PageIndex = page,
+                PageSize = pagesize,
+                Items = dishproducts.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+            };
+
+            return result;
+
+        }
+
+
+        [HttpDelete("DeleteDishProducts")]
+        public async Task<ActionResult<UserProductDish>> DeleteDishProducts(int productid)
+        {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var dishpro = await _context.UserProductDish.FirstOrDefaultAsync(a => a.UserId == user.Id && a.ProductId == productid);
+            _context.UserProductDish.Remove(dishpro);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
+        [HttpGet("GetDishSummary")]
+        public async Task<ActionResult<ProductDish>> GetDishSummary()
+        {
+            List<ProductDish> dishproducts = new List<ProductDish>();
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var dproducts = await _context.UserProductDish.Where(a => a.UserId == user.Id).ToListAsync();
+
+            var summary = new ProductDish
+            {
+                Product = new Product(),
+                Weight = 0
+            };
+
+            foreach (var dishprod in dproducts)
+            {
+                var prod = await _context.Products.FindAsync(dishprod.ProductId);
+                summary.Product.Phe += (int)((prod.Phe / 100 * dishprod.Weight / 100));
+                summary.Product.Calories += (int)((prod.Calories / 100 * dishprod.Weight / 100));
+                summary.Product.Protein += (int)((prod.Protein / 100 * dishprod.Weight / 100));
+                summary.Product.Fat += (int)((prod.Fat / 100 * dishprod.Weight / 100));
+                summary.Product.Carb += (int)((prod.Carb / 100 * dishprod.Weight / 100));
+                summary.Weight += dishprod.Weight;
+            }
+
+            return summary;
+
+        }
+
     }
 }

@@ -106,10 +106,10 @@
     };
     let i = index"
       [class.active]="i==page">
-          <td style="text-align: center;">{{dataItem.Product.Name}}</td>
-          <td style="text-align: center;">{{dataItem.Product.Category}}</td>
-          <td style="text-align: center;">{{dataItem.Product.Phe/100}}</td>
-          <td style="text-align: center;">{{dataItem.Product.Calories/100}}</td>
+          <td style="text-align: center;">{{dataItem?.Product.Name}}</td>
+          <td style="text-align: center;">{{dataItem?.Product.Category}}</td>
+          <td style="text-align: center;">{{dataItem?.Product.Phe/100}}</td>
+          <td style="text-align: center;">{{dataItem?.Product.Calories/100}}</td>
           <td>
             <div style="display: flex; justify-content: center;">
             <button type="button" class="btn btn-info"
@@ -148,7 +148,7 @@
 <div style="width: 60%; padding: 3%; padding-top: 0%;">
 
   <div style="text-align: center; background-color: #212529; color: #38b0ff;" >
-   <h1> {{meal.Date}} {{meal.Name}} </h1>
+   <h1> {{meal?.Date}} {{meal?.Name}} </h1>
   </div>
   <table class="table table-striped">
     <thead>
@@ -169,11 +169,11 @@
       };
       let i = index"
         [class.active]="i==pagepm">
-            <td style="text-align: center;">{{dataItem.Product.Name}}</td>
-            <td style="text-align: center;">{{dataItem.Product.Category}}</td>
-            <td style="text-align: center;">{{dataItem.Product.Phe/100*dataItem.Weight/100/100}}</td>
-            <td style="text-align: center;">{{dataItem.Product.Calories/100*dataItem.Weight/100/100}}</td>
-            <td style="text-align: center;">{{dataItem.Weight/100}}</td>
+            <td style="text-align: center;">{{dataItem?.Product.Name}}</td>
+            <td style="text-align: center;">{{dataItem?.Product.Category}}</td>
+            <td style="text-align: center;">{{dataItem?.Product.Phe/100*dataItem.Weight/100/100}}</td>
+            <td style="text-align: center;">{{dataItem?.Product.Calories/100*dataItem.Weight/100/100}}</td>
+            <td style="text-align: center;">{{dataItem?.Weight/100}}</td>
             <td>
               <div style="display: flex; justify-content: center;">
               <button type="button" class="btn btn-info"
@@ -223,14 +223,14 @@
     <tbody>
       <tr>
         <td style="text-align: center;"><h4>Summary</h4></td>
-        <td style="text-align: center;"><h4>{{MealProductsSummary.Product.Phe/100}}</h4></td>
-        <td style="text-align: center;"><h4>{{MealProductsSummary.Product.Calories/100}}</h4></td>
-        <td style="text-align: center;"><h4>{{MealProductsSummary.Weight/100}}</h4></td>
+        <td style="text-align: center;"><h4>{{MealProductsSummary?.Product.Phe/100}}</h4></td>
+        <td style="text-align: center;"><h4>{{MealProductsSummary?.Product.Calories/100}}</h4></td>
+        <td style="text-align: center;"><h4>{{MealProductsSummary?.Weight/100}}</h4></td>
         <td style="display: flex; justify-content: center; align-items: center;">
           <button type="button" class="btn btn-info"
         (click)="detailsSummaryClick()"
         data-toggle="modal" data-target="#exampleModal"
-        data-backdrop="static" data-keyboard="false" [disabled]="MealProductsSummary.Weight==0"
+        data-backdrop="static" data-keyboard="false" [disabled]="MealProductsSummary?.Weight==0"
         >Details
         </button></td>
         </tr>

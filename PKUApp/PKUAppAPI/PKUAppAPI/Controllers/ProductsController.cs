@@ -757,7 +757,7 @@ namespace PKUAppAPI.Controllers
 
         [HttpGet("GetUserDishProducts")]
         [Authorize]
-        public async Task<ActionResult<Result<ProductParam>>> GetUserDishProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page = 1, int id = 0, bool last = false)
+        public async Task<ActionResult<Result<ProductParam>>> GetUserDishProducts(string search = null, string sort = null, bool asc = false, string cat = null, int page = 1, bool last = false)
         {
 
             var claims = User.Claims
@@ -801,7 +801,7 @@ namespace PKUAppAPI.Controllers
 
             favlist = await _context.UserProductFavs.Where(a => a.UserId == user.Id).ToListAsync();
 
-            ondishlist = await _context.UserProductDish.ToListAsync();
+            ondishlist = await _context.UserProductDish.Where(a=>a.UserId== user.Id).ToListAsync();
 
             list.AddRange(ownlist);
 
@@ -866,25 +866,22 @@ namespace PKUAppAPI.Controllers
             }
 
 
-            if (id != 0)
-            {
-                foreach (var mprod in list)
+                foreach (var dprod in list)
                 {
                     var prodparam = new ProductParam
                     {
                         param = false,
-                        Product = mprod
+                        Product = dprod
 
                     };
 
-                    if (ondishlist.Any(a => a.ProductId == mprod.ProductId))
+                    if (ondishlist.Any(a => a.ProductId == dprod.ProductId))
                     {
                         prodparam.param = true;
                     }
 
                     prodparamlist.Add(prodparam);
                 }
-            }
 
             Result<ProductParam> result = new Result<ProductParam>
             {
