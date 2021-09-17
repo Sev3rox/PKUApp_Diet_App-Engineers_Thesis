@@ -19,14 +19,14 @@ export class ShowProductsComponent implements OnInit {
   product:any;
   productSearch:string="";
   catName:string="";
-  sortNameHelp="";
-  asc:boolean=false;
+  sortNameHelp:string="Name";
+  asc:boolean=true;
   page:number=1;
   count:number=1;
   pageSize:number=1;
 
   sortId:boolean=false;
-  sortName:boolean=false;
+  sortName:boolean=true;
   sortCategory:boolean=false;
   sortPhe:boolean=false;
   sortCalories:boolean=false;

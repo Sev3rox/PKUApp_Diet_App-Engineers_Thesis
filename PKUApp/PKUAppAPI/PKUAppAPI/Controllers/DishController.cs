@@ -30,7 +30,7 @@ namespace PKUAppAPI.Controllers
             public Product Product { get; set; }
         }
 
-        private static int pagesize = 8;
+        private static int pagesize = 6;
 
         private readonly PKUAppDbContext _context;
 
@@ -53,6 +53,8 @@ namespace PKUAppAPI.Controllers
 
             var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
+            dishpro.UserId = user.Id;
+
             _context.UserProductDish.Add(dishpro);
             await _context.SaveChangesAsync();
 
@@ -72,6 +74,10 @@ namespace PKUAppAPI.Controllers
             {
                 return new JsonResult(null);
             }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            dishpro.UserId = user.Id;
 
             _context.Entry(dishpro).State = EntityState.Modified;
 
@@ -187,6 +193,109 @@ namespace PKUAppAPI.Controllers
             }
 
             return summary;
+
+        }
+
+
+        [HttpDelete("DeleteAllDishProducts")]
+        public async Task<ActionResult<UserProductDish>> DeleteAllDishProducts()
+        {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var dishproducts = await _context.UserProductDish.Where(a => a.UserId == user.Id).ToListAsync();
+
+            foreach (var dishprod in dishproducts)
+            {
+                _context.UserProductDish.Remove(dishprod);
+                await _context.SaveChangesAsync();
+            }
+
+            return NoContent();
+        }
+
+
+        [HttpPost("CreateDish")]
+        public async Task<IActionResult> CreateDish(string name="")
+        {
+
+            if (name.Length<1)
+            {
+                ModelState.AddModelError("Name", "Name is required");
+                return BadRequest(ModelState);
+            }
+
+            var check = _context.Products.Any(e => e.Name == name && e.UserId == null);
+            if (check == true)
+            {
+                ModelState.AddModelError("Name", "Name already in use");
+                return BadRequest(ModelState);
+            }
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var owncheck = _context.Products.Any(e => e.Name == name && e.UserId == user.Id);
+            if (owncheck == true)
+            {
+                ModelState.AddModelError("Name", "Name already in use in your Own Products");
+                return BadRequest(ModelState);
+            }
+
+            var dproducts = await _context.UserProductDish.Where(a => a.UserId == user.Id).ToListAsync();
+
+            var Product = new Product();
+            Product.Name = name;
+            int Weight = 0;
+
+            foreach (var dishprod in dproducts)
+            {
+                var prod = await _context.Products.FindAsync(dishprod.ProductId);
+                Product.Phe += (int)((prod.Phe / 100 * dishprod.Weight / 100));
+                Product.Calories += (int)((prod.Calories / 100 * dishprod.Weight / 100));
+                Product.Protein += (int)((prod.Protein / 100 * dishprod.Weight / 100));
+                Product.Fat += (int)((prod.Fat / 100 * dishprod.Weight / 100));
+                Product.Carb += (int)((prod.Carb / 100 * dishprod.Weight / 100));
+                Weight += dishprod.Weight;
+            }
+
+            Product.Phe = (Product.Phe * 100 ) / (Weight / 100);
+            Product.Calories = (Product.Calories * 100) / (Weight / 100);
+            Product.Protein = (Product.Protein * 100) / (Weight / 100);
+            Product.Fat = (Product.Fat * 100) / (Weight / 100);
+            Product.Carb = (Product.Carb * 100) / (Weight / 100);
+
+            Product.Category = "Dishes";
+
+            Product.UserId = user.Id;
+
+            _context.Products.Add(Product);
+            await _context.SaveChangesAsync();
+
+            var dishproducts = await _context.UserProductDish.Where(a => a.UserId == user.Id).ToListAsync();
+
+            foreach (var dishprod in dishproducts)
+            {
+                _context.UserProductDish.Remove(dishprod);
+                await _context.SaveChangesAsync();
+            }
+
+            return NoContent();
 
         }
 

@@ -20,6 +20,20 @@
             </button>
           </div>
           <div class="modal-body">
+            <app-user-dish-details-product [product]="product" *ngIf="ActivateDetailsProductComp">
+            </app-user-dish-details-product>
+            <app-user-add-edit-product-dish [product]="product" [weight]="weight" *ngIf="ActivateAddEditProductDishComp">
+            </app-user-add-edit-product-dish>
+            <app-user-product-in-dish-details [product]="product" *ngIf="ActivateProductInDishDetailsComp">
+            </app-user-product-in-dish-details>
+            <app-user-delete-product-dish [product]="product" *ngIf="ActivateDeleteProductDishComp">
+            </app-user-delete-product-dish>
+            <app-user-dish-summary-details [summary]="DishProductsSummary"  *ngIf="ActivateDishSummaryDetailsComp">
+            </app-user-dish-summary-details>
+            <app-user-delete-all-products-dish *ngIf="ActivateDeleteAllProductsDishComp">
+            </app-user-delete-all-products-dish>
+            <app-user-create-dish *ngIf="ActivateAddDishComp">
+            </app-user-create-dish>
           </div>
         </div>
       </div>
@@ -226,5 +240,21 @@
             </tr>
         </tbody>
     </table>
+    <br>
+    <div style="display: flex; justify-content: center;">
+      <button type="button" class="btn btn-secondary" style="font-size:25px; padding-left:25px; padding-right:25px"
+      (click)="clearDishClick()" [disabled]="DishProductsSummary?.Weight==0"
+      data-toggle="modal" data-target="#exampleModal"
+      data-backdrop="static" data-keyboard="false"
+      >Clear Dish
+      </button>
+      <button type="button" class="btn btn-dark" style="font-size:25px; padding-left:25px; padding-right:25px"
+      (click)="createDishClick()" [disabled]="DishProductsSummary?.Weight==0"
+      data-toggle="modal" data-target="#exampleModal"
+      data-backdrop="static" data-keyboard="false"
+      >Create Dish
+      </button>
+      </div>
+
     </div>
     </div>

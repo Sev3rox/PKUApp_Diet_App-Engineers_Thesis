@@ -20,11 +20,13 @@ export class UserDishComponent implements OnInit {
   ActivateDeleteProductDishComp:boolean=false;
   ActivateDishSummaryDetailsComp:boolean=false;
   ActivateProductInDishDetailsComp:boolean=false;
+  ActivateDeleteAllProductsDishComp:boolean=false;
+  ActivateAddDishComp:boolean=false;
   product:any;
   productSearch:string="";
   catName:string="";
-  sortNameHelp="";
-  asc:boolean=false;
+  sortNameHelp="Name";
+  asc:boolean=true;
   page:number=1;
   count:number=1;
   pageSize:number=1;
@@ -34,16 +36,11 @@ export class UserDishComponent implements OnInit {
   weight:number=0;
   lastAdded:boolean=false;
   dish:any;
-  
 
-  sortId:boolean=false;
-  sortName:boolean=false;
+  sortName:boolean=true;
   sortCategory:boolean=false;
   sortPhe:boolean=false;
   sortCalories:boolean=false;
-  sortProtein:boolean=false;
-  sortFat:boolean=false;
-  sortCarb:boolean=false;
 
   categoryFruits:boolean=false;
   categoryVegetables:boolean=false;
@@ -75,6 +72,8 @@ export class UserDishComponent implements OnInit {
     this.ActivateAddEditProductDishComp=false;
     this.ActivateDishSummaryDetailsComp=false;
     this.ActivateProductInDishDetailsComp=false;
+    this.ActivateDeleteAllProductsDishComp=false;
+    this.ActivateAddDishComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
     this.refreshProductsList();
@@ -87,36 +86,23 @@ export class UserDishComponent implements OnInit {
     this.ActivateAddEditProductDishComp=false;
     this.ActivateDishSummaryDetailsComp=false;
     this.ActivateProductInDishDetailsComp=false;
+    this.ActivateDeleteAllProductsDishComp=false;
+    this.ActivateAddDishComp=false;
     this.refreshProductsList();
     this.refreshDishProductsList()
   }
 
   sortRefresh(){
-    this.sortId=false;
     this.sortName=false;
     this.sortCategory=false;
     this.sortPhe=false;
     this.sortCalories=false;
-    this.sortProtein=false;
-    this.sortFat=false;
-    this.sortCarb=false;
   }
 
   sortResult(prop){
     this.page=1;
     this.sortNameHelp=prop;
-    if(prop==="ProductId"){
-        if(this.sortId===false){
-          this.sortRefresh();
-          this.sortId=true;
-          this.asc=true;
-        }
-        else{
-          this.sortId=false;
-          this.asc=false;
-        }
-    }
-    else if(prop==="Name"){
+    if(prop==="Name"){
       if(this.sortName===false){
         this.sortRefresh();
         this.sortName=true;
@@ -160,39 +146,6 @@ export class UserDishComponent implements OnInit {
         this.asc=false;
       }
   }
-        else if(prop==="Protein"){
-      if(this.sortProtein===false){
-        this.sortRefresh();
-        this.sortProtein=true;
-        this.asc=true;
-      }
-      else{
-        this.sortProtein=false;
-        this.asc=false;
-      }
-  }
-        else if(prop==="Fat"){
-      if(this.sortFat===false){
-        this.sortRefresh();
-        this.sortFat=true;
-        this.asc=true;
-      }
-      else{
-        this.sortFat=false;
-        this.asc=false;
-      }
-  }
-        else if(prop==="Carb"){
-      if(this.sortCarb===false){
-        this.sortRefresh();
-        this.sortCarb=true;
-        this.asc=true;
-      }
-      else{
-        this.sortCarb=false;
-        this.asc=false;
-      }
-  }
   
     this.refreshProductsList();
 
@@ -208,6 +161,7 @@ export class UserDishComponent implements OnInit {
     this.categorySnacks=false;
     this.categoryDishes=false;
     this.categoryOther=false;
+    this.categoryFav=false;
   }
 
   categoryResult(name){
@@ -386,6 +340,16 @@ export class UserDishComponent implements OnInit {
     this.product=item;
     this.ModalTitle="Product in Dish Details";
     this.ActivateProductInDishDetailsComp=true;
+  }
+
+  createDishClick(){
+    this.ModalTitle="Create Dish";
+    this.ActivateAddDishComp=true;
+  }
+
+  clearDishClick(){
+    this.ModalTitle="Clear All Product in Dish";
+    this.ActivateDeleteAllProductsDishComp=true;
   }
 
   refreshProductsList(){

@@ -51,6 +51,8 @@ import { UserDeleteProductDishComponent } from './user-dish/user-delete-product-
 import { UserDishDetailsProductComponent } from './user-dish/user-dish-details-product/user-dish-details-product.component';
 import { UserDishSummaryDetailsComponent } from './user-dish/user-dish-summary-details/user-dish-summary-details.component';
 import { UserProductInDishDetailsComponent } from './user-dish/user-product-in-dish-details/user-product-in-dish-details.component';
+import { UserDeleteAllProductsDishComponent } from './user-dish/user-delete-all-products-dish/user-delete-all-products-dish.component';
+import { UserCreateDishComponent } from './user-dish/user-create-dish/user-create-dish.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -97,7 +99,9 @@ export function tokenGetter() {
     UserDeleteProductDishComponent,
     UserDishDetailsProductComponent,
     UserDishSummaryDetailsComponent,
-    UserProductInDishDetailsComponent
+    UserProductInDishDetailsComponent,
+    UserDeleteAllProductsDishComponent,
+    UserCreateDishComponent
 
   ],
   imports: [

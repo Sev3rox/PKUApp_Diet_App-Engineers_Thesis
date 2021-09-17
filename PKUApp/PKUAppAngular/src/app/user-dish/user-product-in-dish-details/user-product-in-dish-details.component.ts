@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { UserDishComponent } from '../user-dish.component'
 
 @Component({
   selector: 'app-user-product-in-dish-details',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProductInDishDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private closing:UserDishComponent) { }
+
+  @Input() 
+  product:any;
 
   ngOnInit(): void {
   }
 
+  Close(){
+    this.closing.closeClickFromOutside();
+  }
 }

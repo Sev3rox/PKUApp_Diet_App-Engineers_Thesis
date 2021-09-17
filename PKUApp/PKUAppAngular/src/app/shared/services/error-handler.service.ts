@@ -123,6 +123,12 @@ export class ErrorHandlerService implements HttpInterceptor {
         values.map((m: any) => {
            message += m;
         })}
+        if(error.error.errors===undefined&&error.error.Name!=undefined){
+          message+=error.error.Name;
+        }
+        if(error.error.errors===undefined&&error.error.name!=undefined){
+          message+=error.error.name;
+        }
         return message;
         }
     else

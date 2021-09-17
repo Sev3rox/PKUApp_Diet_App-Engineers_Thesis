@@ -175,7 +175,8 @@ namespace PKUAppAPI.Controllers
                 }
                 if (position == 1)
                 {
-                    m.Name = MealsNames[count-1];
+                    if (count > 0) {
+                        m.Name = MealsNames[count - 1];
                     _context.Entry(m).State = EntityState.Modified;
                     try
                     {
@@ -192,6 +193,7 @@ namespace PKUAppAPI.Controllers
                             throw;
                         }
                     }
+                }
                 }
                 count++;
             }

@@ -1,1 +1,44 @@
-<p>user-dish-summary-details works!</p>
+<div class="d-flex flex-row bd-highlight mb-2">
+    <div class="form-group row" style="width: 100%">
+    <div class="form-group row">
+        <label for="Name" class="col-form-label col-sm-12" style="text-align: center;"><h3>Summary:</h3></label>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Phe (mg): </label>
+        <div class="col-sm-5">{{summary.Product.Phe/100}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Calories (kcal): </label>
+        <div class="col-sm-5">{{summary.Product.Calories/100}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Weight (g): </label>
+        <div class="col-sm-5">{{summary.Weight/100}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Protein (g): </label>
+        <div class="col-sm-5">{{summary.Product.Protein/100}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Fat (g): </label>
+        <div class="col-sm-5">{{summary.Product.Fat/100}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Carb (g): </label>
+        <div class="col-sm-5">{{summary.Product.Carb/100}}</div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-6"></label>
+    <button type="button" class="btn btn-secondary col-sm-1" (click)='Close()'>Close</button>
+    </div>
+</div>
+</div>

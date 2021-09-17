@@ -16,14 +16,13 @@ export class NotlogedShowProductsComponent implements OnInit {
       product:any;
       productSearch:string="";
       catName:string="";
-      sortNameHelp:string="";
-      asc:boolean=false;
+      sortNameHelp:string="Name";
+      asc:boolean=true;
       page:number=1;
       count:number=1;
       pageSize:number=1;
   
-      sortId:boolean=false;
-      sortName:boolean=false;
+      sortName:boolean=true;
       sortCategory:boolean=false;
       sortPhe:boolean=false;
       sortCalories:boolean=false;
@@ -68,7 +67,6 @@ export class NotlogedShowProductsComponent implements OnInit {
       }
     
       sortRefresh(){
-        this.sortId=false;
         this.sortName=false;
         this.sortCategory=false;
         this.sortPhe=false;
@@ -81,18 +79,7 @@ export class NotlogedShowProductsComponent implements OnInit {
       sortResult(prop){
         this.page=1;
         this.sortNameHelp=prop;
-        if(prop==="ProductId"){
-            if(this.sortId===false){
-              this.sortRefresh();
-              this.sortId=true;
-              this.asc=true;
-            }
-            else{
-              this.sortId=false;
-              this.asc=false;
-            }
-        }
-        else if(prop==="Name"){
+        if(prop==="Name"){
           if(this.sortName===false){
             this.sortRefresh();
             this.sortName=true;

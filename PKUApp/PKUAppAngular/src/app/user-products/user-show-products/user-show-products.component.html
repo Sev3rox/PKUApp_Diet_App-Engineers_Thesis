@@ -79,7 +79,6 @@
 <table class="table table-striped">
   <thead>
       <tr>
-          <th (click)="sortResult('ProductId')" style="cursor: pointer; text-align: center;">Id</th>
           <th (click)="sortResult('Name')" style="cursor: pointer; text-align: center;">Name</th>
           <th (click)="sortResult('Category')" style="cursor: pointer; text-align: center;">Category</th>
           <th (click)="sortResult('Phe')" style="cursor: pointer; text-align: center;">Phe (mg/100g)</th>
@@ -98,7 +97,6 @@
     };
     let i = index"
       [class.active]="i==page">
-          <td style="text-align: center;">{{dataItem.Product.ProductId}}</td>
           <td style="text-align: center;">{{dataItem.Product.Name}}</td>
           <td style="text-align: center;">{{dataItem.Product.Category}}</td>
           <td style="text-align: center;">{{dataItem.Product.Phe/100}}</td>

@@ -522,7 +522,7 @@ namespace PKUAppAPI.Controllers
             }
             var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
-            var owncheck = _context.Products.Any(e => e.Name == product.Name && e.UserId == user.Id);
+            var owncheck = _context.Products.Any(e => e.Name == product.Name && e.UserId == user.Id && e.ProductId != product.ProductId);
             if (owncheck == true)
             {
                 ModelState.AddModelError("Name", "Name already in use in your Own Products");

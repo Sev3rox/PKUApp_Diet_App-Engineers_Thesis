@@ -15,8 +15,7 @@ export class OwnAddEditProductComponent implements OnInit {
   public errorMessage: string = '';
   public showError: boolean;
   
-  constructor(private service:UserProductsService,
-    private toastr: ToastrService, private closing:OwnShowProductsComponent) { }
+  constructor(private service:UserProductsService, private toastr: ToastrService, private closing:OwnShowProductsComponent) { }
 
   @Input() 
       product:any;

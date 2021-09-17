@@ -29,4 +29,12 @@ export class UserDishService {
   getDishSummary(){
     return this.http.get<any>(this.APIUrl+'/Dish/GetDishSummary');
   }
+
+  deleteAllDishProducts(){
+    return this.http.delete(this.APIUrl+'/Dish/DeleteAllDishProducts');
+  }
+
+  createDish(name:string){
+    return this.http.post(this.APIUrl+'/Dish/CreateDish'+'?name='+name,null);
+  }
 }

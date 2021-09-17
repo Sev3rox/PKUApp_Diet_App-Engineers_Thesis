@@ -27,8 +27,8 @@ export class UserEditMealComponent implements OnInit {
   product:any;
   productSearch:string="";
   catName:string="";
-  sortNameHelp="";
-  asc:boolean=false;
+  sortNameHelp="Name";
+  asc:boolean=true;
   page:number=1;
   count:number=1;
   pageSize:number=1;
@@ -40,15 +40,10 @@ export class UserEditMealComponent implements OnInit {
   lastAdded:boolean=false;
   meal:any;
   
-
-  sortId:boolean=false;
-  sortName:boolean=false;
+  sortName:boolean=true;
   sortCategory:boolean=false;
   sortPhe:boolean=false;
   sortCalories:boolean=false;
-  sortProtein:boolean=false;
-  sortFat:boolean=false;
-  sortCarb:boolean=false;
 
   categoryFruits:boolean=false;
   categoryVegetables:boolean=false;
@@ -73,8 +68,6 @@ export class UserEditMealComponent implements OnInit {
     this.refreshProductsList();
     this.refreshMealProductsList();
   }
-
-
 
   detailsClick(item){
     this.product=item.Product;
@@ -107,31 +100,16 @@ export class UserEditMealComponent implements OnInit {
   }
 
   sortRefresh(){
-    this.sortId=false;
     this.sortName=false;
     this.sortCategory=false;
     this.sortPhe=false;
     this.sortCalories=false;
-    this.sortProtein=false;
-    this.sortFat=false;
-    this.sortCarb=false;
   }
 
   sortResult(prop){
     this.page=1;
     this.sortNameHelp=prop;
-    if(prop==="ProductId"){
-        if(this.sortId===false){
-          this.sortRefresh();
-          this.sortId=true;
-          this.asc=true;
-        }
-        else{
-          this.sortId=false;
-          this.asc=false;
-        }
-    }
-    else if(prop==="Name"){
+    if(prop==="Name"){
       if(this.sortName===false){
         this.sortRefresh();
         this.sortName=true;
@@ -175,39 +153,6 @@ export class UserEditMealComponent implements OnInit {
         this.asc=false;
       }
   }
-        else if(prop==="Protein"){
-      if(this.sortProtein===false){
-        this.sortRefresh();
-        this.sortProtein=true;
-        this.asc=true;
-      }
-      else{
-        this.sortProtein=false;
-        this.asc=false;
-      }
-  }
-        else if(prop==="Fat"){
-      if(this.sortFat===false){
-        this.sortRefresh();
-        this.sortFat=true;
-        this.asc=true;
-      }
-      else{
-        this.sortFat=false;
-        this.asc=false;
-      }
-  }
-        else if(prop==="Carb"){
-      if(this.sortCarb===false){
-        this.sortRefresh();
-        this.sortCarb=true;
-        this.asc=true;
-      }
-      else{
-        this.sortCarb=false;
-        this.asc=false;
-      }
-  }
   
     this.refreshProductsList();
 
@@ -223,6 +168,7 @@ export class UserEditMealComponent implements OnInit {
     this.categorySnacks=false;
     this.categoryDishes=false;
     this.categoryOther=false;
+    this.categoryFav=false;
   }
 
   categoryResult(name){
