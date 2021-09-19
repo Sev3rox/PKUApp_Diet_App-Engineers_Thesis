@@ -1,0 +1,72 @@
+<div class="modal fade bg-dark" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ModalTitle}}</h5>
+          <button #mybutton type="button" class="close" 
+          data-dismiss="modal" aria-label="Close"
+          (click)="closeClick()" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <app-edit-user [Name]="Name" *ngIf="ActivateEditUserSettings">
+            </app-edit-user>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="card">
+    <div class="card-body" >
+        <div class="form-group row">
+                <div style="width:13%">
+                    <h3 class="card-title">User Settings</h3>
+                </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-warning" (click)="editSettings()"
+                data-toggle="modal" data-target="#exampleModal"
+                data-backdrop="static" data-keyboard="false">Edit</button>
+            </div>
+         </div>
+            <div class="form-group row">
+                <label for="username" class="col-form-label col-sm-1">Name: </label>
+                <label for="username" class="col-form-label col-sm-2">{{Name}}</label>
+            </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="form-group row">
+            <div style="width:13%">
+                <h3 class="card-title">User Limits</h3>
+            </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-warning" (click)="editLimits()"
+            data-toggle="modal" data-target="#exampleModal"
+            data-backdrop="static" data-keyboard="false">Edit</button>
+        </div>
+        </div>
+            <div class="form-group row">
+                <label for="username" style="width:13%">Phe limit (mg): </label>
+                <label for="username" class="col-form-label col-sm-2">phe</label>
+            </div>
+            <div class="form-group row">
+                <label for="username" style="width:13%">Calories limit (kcal): </label>
+                <label for="username" class="col-form-label col-sm-2">calories</label>
+            </div>
+            <div class="form-group row">
+                <label for="username" style="width:13%">Protein limit (g): </label>
+                <label for="username" class="col-form-label col-sm-2">protein</label>
+            </div>
+            <div class="form-group row">
+                <label for="username" style="width:13%">Fat limit (g): </label>
+                <label for="username" class="col-form-label col-sm-2">fat</label>
+            </div>
+            <div class="form-group row">
+                <label for="username" style="width:13%">Carb limit (g): </label>
+                <label for="username" class="col-form-label col-sm-2">carb</label>
+            </div>
+    </div>
+</div>

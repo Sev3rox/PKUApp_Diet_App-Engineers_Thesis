@@ -565,6 +565,7 @@ namespace PKUAppAPI.Controllers
 
         [Route("AddFav/{id}")]
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<List<string>>> AddFav(int id)
         {
             var claims = User.Claims
@@ -590,6 +591,7 @@ namespace PKUAppAPI.Controllers
 
         [Route("DeleteFav/{id}")]
         [HttpDelete]
+        [Authorize]
         public async Task<ActionResult<List<string>>> DeleteFav(int id)
         {
             var claims = User.Claims

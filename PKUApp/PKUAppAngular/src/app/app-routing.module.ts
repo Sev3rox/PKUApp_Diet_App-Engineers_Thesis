@@ -14,6 +14,7 @@ import { ProductsComponent } from './products/products.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
 import { UserEditMealComponent } from './user-plan/user-meals/user-edit-meal/user-edit-meal.component';
 import { UserDishComponent } from './user-dish/user-dish.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'user-plan', component: UserPlanComponent, canActivate: [AuthGuard] },
   { path: 'user-edit-meal', component: UserEditMealComponent, canActivate: [AuthGuard] },
   { path: 'user-dish', component: UserDishComponent, canActivate: [AuthGuard] },
+  { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'authentication/register', component : RegisterUserComponent},
   { path: 'authentication/login', component : LoginComponent},

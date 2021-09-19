@@ -58,8 +58,17 @@ namespace PKUAppAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Meal>>> GetMeals(DateTime date)
         { 
-                var helpdate = new DateTime(date.Year, date.Month, date.Day);
-                return await _context.Meals.Where(a => a.Date == helpdate).ToListAsync();
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+
+            return await _context.Meals.Where(a => a.UserId == user.Id && a.Date == helpdate).ToListAsync();
         }
 
         // GET: api/Meals/5
@@ -397,8 +406,10 @@ namespace PKUAppAPI.Controllers
                 return new JsonResult(null);
             }
 
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
             var helpdate = new DateTime(date.Year, date.Month, date.Day);
-            var meals= await _context.Meals.Where(a => a.Date == helpdate).ToListAsync();
+            var meals= await _context.Meals.Where(a => a.Date == helpdate && a.UserId == user.Id).ToListAsync();
 
 
 

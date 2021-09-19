@@ -1,0 +1,30 @@
+<div class="d-flex flex-row bd-highlight mb-2">
+
+    <div class="form-group row" style="width: 100%">
+
+        <div *ngIf="showError" class="alert alert-danger" role="alert">
+            {{errorMessage}}
+        </div>
+
+        <form [formGroup]="userForm" autocomplete="off" novalidate (ngSubmit)="editUser(userForm.value)">
+
+            <div class="form-group row">
+                <label for="Name" class="col-form-label col-sm-3">Name:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" formControlName="Name" id="Name" value="Name">
+                </div>
+                <div class="col-md-4">
+                    <em *ngIf="validateControl('Name') && hasError('Name', 'required')">Name is required</em>
+                </div>
+            </div>
+            <br>
+
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Save</button>
+                    <button type="button" class="btn btn-secondary" (click)='Close()'>Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

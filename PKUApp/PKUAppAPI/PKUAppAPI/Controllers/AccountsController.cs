@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PKUAppAPI.DTO;
 using PKUAppAPI.JwtFeatures;
 using PKUAppAPI.Models;
@@ -45,6 +47,14 @@ namespace PKUAppAPI.Controllers
 
                 return BadRequest(new RegistrationResponseDto { Errors = errors });
             }
+
+            var limits = new UserDailyLimits
+            {
+                UserId=user.Id
+            };
+
+            _context.UserDailyLimits.Add(limits);
+            await _context.SaveChangesAsync();
 
             return StatusCode(201);
         }
@@ -95,6 +105,71 @@ namespace PKUAppAPI.Controllers
             return new JsonResult(true);
             else
                 return new JsonResult(false);
+        }
+
+        [HttpPut("ChangeName")]
+        [Authorize]
+        public async Task<ActionResult<List<string>>> ChangeName(string name="")
+        {
+            if (name == "")
+            {
+                ModelState.AddModelError("Name", "Name is required");
+                return BadRequest(ModelState);
+            }
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(false);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            user.Name = name;
+
+            _context.Entry(user).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+            
+            return NoContent();
+        }
+
+        [HttpPut("GetLimits")]
+        [Authorize]
+        public async Task<ActionResult<UserDailyLimits>> ChangeLimits()
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(false);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            return await _context.UserDailyLimits.FirstOrDefaultAsync(a=>a.UserId==user.Id);
+        }
+
+        [HttpPut("ChangeLimits")]
+        [Authorize]
+        public async Task<ActionResult<List<string>>> ChangeLimits(UserDailyLimits limits)
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(false);
+            }
+
+            _context.Entry(limits).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

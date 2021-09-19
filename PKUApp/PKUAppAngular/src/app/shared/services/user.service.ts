@@ -19,4 +19,9 @@ export class UserService {
   public isAdmin(){
     return this.http.get<any>(this.APIUrl+'/Accounts/isAdmin');
   }
+
+  public editName(name){
+    console.log(name)
+    return this.http.put<any>(this.APIUrl+'/Accounts/ChangeName'+'?name='+name,null);
+  }
 }
