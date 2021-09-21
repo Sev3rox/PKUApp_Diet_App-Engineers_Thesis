@@ -55,7 +55,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   getLimits(){
-
+    this.userService.getLimits()
+    .subscribe(res =>{this.Limits=res;});
   }
   
 }

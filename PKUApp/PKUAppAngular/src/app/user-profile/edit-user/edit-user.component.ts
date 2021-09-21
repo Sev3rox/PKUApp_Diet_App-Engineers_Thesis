@@ -28,7 +28,7 @@ export class EditUserComponent implements OnInit {
   }
 
   editUser(formValue){
-    this.service.editName(formValue.Name).subscribe(_=>{
+    this.service.editSettings(formValue.Name).subscribe(_=>{
       this.toastr.success("Edited successfully", "User Management");
       this.closing.closeClickFromOutside();
     });

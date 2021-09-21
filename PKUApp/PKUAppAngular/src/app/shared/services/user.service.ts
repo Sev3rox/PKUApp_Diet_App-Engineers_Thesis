@@ -16,12 +16,19 @@ export class UserService {
     return this.http.get<any>(this.APIUrl+'/Accounts/GetName');
   }
 
+  getLimits(){
+    return this.http.get<any>(this.APIUrl+'/Accounts/GetLimits');
+  }
+
   public isAdmin(){
     return this.http.get<any>(this.APIUrl+'/Accounts/isAdmin');
   }
 
-  public editName(name){
-    console.log(name)
-    return this.http.put<any>(this.APIUrl+'/Accounts/ChangeName'+'?name='+name,null);
+  public editSettings(name:string){
+    return this.http.put<any>(this.APIUrl+'/Accounts/ChangeSettings'+'?name='+name,null);
+  }
+
+  public editLimits(Limits:any){
+    return this.http.put<any>(this.APIUrl+'/Accounts/ChangeLimits/'+Limits.UserDailyLimitsId,Limits);
   }
 }

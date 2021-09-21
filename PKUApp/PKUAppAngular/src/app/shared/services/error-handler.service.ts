@@ -131,6 +131,16 @@ export class ErrorHandlerService implements HttpInterceptor {
         }
         return message;
         }
+        else if(this._router.url.includes('/user-profile')){
+          let message = '';
+          if(error.error.errors!=undefined){
+          const values = Object.values(error.error.errors);
+          values.map((m: any) => {
+             message += m + '<br>';
+          })}
+    
+          return message.slice(0, -4);
+        }
     else
     return error.error ? error.error : error.message;
   }

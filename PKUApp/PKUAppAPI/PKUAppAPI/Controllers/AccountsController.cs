@@ -107,9 +107,9 @@ namespace PKUAppAPI.Controllers
                 return new JsonResult(false);
         }
 
-        [HttpPut("ChangeName")]
+        [HttpPut("ChangeSettings")]
         [Authorize]
-        public async Task<ActionResult<List<string>>> ChangeName(string name="")
+        public async Task<ActionResult<List<string>>> ChangeSettings(string name="")
         {
             if (name == "")
             {
@@ -136,7 +136,7 @@ namespace PKUAppAPI.Controllers
             return NoContent();
         }
 
-        [HttpPut("GetLimits")]
+        [HttpGet("GetLimits")]
         [Authorize]
         public async Task<ActionResult<UserDailyLimits>> ChangeLimits()
         {
@@ -153,9 +153,9 @@ namespace PKUAppAPI.Controllers
             return await _context.UserDailyLimits.FirstOrDefaultAsync(a=>a.UserId==user.Id);
         }
 
-        [HttpPut("ChangeLimits")]
+        [HttpPut("ChangeLimits/{id}")]
         [Authorize]
-        public async Task<ActionResult<List<string>>> ChangeLimits(UserDailyLimits limits)
+        public async Task<ActionResult<List<string>>> ChangeLimits(int id, UserDailyLimits limits)
         {
             var claims = User.Claims
                 .Select(c => new { c.Type, c.Value })
@@ -163,6 +163,20 @@ namespace PKUAppAPI.Controllers
             if (claims.Count() == 0)
             {
                 return new JsonResult(false);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            if (user.Id != limits.UserId)
+            {
+                return new JsonResult("Not your limits");
+            }
+
+            limits.UserId = user.Id;
+
+            if (id != limits.UserDailyLimitsId)
+            {
+                return BadRequest();
             }
 
             _context.Entry(limits).State = EntityState.Modified;

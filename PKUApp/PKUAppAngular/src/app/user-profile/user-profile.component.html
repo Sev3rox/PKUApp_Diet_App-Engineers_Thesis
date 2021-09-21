@@ -12,6 +12,8 @@
         <div class="modal-body">
             <app-edit-user [Name]="Name" *ngIf="ActivateEditUserSettings">
             </app-edit-user>
+            <app-edit-limits [Limits]="Limits" *ngIf="ActivateEditUserLimits">
+            </app-edit-limits>
         </div>
       </div>
     </div>
@@ -50,23 +52,23 @@
         </div>
             <div class="form-group row">
                 <label for="username" style="width:13%">Phe limit (mg): </label>
-                <label for="username" class="col-form-label col-sm-2">phe</label>
+                <label for="username" class="col-form-label col-sm-2">{{Limits?.PheLimit/100}}</label>
             </div>
             <div class="form-group row">
                 <label for="username" style="width:13%">Calories limit (kcal): </label>
-                <label for="username" class="col-form-label col-sm-2">calories</label>
+                <label for="username" class="col-form-label col-sm-2">{{Limits?.CaloriesLimit/100}}</label>
             </div>
             <div class="form-group row">
                 <label for="username" style="width:13%">Protein limit (g): </label>
-                <label for="username" class="col-form-label col-sm-2">protein</label>
+                <label for="username" class="col-form-label col-sm-2">{{Limits?.ProteinLimit/100}}</label>
             </div>
             <div class="form-group row">
                 <label for="username" style="width:13%">Fat limit (g): </label>
-                <label for="username" class="col-form-label col-sm-2">fat</label>
+                <label for="username" class="col-form-label col-sm-2">{{Limits?.FatLimit/100}}</label>
             </div>
             <div class="form-group row">
                 <label for="username" style="width:13%">Carb limit (g): </label>
-                <label for="username" class="col-form-label col-sm-2">carb</label>
+                <label for="username" class="col-form-label col-sm-2">{{Limits?.CarbLimit/100}}</label>
             </div>
     </div>
 </div>
