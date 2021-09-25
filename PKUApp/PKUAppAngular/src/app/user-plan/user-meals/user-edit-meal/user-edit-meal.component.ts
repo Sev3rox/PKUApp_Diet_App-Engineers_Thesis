@@ -353,6 +353,10 @@ export class UserEditMealComponent implements OnInit {
     this.router.navigate(['/user-plan'],{queryParams:{date: this.date}});
   }
 
+  dailySummaryClick(){
+    
+  }
+
   refreshProductsList(){
     this.prodservice.getMealProductsList(this.productSearch.toString(), this.sortNameHelp, this.asc, this.catName, this.page, this.mealid, this.lastAdded).subscribe(data=>{
       this.ProductsList=data.Items;

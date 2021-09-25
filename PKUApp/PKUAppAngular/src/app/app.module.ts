@@ -7,6 +7,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { DatePipe } from '@angular/common';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,6 +57,8 @@ import { UserCreateDishComponent } from './user-dish/user-create-dish/user-creat
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditLimitsComponent } from './user-profile/edit-limits/edit-limits.component';
 import { EditUserComponent } from './user-profile/edit-user/edit-user.component';
+import { UserDailySummaryComponent } from './user-plan/user-meals/user-edit-meal/user-daily-summary/user-daily-summary.component';
+import { UserChartsComponent } from './user-charts/user-charts.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -107,7 +110,9 @@ export function tokenGetter() {
     UserCreateDishComponent,
     UserProfileComponent,
     EditLimitsComponent,
-    EditUserComponent
+    EditUserComponent,
+    UserDailySummaryComponent,
+    UserChartsComponent,
 
   ],
   imports: [
@@ -117,6 +122,7 @@ export function tokenGetter() {
     AppRoutingModule,
     HttpClientModule,
     NgxPaginationModule,
+    NgxChartsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

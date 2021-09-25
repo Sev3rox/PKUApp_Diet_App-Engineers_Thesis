@@ -1,4 +1,4 @@
-    
+    <div style="display: flex; justify-content: center;">
       <div class="modal fade bg-dark" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
           <div class="modal-content">
@@ -20,11 +20,12 @@
         </div>
       </div>
 
+
       <div style="width: 40%;">
         
       <div style="display: flex; justify-content: center; align-items: center;">
       <div style="text-align: center; background-color: #212529; color: #38b0ff; width: 100%" >
-        <h1> Plan </h1>
+        <h1 style="margin-bottom: 0%;"> Plan </h1>
        </div>
       </div>
     <div style="display: flex; justify-content: center; align-items: center;">
@@ -135,3 +136,354 @@
     </div>
 
   </div>
+
+  <div style="width: 60%; padding: 3%; padding-top: 0%; padding-right: 0%;">
+
+    <div style="text-align: center; background-color: #212529; color: #38b0ff;" >
+     <h1> Daily Summary </h1>
+    </div>
+    <div>
+
+      <br>
+
+    <table style="margin-left: auto; margin-right: auto;">
+      <tr>
+        <td *ngIf="Limits?.PheLimit!=0">
+          <ngx-charts-pie-grid
+          [view]="[300, 300]"
+          [scheme]="colorScheme.colorPhe"
+          [results]="daySummaryCharts.Phe"
+          [designatedTotal]="Limits?.PheLimit/100"
+          label='Total Phe (mg)'>
+          <ng-template #tooltipTemplate let-model="model">
+           <b style="font-size: 18px;">{{ model.value }} / {{Limits?.PheLimit/100}} (mg)</b>
+          </ng-template>
+        </ngx-charts-pie-grid>
+        </td>
+
+        <td *ngIf="Limits?.PheLimit==0">
+          <div style="position: relative;" *ngIf="daySummary?.Product.Phe==0">
+            <div style="position: absolute; top: 120px; left: 105px;">
+            <div style="height: 80px; width: 80px; background-color: white;">
+              <div style="text-align: center;">
+              {{daySummary?.Product.Phe/100}} (mg)
+              <br>
+              <p style="font-size: small;">Phe</p>
+              </div>
+            </div>
+            </div>
+            <div>
+            <ngx-charts-pie-grid
+            [view]="[300, 300]"
+            [scheme]="colorScheme.colorPhe"
+            [results]="daySummaryCharts.Phe"
+            [designatedTotal]="1"
+            [animations]="false"
+            label='Total Phe (mg)'>
+            <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 18px;">{{ model.value }} (mg)</b>
+            </ng-template>
+          </ngx-charts-pie-grid>
+        </div>
+        </div>
+
+          <div style="position: relative;" *ngIf="daySummary?.Product.Phe!=0">
+            <div style="position: absolute; top: 120px; left: 105px;">
+            <div style="height: 80px; width: 80px; background-color: white;">
+              <div style="text-align: center;">
+              {{daySummary?.Product.Phe/100}} (mg)
+              <br>
+              <p style="font-size: small;">Phe</p>
+              </div>
+            </div>
+            </div>
+            <div>
+            <ngx-charts-pie-grid
+            [view]="[300, 300]"
+            [scheme]="colorScheme.colorPhe"
+            [results]="daySummaryCharts.Phe"
+            [designatedTotal]="Limits?.PheLimit/100"
+            [animations]="false"
+            label='Total Phe (mg)'>
+            <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 18px;">{{ model.value }} (mg)</b>
+            </ng-template>
+          </ngx-charts-pie-grid>
+        </div>
+        </div>
+        </td>
+
+        <td *ngIf="Limits?.CaloriesLimit!=0">
+          <ngx-charts-pie-grid
+          [view]="[300, 300]"
+          [scheme]="colorScheme.colorCalories"
+          [results]="daySummaryCharts.Calories"
+          [designatedTotal]="Limits?.CaloriesLimit/100"
+          label='Total Calories (kcal)'>
+          <ng-template #tooltipTemplate let-model="model">
+           <b style="font-size: 18px;">{{ model.value }} / {{Limits?.CaloriesLimit/100}} (kcal)</b>
+          </ng-template>
+        </ngx-charts-pie-grid>
+        </td>
+
+        <td *ngIf="Limits?.CaloriesLimit==0">
+          <div style="position: relative;" *ngIf="daySummary?.Product.Calories==0">
+            <div style="position: absolute; top: 120px; left: 105px;">
+              <div style="height: 80px; width: 80px; background-color: white;">
+                <div style="text-align: center;">
+                  {{daySummary?.Product.Calories/100}} (kcal)
+                  <br>
+                  <p style="font-size: small;">Calories</p>
+                  </div>
+              </div>
+              </div>
+            <div>
+            <ngx-charts-pie-grid
+            [view]="[300, 300]"
+            [scheme]="colorScheme.colorCalories"
+            [results]="daySummaryCharts.Calories"
+            [designatedTotal]="1"
+            [animations]="false"
+            label='Total Calories (kcal)'>
+            <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 18px;">{{ model.value }} (kcal)</b>
+            </ng-template>
+          </ngx-charts-pie-grid>
+        </div>
+        </div>
+
+          <div style="position: relative;" *ngIf="daySummary?.Product.Calories!=0">
+            <div style="position: absolute; top: 120px; left: 105px;">
+              <div style="height: 80px; width: 80px; background-color: white;">
+                <div style="text-align: center;">
+                  {{daySummary?.Product.Calories/100}} (kcal)
+                  <br>
+                  <p style="font-size: small;">Calories</p>
+                  </div>
+              </div>
+              </div>
+            <div>
+            <ngx-charts-pie-grid
+            [view]="[300, 300]"
+            [scheme]="colorScheme.colorCalories"
+            [results]="daySummaryCharts.Calories"
+            [designatedTotal]="Limits?.CaloriesLimit/100"
+            [animations]="false"
+            label='Total Calories (kcal)'>
+            <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 18px;">{{ model.value }} (kcal)</b>
+            </ng-template>
+          </ngx-charts-pie-grid>
+        </div>
+        </div>
+        </td>
+
+      </tr>
+    </table>
+
+    <br>
+    <br>
+
+    <table style="  margin-left: auto; margin-right: auto;">
+      <tr>
+        <td *ngIf="Limits?.ProteinLimit!=0">
+          <ngx-charts-pie-grid
+          [view]="[275, 275]"
+          [scheme]="colorScheme.colorProtein"
+          [results]="daySummaryCharts.Protein"
+          [designatedTotal]="Limits?.ProteinLimit/100"
+          label='Total Protein (g)'>
+          <ng-template #tooltipTemplate let-model="model">
+           <b style="font-size: 18px;">{{ model.value }} / {{Limits?.ProteinLimit/100}} (g)</b>
+          </ng-template>
+        </ngx-charts-pie-grid>
+        </td>
+
+        <td *ngIf="Limits?.ProteinLimit==0">
+          <div style="position: relative;" *ngIf="daySummary?.Product.Protein==0">
+            <div style="position: absolute; top: 105px; left: 92px;">
+            <div style="height: 80px; width: 80px; background-color: white;">
+              <div style="text-align: center;">
+              {{daySummary?.Product.Protein/100}} (g)
+              <br>
+              <p style="font-size: small;">Protein</p>
+              </div>
+            </div>
+            </div>
+            <div>
+            <ngx-charts-pie-grid
+            [view]="[275, 275]"
+            [scheme]="colorScheme.colorProtein"
+            [results]="daySummaryCharts.Protein"
+            [designatedTotal]="1"
+            [animations]="false"
+            label='Total Protein (g)'>
+            <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 18px;">{{ model.value }} (g)</b>
+            </ng-template>
+          </ngx-charts-pie-grid>
+        </div>
+        </div>
+
+          <div style="position: relative;" *ngIf="daySummary?.Product.Protein!=0">
+            <div style="position: absolute; top: 105px; left: 92px;">
+            <div style="height: 80px; width: 80px; background-color: white;">
+              <div style="text-align: center;">
+              {{daySummary?.Product.Protein/100}} (g)
+              <br>
+              <p style="font-size: small;">Protein</p>
+              </div>
+            </div>
+            </div>
+            <div>
+            <ngx-charts-pie-grid
+            [view]="[275, 275]"
+            [scheme]="colorScheme.colorProtein"
+            [results]="daySummaryCharts.Protein"
+            [designatedTotal]="Limits?.ProteinLimit/100"
+            [animations]="false"
+            label='Total Protein (g)'>
+            <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 18px;">{{ model.value }} (g)</b>
+            </ng-template>
+          </ngx-charts-pie-grid>
+        </div>
+        </div>
+        </td>
+
+        <td *ngIf="Limits?.FatLimit!=0">
+          <ngx-charts-pie-grid
+          [view]="[275, 275]"
+          [scheme]="colorScheme.colorFat"
+          [results]="daySummaryCharts.Fat"
+          [designatedTotal]="Limits?.FatLimit/100"
+          label='Total Fat (g)'>
+          <ng-template #tooltipTemplate let-model="model">
+           <b style="font-size: 18px;">{{ model.value }} / {{Limits?.FatLimit/100}} (g)</b>
+          </ng-template>
+        </ngx-charts-pie-grid>
+        </td>
+
+        <td *ngIf="Limits?.FatLimit==0">
+          <div style="position: relative;" *ngIf="daySummary?.Product.Fat==0">
+            <div style="position: absolute; top: 105px; left: 92px;">
+            <div style="height: 80px; width: 80px; background-color: white;">
+              <div style="text-align: center;">
+              {{daySummary?.Product.Fat/100}} (g)
+              <br>
+              <p style="font-size: small;">Fat</p>
+              </div>
+            </div>
+            </div>
+            <div>
+            <ngx-charts-pie-grid
+            [view]="[275, 275]"
+            [scheme]="colorScheme.colorFat"
+            [results]="daySummaryCharts.Fat"
+            [designatedTotal]="1"
+            [animations]="false"
+            label='Total Fat (g)'>
+            <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 18px;">{{ model.value }} (g)</b>
+            </ng-template>
+          </ngx-charts-pie-grid>
+        </div>
+        </div>
+
+          <div style="position: relative;" *ngIf="daySummary?.Product.Fat!=0">
+            <div style="position: absolute; top: 105px; left: 92px;">
+            <div style="height: 80px; width: 80px; background-color: white;">
+              <div style="text-align: center;">
+              {{daySummary?.Product.Fat/100}} (g)
+              <br>
+              <p style="font-size: small;">Fat</p>
+              </div>
+            </div>
+            </div>
+            <div>
+            <ngx-charts-pie-grid
+            [view]="[275, 275]"
+            [scheme]="colorScheme.colorFat"
+            [results]="daySummaryCharts.Fat"
+            [designatedTotal]="Limits?.FatLimit/100"
+            [animations]="false"
+            label='Total Fat (g)'>
+            <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 18px;">{{ model.value }} (g)</b>
+            </ng-template>
+          </ngx-charts-pie-grid>
+        </div>
+        </div>
+        </td>
+
+        <td *ngIf="Limits?.CarbLimit!=0">
+          <ngx-charts-pie-grid
+          [view]="[275, 275]"
+          [scheme]="colorScheme.colorCarb"
+          [results]="daySummaryCharts.Carb"
+          [designatedTotal]="Limits?.CarbLimit/100"
+          label='Total Carb (g)'>
+          <ng-template #tooltipTemplate let-model="model">
+           <b style="font-size: 18px;">{{ model.value }} / {{Limits?.CarbLimit/100}} (g)</b>
+          </ng-template>
+        </ngx-charts-pie-grid>
+        </td>
+
+        <td *ngIf="Limits?.CarbLimit==0">
+          <div style="position: relative;" *ngIf="daySummary?.Product.Carb==0">
+            <div style="position: absolute; top: 105px; left: 92px;">
+            <div style="height: 80px; width: 80px; background-color: white;">
+              <div style="text-align: center;">
+              {{daySummary?.Product.Carb/100}} (g)
+              <br>
+              <p style="font-size: small;">Carb</p>
+              </div>
+            </div>
+            </div>
+            <div>
+            <ngx-charts-pie-grid
+            [view]="[275, 275]"
+            [scheme]="colorScheme.colorCarb"
+            [results]="daySummaryCharts.Carb"
+            [designatedTotal]="1"
+            [animations]="false"
+            label='Total Carb (g)'>
+            <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 18px;">{{ model.value }} (g)</b>
+            </ng-template>
+          </ngx-charts-pie-grid>
+        </div>
+        </div>
+
+          <div style="position: relative;" *ngIf="daySummary?.Product.Carb!=0">
+            <div style="position: absolute; top: 105px; left: 92px;">
+            <div style="height: 80px; width: 80px; background-color: white;">
+              <div style="text-align: center;">
+              {{daySummary?.Product.Carb/100}} (g)
+              <br>
+              <p style="font-size: small;">Carb</p>
+              </div>
+            </div>
+            </div>
+            <div>
+            <ngx-charts-pie-grid
+            [view]="[275, 275]"
+            [scheme]="colorScheme.colorCarb"
+            [results]="daySummaryCharts.Carb"
+            [designatedTotal]="Limits?.CarbLimit/100"
+            [animations]="false"
+            label='Total Carb (g)'>
+            <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 18px;">{{ model.value }} (g)</b>
+            </ng-template>
+          </ngx-charts-pie-grid>
+        </div>
+        </div>
+        </td>
+
+      </tr>
+    </table>
+
+    </div>
+  </div>
+

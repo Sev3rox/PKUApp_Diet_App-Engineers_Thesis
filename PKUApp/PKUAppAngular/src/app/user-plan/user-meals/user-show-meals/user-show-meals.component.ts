@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserPlanService } from 'src/app/shared/services/user-plan.service';
+import { UserService } from './../../../shared/services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
@@ -12,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserShowMealsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private service:UserPlanService,private toastr: ToastrService, private datePipe: DatePipe, private router:Router) { }
+  constructor(private route: ActivatedRoute, private service:UserPlanService, private userService:UserService, private toastr: ToastrService, private datePipe: DatePipe, private router:Router) { }
   MealsList:any=[];
   date:Date;
   minDate:Date;
@@ -27,7 +28,32 @@ export class UserShowMealsComponent implements OnInit {
   ActivateDeleteMealComp:boolean=false;
   ActivateDetailsMealComp:boolean=false;
 
+  daySummaryCharts:any;
+  colorScheme:any;
+  Limits: any;
+
   ngOnInit(): void {
+    
+      this.colorScheme = {
+        colorCalories: {
+        domain: ['#ffd900']
+      },
+      colorPhe: {
+        domain: ['#b700ff']
+      }
+      ,
+      colorProtein: {
+        domain: ['#0059ff']
+      }
+      ,
+      colorFat: {
+        domain: ['#00b10f']
+      }
+      ,
+      colorCarb: {
+        domain: ['#ff1e00']
+      }
+      };
 
     this.route.queryParams.subscribe(params => {
       if(params.date!=undefined)
@@ -57,6 +83,7 @@ export class UserShowMealsComponent implements OnInit {
     else{
       this.isToday=true;
     }
+
     
     this.refreshMealsList();
     this.refreshDaySummary();
@@ -122,6 +149,11 @@ export class UserShowMealsComponent implements OnInit {
     this.refreshDaySummary();
   }
 
+  getLimits(){
+    this.userService.getLimits()
+    .subscribe(res =>{this.Limits=res;});
+  }
+
   refreshMealsList(){
     this.service.getMealsList(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
     this.MealsList=data;
@@ -131,7 +163,38 @@ export class UserShowMealsComponent implements OnInit {
     refreshDaySummary(){
       this.service.getDaySummary(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
         this.daySummary=data;
+        this.refreshChartSummary();
+        this.getLimits();
       });
       }
 
+      refreshChartSummary(){
+        this.daySummaryCharts={
+          Phe:
+          [{
+            "name": "Phe limit",
+            "value": this.daySummary?.Product.Phe/100
+          }],
+          Calories:
+          [{
+            "name": "Calories limit",
+            "value": this.daySummary?.Product.Calories/100
+          }],
+          Protein:
+          [{
+            "name": "Protein limit",
+            "value": this.daySummary?.Product.Protein/100
+          }],
+          Fat:
+          [{
+            "name": "Fat limit",
+            "value": this.daySummary?.Product.Fat/100
+          }],
+          Carb:
+          [{
+            "name": "Carb limit",
+            "value": this.daySummary?.Product.Carb/100
+          }],
+        };
+      }  
 }

@@ -15,6 +15,7 @@ import { UserPlanComponent } from './user-plan/user-plan.component';
 import { UserEditMealComponent } from './user-plan/user-meals/user-edit-meal/user-edit-meal.component';
 import { UserDishComponent } from './user-dish/user-dish.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserChartsComponent } from "./user-charts/user-charts.component"
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'user-edit-meal', component: UserEditMealComponent, canActivate: [AuthGuard] },
   { path: 'user-dish', component: UserDishComponent, canActivate: [AuthGuard] },
   { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard] },
+  { path: 'user-charts', component: UserChartsComponent, canActivate: [AuthGuard] },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'authentication/register', component : RegisterUserComponent},
   { path: 'authentication/login', component : LoginComponent},
