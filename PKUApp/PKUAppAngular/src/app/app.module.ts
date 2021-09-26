@@ -59,6 +59,7 @@ import { EditLimitsComponent } from './user-profile/edit-limits/edit-limits.comp
 import { EditUserComponent } from './user-profile/edit-user/edit-user.component';
 import { UserDailySummaryComponent } from './user-plan/user-meals/user-edit-meal/user-daily-summary/user-daily-summary.component';
 import { UserChartsComponent } from './user-charts/user-charts.component';
+import { UserDayAlertsComponent } from './user-plan/user-meals/user-day-alerts/user-day-alerts.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -113,6 +114,7 @@ export function tokenGetter() {
     EditUserComponent,
     UserDailySummaryComponent,
     UserChartsComponent,
+    UserDayAlertsComponent,
 
   ],
   imports: [

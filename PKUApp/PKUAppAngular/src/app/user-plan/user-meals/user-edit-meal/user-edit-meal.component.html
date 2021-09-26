@@ -30,6 +30,8 @@
           </app-user-meal-summary-details>
           <app-user-product-in-meal-details [product]="product" *ngIf="ActivateProductInMealDetailsComp">
           </app-user-product-in-meal-details>
+          <app-user-daily-summary [date]="date" *ngIf="ActivateDailySummaryComp">
+          </app-user-daily-summary >
       </div>
     </div>
   </div>
@@ -88,7 +90,7 @@
           </button>
         </div>
       </div>
-<table class="table table-striped">
+<table class="table table-striped"  style="width: 100%">
   <thead>
       <tr>
           <th (click)="sortResult('Name')" style="cursor: pointer;">Name</th>
@@ -148,7 +150,7 @@
 <div style="width: 60%; padding: 3%; padding-top: 0%; padding-right: 0%;">
 
   <div style="text-align: center; background-color: #212529; color: #38b0ff;" >
-   <h1> {{meal?.Date}} {{meal?.Name}} </h1>
+   <h1> {{meal?.Date | date:'MM-dd-yyyy'}} {{meal?.Name}} </h1>
   </div>
   <table class="table table-striped">
     <thead>
@@ -239,7 +241,8 @@
 
 <br>
 <div>
-<button style=" float: left; font-size:25px; padding-left:25px; padding-right:25px" (click)="dailySummaryClick()" type="button" class="btn btn-secondary"> Daily Summary </button>
+<button style=" float: left; font-size:25px; margin-left: 16px; padding-left:25px; padding-right:25px" (click)="dailySummaryClick()" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal"
+data-backdrop="static" data-keyboard="false"> Daily Summary </button>
 <button style=" float: right; font-size:25px; padding-left:25px; padding-right:25px" (click)="backClick()" type="button" class="btn btn-dark"> Back </button>
 </div>
 </div>

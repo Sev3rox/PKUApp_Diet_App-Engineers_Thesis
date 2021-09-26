@@ -15,6 +15,7 @@ namespace PKUAppAPI.Models
         public ICollection<UserProductLastAdded> UserProductLastAddeds { get; set; }
         public ICollection<UserProductDish> UserProductDish { get; set; }
         public UserDailyLimits DailyLimits { get; set; }
+        public ICollection<UserOffAlert> UserOffAlerts { get; set; }
 
     }
 

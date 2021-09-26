@@ -1,0 +1,38 @@
+<div class="d-flex flex-row bd-highlight mb-2">
+    <div class="form-group row" style="width: 100%">
+        <div class="form-group row" *ngIf="showPhe">
+            <label  class="col-form-label col-sm-3"></label>
+            <h1 for="Phe"  style="text-align: center;" class="col-form-label col-sm-6">You have exceeded your daily Phe limit!&nbsp;&nbsp;&nbsp; ({{daySummary?.Product.Phe/100}}/{{Limits?.PheLimit/100}})mg</h1>
+        </div>
+
+        <div class="form-group row" *ngIf="showCalories">
+            <label  class="col-form-label col-sm-3"></label>
+            <h1 style="font-size: 20px;" for="Calories"  style="text-align: center;" class="col-form-label col-sm-6">You have exceeded your daily Calories limit!&nbsp;&nbsp;&nbsp; ({{daySummary?.Product.Calories/100}}/{{Limits?.CaloriesLimit/100}})kcal</h1>
+        </div>
+
+        <div class="form-group row" *ngIf="showProtein">
+            <label  class="col-form-label col-sm-3"></label>
+            <h1 for="Protein"  style="text-align: center;" class="col-form-label col-sm-6">You have exceeded your daily Protein limit!&nbsp;&nbsp;&nbsp; ({{daySummary?.Product.Protein/100}}/{{Limits?.ProteinLimit/100}})g</h1>
+        </div>
+
+        <div class="form-group row" *ngIf="showFat">
+            <label  class="col-form-label col-sm-3"></label>
+            <h1 for="Fat"  style="text-align: center;" class="col-form-label col-sm-6">You have exceeded your daily Fat limit!&nbsp;&nbsp;&nbsp; ({{daySummary?.Product.Fat/100}}/{{Limits?.FatLimit/100}})g</h1>
+        </div>
+
+        <div class="form-group row" *ngIf="showCarb">
+            <label  class="col-form-label col-sm-3"></label>
+            <h1 for="Carb" style="text-align: center;" class="col-form-label col-sm-6">You have exceeded your daily Carb limit!&nbsp;&nbsp;&nbsp; ({{daySummary?.Product.Carb/100}}/{{Limits?.CarbLimit/100}})g</h1>
+        </div>
+
+    </div>
+</div>
+
+<br>
+<div class="form-group row">
+    <label  class="col-form-label col-sm-4"></label>
+    <div style="display: flex; justify-content: center; align-items: center;" class="col-sm-4">
+    <button type="button" style="padding-left: 25px; padding-right: 25px;" class="btn btn-secondary" (click)='Close()'>Close</button>
+    <button type="button" class="btn btn-danger" (click)='DontShow()'>Don't show again</button>
+</div>
+</div>

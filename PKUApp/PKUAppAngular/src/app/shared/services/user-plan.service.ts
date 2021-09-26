@@ -50,4 +50,11 @@ export class UserPlanService {
     return this.http.get<any>(this.APIUrl+'/Meals/'+id);
   }
 
+  getOffAlerts(date:any){
+    return this.http.get<any>(this.APIUrl+'/Meals/GetOffAlerts'+'?date='+date);
+  }
+
+  addOffAlerts(date:any){
+    return this.http.post<any>(this.APIUrl+'/Meals/AddOffAlerts'+'?date='+date, null);
+  }
 }

@@ -19,6 +19,7 @@ export class UserShowMealsComponent implements OnInit {
   minDate:Date;
   maxDate:Date;
   currDate:Date;
+  alertDate:Date;
   isToday:boolean=true;
   public errorMessage: string = '';
   public showError: boolean;
@@ -27,10 +28,13 @@ export class UserShowMealsComponent implements OnInit {
   ModalTitle:string;
   ActivateDeleteMealComp:boolean=false;
   ActivateDetailsMealComp:boolean=false;
+  ActivateDayAlertsComp:boolean=false;
 
   daySummaryCharts:any;
   colorScheme:any;
   Limits: any;
+
+  @ViewChild('alertbutton') alertbutton: ElementRef<HTMLElement>;
 
   ngOnInit(): void {
     
@@ -63,6 +67,7 @@ export class UserShowMealsComponent implements OnInit {
     this.minDate=new Date();
     this.maxDate=new Date();
     this.currDate=new Date();
+    this.alertDate=new Date();
 
     if(this.date===undefined)
     {
@@ -83,10 +88,8 @@ export class UserShowMealsComponent implements OnInit {
     else{
       this.isToday=true;
     }
-
-    
     this.refreshMealsList();
-    this.refreshDaySummary();
+    this.refreshDaySummaryOnInit();
     
   }
 
@@ -100,7 +103,7 @@ export class UserShowMealsComponent implements OnInit {
       this.isToday=true;
     }
     this.refreshMealsList();
-    this.refreshDaySummary();
+    this.refreshDaySummaryOnInit();
   }
 
   addMealClick(){
@@ -136,6 +139,7 @@ export class UserShowMealsComponent implements OnInit {
   closeClickFromOutside(){
     this.ActivateDeleteMealComp=false;
     this.ActivateDetailsMealComp=false;
+    this.ActivateDayAlertsComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
     this.refreshMealsList();
@@ -145,6 +149,7 @@ export class UserShowMealsComponent implements OnInit {
   closeClick(){
     this.ActivateDeleteMealComp=false;
     this.ActivateDetailsMealComp=false;
+    this.ActivateDayAlertsComp=false;
     this.refreshMealsList();
     this.refreshDaySummary();
   }
@@ -152,6 +157,45 @@ export class UserShowMealsComponent implements OnInit {
   getLimits(){
     this.userService.getLimits()
     .subscribe(res =>{this.Limits=res;});
+  }
+
+  getLimitsOnInit(){
+    this.userService.getLimits()
+    .subscribe(res =>{this.Limits=res;
+      this.showAlerts();
+    });
+  }
+
+  dailyAlertsClick(){
+    this.ModalTitle="Alerts "+(this.datePipe.transform(this.date, 'MM-dd-yyyy'));
+    this.ActivateDayAlertsComp=true;
+  }
+
+  showAlerts(){
+    let isalert=false;
+    
+    if(this.date>=this.alertDate){
+        this.service.getOffAlerts(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
+
+        if(data==false){
+            if(this.daySummary?.Product.Phe>this.Limits?.PheLimit && this.Limits?.PheLimit!=0)
+              isalert=true;
+            else if(this.daySummary?.Product.Calories>this.Limits?.CaloriesLimit && this.Limits?.CaloriesLimit!=0)
+              isalert=true;
+            else if(this.daySummary?.Product.Protein>this.Limits?.ProteinLimit && this.Limits?.ProteinLimit!=0)
+              isalert=true; 
+            else if(this.daySummary?.Product.Fat>this.Limits?.FatLimit && this.Limits?.FatLimit!=0)
+              isalert=true; 
+            else if(this.daySummary?.Product.Carb>this.Limits?.CarbLimit && this.Limits?.CarbLimit!=0)
+              isalert=true;           
+        }
+
+        if(isalert==true){
+        let el: HTMLElement = this.alertbutton.nativeElement;
+            el.click();
+        }
+      });
+    }
   }
 
   refreshMealsList(){
@@ -167,6 +211,14 @@ export class UserShowMealsComponent implements OnInit {
         this.getLimits();
       });
       }
+
+      refreshDaySummaryOnInit(){
+        this.service.getDaySummary(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
+          this.daySummary=data;
+          this.refreshChartSummary();
+          this.getLimitsOnInit();
+        });
+        }
 
       refreshChartSummary(){
         this.daySummaryCharts={

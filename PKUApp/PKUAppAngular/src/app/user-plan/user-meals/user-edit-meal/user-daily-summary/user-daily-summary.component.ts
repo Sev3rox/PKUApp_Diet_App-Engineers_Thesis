@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit,  } from '@angular/core';
+import { UserPlanService } from 'src/app/shared/services/user-plan.service';
+import { UserService } from './../../../../shared/services/user.service';
+import { DatePipe } from '@angular/common';
+import { UserEditMealComponent } from '../user-edit-meal.component'
 
 @Component({
   selector: 'app-user-daily-summary',
@@ -7,9 +11,86 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserDailySummaryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service:UserPlanService, private userService:UserService, private datePipe: DatePipe, private closing:UserEditMealComponent) { }
+
+  @Input()
+  date
+
+  daySummary:any;
+  daySummaryCharts:any;
+  colorScheme:any;
+  Limits: any;
 
   ngOnInit(): void {
+    this.colorScheme = {
+      colorCalories: {
+      domain: ['#ffd900']
+    },
+    colorPhe: {
+      domain: ['#b700ff']
+    }
+    ,
+    colorProtein: {
+      domain: ['#0059ff']
+    }
+    ,
+    colorFat: {
+      domain: ['#00b10f']
+    }
+    ,
+    colorCarb: {
+      domain: ['#ff1e00']
+    }
+    };
+
+    this.refreshDaySummary();
   }
+
+  refreshDaySummary(){
+    this.service.getDaySummary(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
+      this.daySummary=data;
+      this.refreshChartSummary();
+      this.getLimits();
+    });
+    }
+
+    refreshChartSummary(){
+      this.daySummaryCharts={
+        Phe:
+        [{
+          "name": "Phe limit",
+          "value": this.daySummary?.Product.Phe/100
+        }],
+        Calories:
+        [{
+          "name": "Calories limit",
+          "value": this.daySummary?.Product.Calories/100
+        }],
+        Protein:
+        [{
+          "name": "Protein limit",
+          "value": this.daySummary?.Product.Protein/100
+        }],
+        Fat:
+        [{
+          "name": "Fat limit",
+          "value": this.daySummary?.Product.Fat/100
+        }],
+        Carb:
+        [{
+          "name": "Carb limit",
+          "value": this.daySummary?.Product.Carb/100
+        }],
+      };
+    }  
+
+    Close(){
+      this.closing.closeClickFromOutside();
+    }
+
+    getLimits(){
+      this.userService.getLimits()
+      .subscribe(res =>{this.Limits=res;});
+    }
 
 }

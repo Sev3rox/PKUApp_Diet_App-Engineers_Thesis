@@ -24,6 +24,7 @@ export class UserEditMealComponent implements OnInit {
   ActivateDeleteProductMealComp:boolean=false;
   ActivateMealSummaryDetailsComp:boolean=false;
   ActivateProductInMealDetailsComp:boolean=false;
+  ActivateDailySummaryComp:boolean=false;
   product:any;
   productSearch:string="";
   catName:string="";
@@ -83,6 +84,7 @@ export class UserEditMealComponent implements OnInit {
     this.ActivateAddEditProductMealComp=false;
     this.ActivateMealSummaryDetailsComp=false;
     this.ActivateProductInMealDetailsComp=false;
+    this.ActivateDailySummaryComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
     this.refreshProductsList();
@@ -95,6 +97,7 @@ export class UserEditMealComponent implements OnInit {
     this.ActivateAddEditProductMealComp=false;
     this.ActivateMealSummaryDetailsComp=false;
     this.ActivateProductInMealDetailsComp=false;
+    this.ActivateDailySummaryComp=false;
     this.refreshProductsList();
     this.refreshMealProductsList()
   }
@@ -354,7 +357,8 @@ export class UserEditMealComponent implements OnInit {
   }
 
   dailySummaryClick(){
-    
+    this.ModalTitle="Daily Summary";
+    this.ActivateDailySummaryComp=true;
   }
 
   refreshProductsList(){

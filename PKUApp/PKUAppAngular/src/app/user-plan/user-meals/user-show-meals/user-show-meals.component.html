@@ -15,6 +15,8 @@
                 </app-user-delete-meal>
                 <app-user-details-meal [meal]="meal" *ngIf="ActivateDetailsMealComp">
                 </app-user-details-meal>
+                <app-user-day-alerts [date]="date" [daySummary]="daySummary" [Limits]="Limits" *ngIf="ActivateDayAlertsComp">
+                </app-user-day-alerts>
             </div>
           </div>
         </div>
@@ -152,7 +154,7 @@
           <ngx-charts-pie-grid
           [view]="[300, 300]"
           [scheme]="colorScheme.colorPhe"
-          [results]="daySummaryCharts.Phe"
+          [results]="daySummaryCharts?.Phe"
           [designatedTotal]="Limits?.PheLimit/100"
           label='Total Phe (mg)'>
           <ng-template #tooltipTemplate let-model="model">
@@ -176,7 +178,7 @@
             <ngx-charts-pie-grid
             [view]="[300, 300]"
             [scheme]="colorScheme.colorPhe"
-            [results]="daySummaryCharts.Phe"
+            [results]="daySummaryCharts?.Phe"
             [designatedTotal]="1"
             [animations]="false"
             label='Total Phe (mg)'>
@@ -201,7 +203,7 @@
             <ngx-charts-pie-grid
             [view]="[300, 300]"
             [scheme]="colorScheme.colorPhe"
-            [results]="daySummaryCharts.Phe"
+            [results]="daySummaryCharts?.Phe"
             [designatedTotal]="Limits?.PheLimit/100"
             [animations]="false"
             label='Total Phe (mg)'>
@@ -217,7 +219,7 @@
           <ngx-charts-pie-grid
           [view]="[300, 300]"
           [scheme]="colorScheme.colorCalories"
-          [results]="daySummaryCharts.Calories"
+          [results]="daySummaryCharts?.Calories"
           [designatedTotal]="Limits?.CaloriesLimit/100"
           label='Total Calories (kcal)'>
           <ng-template #tooltipTemplate let-model="model">
@@ -241,7 +243,7 @@
             <ngx-charts-pie-grid
             [view]="[300, 300]"
             [scheme]="colorScheme.colorCalories"
-            [results]="daySummaryCharts.Calories"
+            [results]="daySummaryCharts?.Calories"
             [designatedTotal]="1"
             [animations]="false"
             label='Total Calories (kcal)'>
@@ -266,7 +268,7 @@
             <ngx-charts-pie-grid
             [view]="[300, 300]"
             [scheme]="colorScheme.colorCalories"
-            [results]="daySummaryCharts.Calories"
+            [results]="daySummaryCharts?.Calories"
             [designatedTotal]="Limits?.CaloriesLimit/100"
             [animations]="false"
             label='Total Calories (kcal)'>
@@ -290,7 +292,7 @@
           <ngx-charts-pie-grid
           [view]="[275, 275]"
           [scheme]="colorScheme.colorProtein"
-          [results]="daySummaryCharts.Protein"
+          [results]="daySummaryCharts?.Protein"
           [designatedTotal]="Limits?.ProteinLimit/100"
           label='Total Protein (g)'>
           <ng-template #tooltipTemplate let-model="model">
@@ -314,7 +316,7 @@
             <ngx-charts-pie-grid
             [view]="[275, 275]"
             [scheme]="colorScheme.colorProtein"
-            [results]="daySummaryCharts.Protein"
+            [results]="daySummaryCharts?.Protein"
             [designatedTotal]="1"
             [animations]="false"
             label='Total Protein (g)'>
@@ -339,7 +341,7 @@
             <ngx-charts-pie-grid
             [view]="[275, 275]"
             [scheme]="colorScheme.colorProtein"
-            [results]="daySummaryCharts.Protein"
+            [results]="daySummaryCharts?.Protein"
             [designatedTotal]="Limits?.ProteinLimit/100"
             [animations]="false"
             label='Total Protein (g)'>
@@ -355,7 +357,7 @@
           <ngx-charts-pie-grid
           [view]="[275, 275]"
           [scheme]="colorScheme.colorFat"
-          [results]="daySummaryCharts.Fat"
+          [results]="daySummaryCharts?.Fat"
           [designatedTotal]="Limits?.FatLimit/100"
           label='Total Fat (g)'>
           <ng-template #tooltipTemplate let-model="model">
@@ -379,7 +381,7 @@
             <ngx-charts-pie-grid
             [view]="[275, 275]"
             [scheme]="colorScheme.colorFat"
-            [results]="daySummaryCharts.Fat"
+            [results]="daySummaryCharts?.Fat"
             [designatedTotal]="1"
             [animations]="false"
             label='Total Fat (g)'>
@@ -404,7 +406,7 @@
             <ngx-charts-pie-grid
             [view]="[275, 275]"
             [scheme]="colorScheme.colorFat"
-            [results]="daySummaryCharts.Fat"
+            [results]="daySummaryCharts?.Fat"
             [designatedTotal]="Limits?.FatLimit/100"
             [animations]="false"
             label='Total Fat (g)'>
@@ -420,7 +422,7 @@
           <ngx-charts-pie-grid
           [view]="[275, 275]"
           [scheme]="colorScheme.colorCarb"
-          [results]="daySummaryCharts.Carb"
+          [results]="daySummaryCharts?.Carb"
           [designatedTotal]="Limits?.CarbLimit/100"
           label='Total Carb (g)'>
           <ng-template #tooltipTemplate let-model="model">
@@ -444,7 +446,7 @@
             <ngx-charts-pie-grid
             [view]="[275, 275]"
             [scheme]="colorScheme.colorCarb"
-            [results]="daySummaryCharts.Carb"
+            [results]="daySummaryCharts?.Carb"
             [designatedTotal]="1"
             [animations]="false"
             label='Total Carb (g)'>
@@ -469,7 +471,7 @@
             <ngx-charts-pie-grid
             [view]="[275, 275]"
             [scheme]="colorScheme.colorCarb"
-            [results]="daySummaryCharts.Carb"
+            [results]="daySummaryCharts?.Carb"
             [designatedTotal]="Limits?.CarbLimit/100"
             [animations]="false"
             label='Total Carb (g)'>
@@ -487,3 +489,9 @@
     </div>
   </div>
 
+
+  <button #alertbutton type="button" class="btn btn-primary" hidden="true"
+                    (click)="dailyAlertsClick()"
+                    data-toggle="modal" data-target="#exampleModal"
+                    data-backdrop="static" data-keyboard="false">
+                    </button>

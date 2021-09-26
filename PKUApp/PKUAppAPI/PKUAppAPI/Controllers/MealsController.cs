@@ -440,5 +440,46 @@ namespace PKUAppAPI.Controllers
 
         }
 
+        [HttpGet("GetOffAlerts")]
+        public async Task<ActionResult<bool>> GetOffAlerts(DateTime date)
+        {
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+
+            return await _context.UserOffAlerts.AnyAsync(a => a.UserId == user.Id && a.Date == helpdate);
+        }
+
+        [HttpPost("AddOffAlerts")]
+        public async Task<IActionResult> AddOffAlerts(DateTime date)
+        {
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+
+            var alertOff = new UserOffAlert
+            {
+                UserId=user.Id,
+                Date= helpdate
+            };
+
+            _context.UserOffAlerts.Add(alertOff);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
     }
 }
