@@ -6,8 +6,8 @@
     <button *ngIf="!chartPhe" (click)="chartChange('Phe')" style="width:10%; margin-left: 1%;" type="button" class="btn btn-light">Phe Chart</button>
     <button *ngIf="chartCalories" (click)="chartChange('Calories')" style="width:10%;" type="button" class="btn btn-primary">Calories Chart</button>
     <button *ngIf="!chartCalories" (click)="chartChange('Calories')" style="width:10%;" type="button" class="btn btn-light">Calories Chart</button>
-    <button *ngIf="chartProteins" (click)="chartChange('Proteins')" style="width:10%;" type="button" class="btn btn-primary">Proteins Chart</button>
-    <button *ngIf="!chartProteins" (click)="chartChange('Proteins')" style="width:10%;" type="button" class="btn btn-light">Proteins Chart</button>
+    <button *ngIf="chartProtein" (click)="chartChange('Protein')" style="width:10%;" type="button" class="btn btn-primary">Protein Chart</button>
+    <button *ngIf="!chartProtein" (click)="chartChange('Protein')" style="width:10%;" type="button" class="btn btn-light">Protein Chart</button>
     <button *ngIf="chartFat" (click)="chartChange('Fat')" style="width:10%;" type="button" class="btn btn-primary">Fat Chart</button>
     <button *ngIf="!chartFat" (click)="chartChange('Fat')" style="width:10%;" type="button" class="btn btn-light">Fat Chart</button>
     <button *ngIf="chartCarb" (click)="chartChange('Carb')" style="width:10%;" type="button" class="btn btn-primary">Carb Chart</button>
@@ -22,4 +22,23 @@
     <button *ngIf="!chart14Days" (click)="daysChange('14')" style="width:10%;" type="button" class="btn btn-secondary">14 Days</button>
     <button *ngIf="chart30Days" (click)="daysChange('30')" style="width:10%;" type="button" class="btn btn-dark">30 Days</button>
     <button *ngIf="!chart30Days" (click)="daysChange('30')" style="width:10%;" type="button" class="btn btn-secondary">30 Days</button>
+</div>
+
+<div style="display: flex; justify-content: center; margin-top: 55px;">
+<ngx-charts-bar-vertical
+  [view]="[1200, 500]"
+  [scheme]="chartColor"
+  [results]="chartData"
+  [gradient]="true"
+  [xAxis]="true"
+  [yAxis]="true"
+  [showYAxisLabel]="true"
+  [yAxisLabel]="yAxis"
+>
+<ng-template #tooltipTemplate let-model="model">
+    <b style="font-size: 16px;">{{ model.name }}</b>
+    <br>
+    <b style="font-size: 16px;">{{ model.value }} {{chartUnit}}</b>
+</ng-template>
+</ngx-charts-bar-vertical>
 </div>
