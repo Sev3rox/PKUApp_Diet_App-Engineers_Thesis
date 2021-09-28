@@ -55,10 +55,8 @@ export class NotlogedShowProductsComponent implements OnInit {
       @ViewChild('mybutton') mybutton: ElementRef<HTMLElement>;
   
       closeClickFromOutside(){
-        this.ActivateDetailsProductComp=false;
         let el: HTMLElement = this.mybutton.nativeElement;
         el.click();
-        this.refreshProductsList();
       }
     
       closeClick(){

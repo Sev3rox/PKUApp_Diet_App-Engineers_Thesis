@@ -57,4 +57,8 @@ export class UserPlanService {
   addOffAlerts(date:any){
     return this.http.post<any>(this.APIUrl+'/Meals/AddOffAlerts'+'?date='+date, null);
   }
+
+  getDayMed(date:any){
+    return this.http.get<any>(this.APIUrl+'/Meals/GetDayMedicine'+'?date='+date);
+  }
 }

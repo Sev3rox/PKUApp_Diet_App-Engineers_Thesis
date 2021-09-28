@@ -19,6 +19,7 @@ export class UserChartsComponent implements OnInit {
   chartData:any;
   chartColor:any;
   chartUnit:string="(mg)";
+  loaded:boolean=false;
 
   chartPhe:boolean=true;
   chartCalories:boolean=false;
@@ -148,8 +149,10 @@ export class UserChartsComponent implements OnInit {
   }
 
   getChartData(){
+    this.loaded=false;
     this.service.getChartData(this.datePipe.transform(this.date, 'yyyy-MM-dd'), this.chartType, this.chartDays).subscribe(data=>{
       this.chartData=data
+      this.loaded=true;
     });
   }
 }

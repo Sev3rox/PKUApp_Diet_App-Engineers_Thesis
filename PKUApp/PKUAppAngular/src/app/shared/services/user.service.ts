@@ -20,6 +20,10 @@ export class UserService {
     return this.http.get<any>(this.APIUrl+'/Accounts/GetLimits');
   }
 
+  getMedicine(){
+    return this.http.get<any>(this.APIUrl+'/Accounts/GetMedicine');
+  }
+
   public isAdmin(){
     return this.http.get<any>(this.APIUrl+'/Accounts/isAdmin');
   }
@@ -31,4 +35,21 @@ export class UserService {
   public editLimits(Limits:any){
     return this.http.put<any>(this.APIUrl+'/Accounts/ChangeLimits/'+Limits.UserDailyLimitsId,Limits);
   }
+
+  public resetLimits(){
+    return this.http.put<any>(this.APIUrl+'/Accounts/ResetLimits',null);
+  }
+
+  public addMedicine(med:any, date:any){
+    return this.http.post<any>(this.APIUrl+'/Accounts/AddMedicine'+'?date='+date,med);
+  }
+
+  public deleteMedicine(id:any, date:any){
+    return this.http.delete<any>(this.APIUrl+'/Accounts/DeleteMedicine'+'?date='+date+'&&'+'id='+id);
+  }
+
+  public editMedicine(med:any, date:any){
+    return this.http.put<any>(this.APIUrl+'/Accounts/PutMedicine'+'?date='+date+'&&'+'id='+med.UserMedicineId,med);
+  }
+
 }

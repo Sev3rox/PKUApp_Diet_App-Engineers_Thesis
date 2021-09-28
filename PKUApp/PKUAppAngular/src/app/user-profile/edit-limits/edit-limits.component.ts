@@ -15,6 +15,7 @@ export class EditLimitsComponent implements OnInit {
 
   @Input()
   Limits:any;
+
   UserDailyLimitsId:number;
   PheLimit:number;
   CaloriesLimit:number;
@@ -47,6 +48,7 @@ export class EditLimitsComponent implements OnInit {
   }
 
   editUserLimits(formValue){
+    this.showError = false;
     var val = { UserDailyLimitsId:this.UserDailyLimitsId,
       PheLimit:(Math.round((Math.round(formValue.PheLimit * 100) / 100)*100)),
       CaloriesLimit:(Math.round((Math.round(formValue.CaloriesLimit * 100) / 100)*100)),
@@ -58,6 +60,10 @@ export class EditLimitsComponent implements OnInit {
     this.service.editLimits(val).subscribe(_=>{
       this.toastr.success("Limits edited successfully", "User Management");
       this.closing.closeClickFromOutside();
+    },
+    (error) => {
+      this.errorMessage = error;
+      this.showError = true;
     });
   }
 

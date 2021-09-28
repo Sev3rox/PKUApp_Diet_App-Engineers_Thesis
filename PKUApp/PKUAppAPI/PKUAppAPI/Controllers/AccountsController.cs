@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using PKUAppAPI.DTO;
 using PKUAppAPI.JwtFeatures;
 using PKUAppAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -180,6 +181,147 @@ namespace PKUAppAPI.Controllers
 
             _context.Entry(limits).State = EntityState.Modified;
 
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("ResetLimits")]
+        [Authorize]
+        public async Task<ActionResult<List<string>>> ResetLimits()
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(false);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var limits = await _context.UserDailyLimits.FirstOrDefaultAsync(a => a.UserId == user.Id);
+            limits.PheLimit = 0;
+            limits.CaloriesLimit = 0;
+            limits.ProteinLimit = 0;
+            limits.FatLimit = 0;
+            limits.CarbLimit = 0;
+
+            _context.Entry(limits).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpGet("GetMedicine")]
+        [Authorize]
+        public async Task<ActionResult<UserMedicine>> GetMedicine()
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(false);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            return await _context.UserMedicines.FirstOrDefaultAsync(a => a.UserId == user.Id && a.EndDate==null);
+        }
+
+        [HttpPost("AddMedicine")]
+        [Authorize]
+        public async Task<ActionResult<UserMedicine>> AddMedicine(UserMedicine med, DateTime date)
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(false);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+
+            med.UserId = user.Id;
+            med.StartDate = helpdate;
+
+            _context.UserMedicines.Add(med);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("DeleteMedicine")]
+        [Authorize]
+        public async Task<ActionResult<List<string>>> AddMedicine(int id, DateTime date)
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(false);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+
+            var med = _context.UserMedicines.Find(id);
+
+            if (user.Id != med.UserId)
+            {
+                return new JsonResult("Not your medicine");
+            }
+
+            med.EndDate = helpdate;
+
+            _context.Entry(med).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("PutMedicine")]
+        [Authorize]
+        public async Task<ActionResult<List<string>>> PutMedicine(UserMedicine medicine, int id, DateTime date)
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(false);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+
+            var med = _context.UserMedicines.Find(id);
+
+            if (user.Id != med.UserId)
+            {
+                return new JsonResult("Not your medicine");
+            }
+
+            med.EndDate = helpdate;
+
+            _context.Entry(med).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            medicine.UserId = user.Id;
+            medicine.StartDate = helpdate;
+            medicine.UserMedicineId = 0;
+
+            _context.UserMedicines.Add(medicine);
             await _context.SaveChangesAsync();
 
             return NoContent();

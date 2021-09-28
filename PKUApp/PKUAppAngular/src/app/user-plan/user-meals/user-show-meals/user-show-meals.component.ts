@@ -25,10 +25,12 @@ export class UserShowMealsComponent implements OnInit {
   public showError: boolean;
   meal:any;
   daySummary:any;
+  dayMed:any;
   ModalTitle:string;
   ActivateDeleteMealComp:boolean=false;
   ActivateDetailsMealComp:boolean=false;
   ActivateDayAlertsComp:boolean=false;
+  ActivateDayMedComp:boolean=false;
 
   daySummaryCharts:any;
   colorScheme:any;
@@ -134,22 +136,23 @@ export class UserShowMealsComponent implements OnInit {
     this.ActivateDetailsMealComp=true;
   }
 
+  deatailsMedClick(){
+    this.ModalTitle="Medicine Details";
+    this.ActivateDayMedComp=true;
+  }
+
   @ViewChild('mybutton') mybutton: ElementRef<HTMLElement>;
 
   closeClickFromOutside(){
-    this.ActivateDeleteMealComp=false;
-    this.ActivateDetailsMealComp=false;
-    this.ActivateDayAlertsComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
-    this.refreshMealsList();
-    this.refreshDaySummary();
   }
 
   closeClick(){
     this.ActivateDeleteMealComp=false;
     this.ActivateDetailsMealComp=false;
     this.ActivateDayAlertsComp=false;
+    this.ActivateDayMedComp=false;
     this.refreshMealsList();
     this.refreshDaySummary();
   }
@@ -204,10 +207,24 @@ export class UserShowMealsComponent implements OnInit {
     });
     }
 
+    refreshDayMed(){
+      this.service.getDayMed(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
+        this.dayMed=data;
+        if(data!=undefined){
+        this.daySummary.Product.Phe+=this.dayMed.Phe;
+        this.daySummary.Product.Calories+=this.dayMed.Calories;
+        this.daySummary.Product.Protein+=this.dayMed.Protein;
+        this.daySummary.Product.Fat+=this.dayMed.Fat;
+        this.daySummary.Product.Carb+=this.dayMed.Carb;
+        }
+        this.refreshChartSummary();
+      });
+    }
+
     refreshDaySummary(){
       this.service.getDaySummary(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
         this.daySummary=data;
-        this.refreshChartSummary();
+        this.refreshDayMed();
         this.getLimits();
       });
       }
@@ -215,7 +232,7 @@ export class UserShowMealsComponent implements OnInit {
       refreshDaySummaryOnInit(){
         this.service.getDaySummary(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
           this.daySummary=data;
-          this.refreshChartSummary();
+          this.refreshDayMed();
           this.getLimitsOnInit();
         });
         }

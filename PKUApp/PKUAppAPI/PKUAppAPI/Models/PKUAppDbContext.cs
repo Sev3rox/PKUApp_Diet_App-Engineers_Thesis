@@ -23,6 +23,7 @@ namespace PKUAppAPI.Models
         public DbSet<UserProductDish> UserProductDish { get; set; }
         public DbSet<UserDailyLimits> UserDailyLimits { get; set; }
         public DbSet<UserOffAlert> UserOffAlerts { get; set; }
+        public DbSet<UserMedicine> UserMedicines { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,6 +40,10 @@ namespace PKUAppAPI.Models
 
             modelBuilder.Entity<User>()
                 .HasMany(c => c.UserOffAlerts)
+                .WithOne(e => e.User);
+
+            modelBuilder.Entity<User>()
+                .HasMany(c => c.UserMedicines)
                 .WithOne(e => e.User);
 
             modelBuilder.Entity<User>()

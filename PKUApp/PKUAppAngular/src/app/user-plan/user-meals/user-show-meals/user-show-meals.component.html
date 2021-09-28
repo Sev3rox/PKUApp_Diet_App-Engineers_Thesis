@@ -17,6 +17,8 @@
                 </app-user-details-meal>
                 <app-user-day-alerts [date]="date" [daySummary]="daySummary" [Limits]="Limits" *ngIf="ActivateDayAlertsComp">
                 </app-user-day-alerts>
+                <app-user-details-med [dayMed]="dayMed" *ngIf="ActivateDayMedComp">
+                </app-user-details-med>
             </div>
           </div>
         </div>
@@ -84,7 +86,6 @@
         <br>
     </div>
 
-
     <div style="display: flex; justify-content: center; align-items: center;" *ngIf="currDate.getTime()>date.getTime()">
       <table class="table table-striped" style="width: 100%">
           <tbody>
@@ -109,8 +110,29 @@
       <br>
   </div>
 
+  <table class="table table-dark table-striped" style="width: 100%">
+    <tbody>
+      <tr *ngIf="dayMed!=undefined">
+        <td style="width:20%">
+        </td>
+        <td style="width:70%; text-align: center; justify-content:center; padding-right: 3%;">Medicine</td>
+        <div style=" justify-content:right;">
+          <td style="width:5%"><button type="button" class="btn btn-primary"
+          (click)="deatailsMedClick()"
+          data-toggle="modal" data-target="#exampleModal"
+          data-backdrop="static" data-keyboard="false"
+          >Deatails
+          </button>
+          </td>
+          <td style="width:5%">
+          </td>
+        </div>
+      </tr>
+    </tbody>
+  </table>
 
-    <div *ngIf="MealsList.length!=0" style="display: flex; justify-content: center; align-items: center;">
+
+    <div *ngIf="MealsList.length!=0||dayMed!=undefined" style="display: flex; justify-content: center; align-items: center;">
       <table class="table table-striped " style="width: 100%">
         <thead>
             <tr>

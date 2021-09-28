@@ -54,7 +54,7 @@ namespace PKUAppAPI.Controllers
         // GET: api/Meals
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Meal>>> GetMeals(DateTime date)
-        { 
+        {
             var claims = User.Claims
             .Select(c => new { c.Type, c.Value })
             .ToList();
@@ -132,7 +132,7 @@ namespace PKUAppAPI.Controllers
 
             var count = Meals.Count();
 
-            if (count>=10)
+            if (count >= 10)
             {
                 ModelState.AddModelError("Count", "You can have maximally 10 Meals for day");
                 return BadRequest(ModelState);
@@ -142,7 +142,7 @@ namespace PKUAppAPI.Controllers
             {
                 Name = MealsNames[count],
                 Date = date,
-                UserId= user.Id
+                UserId = user.Id
             };
 
             _context.Meals.Add(meal);
@@ -174,32 +174,34 @@ namespace PKUAppAPI.Controllers
             var count = 0;
             var position = 0;
 
-            foreach(var m in Meals){
+            foreach (var m in Meals)
+            {
                 if (m == meal)
                 {
                     position = 1;
                 }
                 if (position == 1)
                 {
-                    if (count > 0) {
+                    if (count > 0)
+                    {
                         m.Name = MealsNames[count - 1];
-                    _context.Entry(m).State = EntityState.Modified;
-                    try
-                    {
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (!MealExists(id))
+                        _context.Entry(m).State = EntityState.Modified;
+                        try
                         {
-                            return NotFound();
+                            await _context.SaveChangesAsync();
                         }
-                        else
+                        catch (DbUpdateConcurrencyException)
                         {
-                            throw;
+                            if (!MealExists(id))
+                            {
+                                return NotFound();
+                            }
+                            else
+                            {
+                                throw;
+                            }
                         }
                     }
-                }
                 }
                 count++;
             }
@@ -235,14 +237,14 @@ namespace PKUAppAPI.Controllers
                 ProductId = mealpro.ProductId
             };
 
-            if (await _context.UserProductLastAddeds.AnyAsync(a=>a.ProductId == userLast.ProductId && a.UserId==userLast.UserId)) 
+            if (await _context.UserProductLastAddeds.AnyAsync(a => a.ProductId == userLast.ProductId && a.UserId == userLast.UserId))
             {
                 var userlastdel = await _context.UserProductLastAddeds.FirstOrDefaultAsync(a => a.ProductId == userLast.ProductId && a.UserId == userLast.UserId);
                 _context.UserProductLastAddeds.Remove(userlastdel);
                 await _context.SaveChangesAsync();
 
                 var neworder = 0;
-                if(await _context.UserProductLastAddeds.CountAsync()>0)
+                if (await _context.UserProductLastAddeds.CountAsync() > 0)
                     neworder = await _context.UserProductLastAddeds.MaxAsync(a => a.Order);
 
                 userLast.Order = neworder + 1;
@@ -253,7 +255,7 @@ namespace PKUAppAPI.Controllers
             {
                 var neworder = 0;
                 if (await _context.UserProductLastAddeds.CountAsync() > 0)
-                    neworder = await _context.UserProductLastAddeds.MaxAsync(a=>a.Order);
+                    neworder = await _context.UserProductLastAddeds.MaxAsync(a => a.Order);
 
                 userLast.Order = neworder + 1;
                 _context.UserProductLastAddeds.Add(userLast);
@@ -292,7 +294,7 @@ namespace PKUAppAPI.Controllers
         }
 
         [HttpGet("GetMealProducts")]
-        public async Task<ActionResult<Result<ProductMeal>>> GetMealProducts(int id, int page=1)
+        public async Task<ActionResult<Result<ProductMeal>>> GetMealProducts(int id, int page = 1)
         {
             List<ProductMeal> mealproducts = new List<ProductMeal>();
 
@@ -306,7 +308,7 @@ namespace PKUAppAPI.Controllers
 
             var mproducts = await _context.MealProducts.Where(a => a.MealId == id).ToListAsync();
 
-            foreach(var mealprod in mproducts)
+            foreach (var mealprod in mproducts)
             {
                 var prod = await _context.Products.FindAsync(mealprod.ProductId);
                 var temp = new ProductMeal
@@ -341,7 +343,7 @@ namespace PKUAppAPI.Controllers
                 return new JsonResult(null);
             }
 
-            var mealpro = await _context.MealProducts.FirstOrDefaultAsync(a=>a.MealId== mealid && a.ProductId==productid);
+            var mealpro = await _context.MealProducts.FirstOrDefaultAsync(a => a.MealId == mealid && a.ProductId == productid);
             _context.MealProducts.Remove(mealpro);
             await _context.SaveChangesAsync();
 
@@ -378,11 +380,11 @@ namespace PKUAppAPI.Controllers
             {
                 var prod = await _context.Products.FindAsync(mealprod.ProductId);
                 summary.Product.Phe += (int)((prod.Phe / 100 * mealprod.Weight / 100));
-                summary.Product.Calories += (int)((prod.Calories /100 * mealprod.Weight / 100));
+                summary.Product.Calories += (int)((prod.Calories / 100 * mealprod.Weight / 100));
                 summary.Product.Protein += (int)((prod.Protein / 100 * mealprod.Weight / 100));
                 summary.Product.Fat += (int)((prod.Fat / 100 * mealprod.Weight / 100));
                 summary.Product.Carb += (int)((prod.Carb / 100 * mealprod.Weight / 100));
-                summary.Weight += mealprod.Weight;  
+                summary.Weight += mealprod.Weight;
             }
 
             return summary;
@@ -406,7 +408,7 @@ namespace PKUAppAPI.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
             var helpdate = new DateTime(date.Year, date.Month, date.Day);
-            var meals= await _context.Meals.Where(a => a.Date == helpdate && a.UserId == user.Id).ToListAsync();
+            var meals = await _context.Meals.Where(a => a.Date == helpdate && a.UserId == user.Id).ToListAsync();
 
 
 
@@ -468,8 +470,8 @@ namespace PKUAppAPI.Controllers
 
             var alertOff = new UserOffAlert
             {
-                UserId=user.Id,
-                Date= helpdate
+                UserId = user.Id,
+                Date = helpdate
             };
 
             _context.UserOffAlerts.Add(alertOff);
@@ -478,5 +480,24 @@ namespace PKUAppAPI.Controllers
             return NoContent();
         }
 
+        [HttpGet("GetDayMedicine")]
+        public async Task<ActionResult<UserMedicine>> GetDayMedicine(DateTime date)
+        {
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+
+            var meds = await _context.UserMedicines.FirstOrDefaultAsync(a => a.StartDate != a.EndDate && a.StartDate <= helpdate && (a.EndDate > helpdate || a.EndDate==null) && a.UserId == user.Id);
+
+            return meds;
+        }
     }
 }

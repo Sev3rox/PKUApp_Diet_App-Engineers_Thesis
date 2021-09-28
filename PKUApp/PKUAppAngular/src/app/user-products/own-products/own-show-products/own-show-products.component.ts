@@ -84,12 +84,8 @@ export class OwnShowProductsComponent implements OnInit {
   @ViewChild('mybutton') mybutton: ElementRef<HTMLElement>;
   
   closeClickFromOutside(){
-    this.ActivateDetailsProductComp=false;
-    this.ActivateAddEditProductComp=false;
-    this.ActivateDeleteProductComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
-    this.refreshProductsList();
   }
 
   closeClick(){

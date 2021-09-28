@@ -79,16 +79,8 @@ export class UserEditMealComponent implements OnInit {
   @ViewChild('mybutton') mybutton: ElementRef<HTMLElement>;
 
   closeClickFromOutside(){
-    this.ActivateDetailsProductComp=false;
-    this.ActivateDeleteProductMealComp=false;
-    this.ActivateAddEditProductMealComp=false;
-    this.ActivateMealSummaryDetailsComp=false;
-    this.ActivateProductInMealDetailsComp=false;
-    this.ActivateDailySummaryComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
-    this.refreshProductsList();
-    this.refreshMealProductsList()
   }
 
   closeClick(){

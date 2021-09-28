@@ -47,11 +47,15 @@ namespace PKUAppAPI.Controllers
             var firstdate = new DateTime(date.Year, date.Month, date.Day);
             firstdate=firstdate.AddDays(-chartDays);
 
+            var meds = await _context.UserMedicines.Where(a => a.StartDate != a.EndDate && a.StartDate<= lastdate && (a.EndDate>= firstdate || a.EndDate==null) && a.UserId == user.Id).OrderBy(a=>a.StartDate).ToListAsync();
+
+            var medhelp = 0;
+
             var dateString = lastdate.ToString("d", CultureInfo.CreateSpecificCulture("en-US"));
 
             if (chartType == "Phe")
             {
-                while(firstdate <= lastdate)
+                while (firstdate <= lastdate)
                 {
                     var mealsInDay = await _context.Meals.Where(a=>a.Date == firstdate && a.UserId==user.Id).ToListAsync();
 
@@ -64,6 +68,16 @@ namespace PKUAppAPI.Controllers
                     }
 
                     var value = 0;
+
+                    for (int i = medhelp; i < meds.Count(); i++)
+                    {
+                        if (firstdate >= meds[i].StartDate && (firstdate < meds[i].EndDate || meds[i].EndDate==null))
+                        {
+                            value += meds[i].Phe / 100;
+                            medhelp = i;
+                            break;
+                        }
+                    }
 
                     foreach (var mealprod in mproducts)
                     {
@@ -98,6 +112,16 @@ namespace PKUAppAPI.Controllers
 
                     var value = 0;
 
+                    for (int i = medhelp; i < meds.Count(); i++)
+                    {
+                        if (firstdate >= meds[i].StartDate && (firstdate < meds[i].EndDate || meds[i].EndDate == null))
+                        {
+                            value += meds[i].Calories / 100;
+                            medhelp = i;
+                            break;
+                        }
+                    }
+
                     foreach (var mealprod in mproducts)
                     {
                         var prod = await _context.Products.FindAsync(mealprod.ProductId);
@@ -130,6 +154,16 @@ namespace PKUAppAPI.Controllers
                     }
 
                     var value = 0;
+
+                    for (int i = medhelp; i < meds.Count(); i++)
+                    {
+                        if (firstdate >= meds[i].StartDate && (firstdate < meds[i].EndDate || meds[i].EndDate == null))
+                        {
+                            value += meds[i].Protein / 100;
+                            medhelp = i;
+                            break;
+                        }
+                    }
 
                     foreach (var mealprod in mproducts)
                     {
@@ -164,6 +198,16 @@ namespace PKUAppAPI.Controllers
 
                     var value = 0;
 
+                    for (int i = medhelp; i < meds.Count(); i++)
+                    {
+                        if (firstdate >= meds[i].StartDate && (firstdate < meds[i].EndDate || meds[i].EndDate == null))
+                        {
+                            value += meds[i].Fat / 100;
+                            medhelp = i;
+                            break;
+                        }
+                    }
+
                     foreach (var mealprod in mproducts)
                     {
                         var prod = await _context.Products.FindAsync(mealprod.ProductId);
@@ -196,6 +240,16 @@ namespace PKUAppAPI.Controllers
                     }
 
                     var value = 0;
+
+                    for (int i = medhelp; i < meds.Count(); i++)
+                    {
+                        if (firstdate >= meds[i].StartDate && (firstdate < meds[i].EndDate || meds[i].EndDate == null))
+                        {
+                            value += meds[i].Carb / 100;
+                            medhelp = i;
+                            break;
+                        }
+                    }
 
                     foreach (var mealprod in mproducts)
                     {

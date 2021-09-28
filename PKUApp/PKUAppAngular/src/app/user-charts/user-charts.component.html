@@ -25,7 +25,7 @@
 </div>
 
 <div style="display: flex; justify-content: center; margin-top: 55px;">
-<ngx-charts-bar-vertical
+<ngx-charts-bar-vertical *ngIf="loaded"
   [view]="[1200, 500]"
   [scheme]="chartColor"
   [results]="chartData"

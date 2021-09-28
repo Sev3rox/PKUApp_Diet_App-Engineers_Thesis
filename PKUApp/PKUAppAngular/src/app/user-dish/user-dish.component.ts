@@ -67,17 +67,8 @@ export class UserDishComponent implements OnInit {
   @ViewChild('mybutton') mybutton: ElementRef<HTMLElement>;
 
   closeClickFromOutside(){
-    this.ActivateDetailsProductComp=false;
-    this.ActivateDeleteProductDishComp=false;
-    this.ActivateAddEditProductDishComp=false;
-    this.ActivateDishSummaryDetailsComp=false;
-    this.ActivateProductInDishDetailsComp=false;
-    this.ActivateDeleteAllProductsDishComp=false;
-    this.ActivateAddDishComp=false;
     let el: HTMLElement = this.mybutton.nativeElement;
     el.click();
-    this.refreshProductsList();
-    this.refreshDishProductsList()
   }
 
   closeClick(){

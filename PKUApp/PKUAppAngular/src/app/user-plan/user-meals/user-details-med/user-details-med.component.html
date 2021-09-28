@@ -1,0 +1,30 @@
+<br>
+<table class="table table-striped">
+    <thead>
+        <tr>
+          <th style="text-align: center;"></th>
+          <th style="text-align: center;">Phe (mg)</th>
+          <th style="text-align: center;">Calories (kcal)</th>
+          <th  style="text-align: center;">Protein (g)</th>
+          <th  style="text-align: center;">Fat (g)</th>
+          <th  style="text-align: center;">Carb (g)</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center;"><h5>Medicine</h5></td>
+        <td style="text-align: center;"><h5>{{dayMed.Phe/100}}</h5></td>
+        <td style="text-align: center;"><h5>{{dayMed.Calories/100}}</h5></td>
+        <td style="text-align: center;"><h5>{{dayMed.Protein/100}}</h5></td>
+        <td style="text-align: center;"><h5>{{dayMed.Fat/100}}</h5></td>
+        <td style="text-align: center;"><h5>{{dayMed.Carb/100}}</h5></td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<div class="form-group row">
+  <label  class="col-form-label col-sm-5"></label>
+  <div style="display: flex; justify-content: center; align-items: center;" class="col-sm-2">
+    <button class="btn btn-secondary" type="button" (click)='Close()'>Close</button>
+  </div>
+</div>

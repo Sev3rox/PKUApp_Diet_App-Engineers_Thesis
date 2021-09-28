@@ -14,6 +14,12 @@
             </app-edit-user>
             <app-edit-limits [Limits]="Limits" *ngIf="ActivateEditUserLimits">
             </app-edit-limits>
+            <app-reset-limits  *ngIf="ActivateResetUserLimits">
+            </app-reset-limits>
+            <app-del-med [med]="med" *ngIf="ActivateDelUserMed">
+            </app-del-med>
+            <app-add-edit-med [med]="med" *ngIf="ActivateAddEditUserMed">
+            </app-add-edit-med>
         </div>
       </div>
     </div>
@@ -22,7 +28,7 @@
 <div class="card">
     <div class="card-body" >
         <div class="form-group row">
-                <div style="width:14%">
+                <div style="width:14.5%">
                     <h3 class="card-title">User Settings</h3>
                 </div>
             <div class="col-md-1">
@@ -41,34 +47,100 @@
 <div class="card">
     <div class="card-body">
         <div class="form-group row">
-            <div style="width:14%">
-                <h3 class="card-title">User Limits</h3>
+            <div style="width:14.5%">
+                <h3 class="card-title">User Limits <a data-toggle="tooltip" data-placement="top" title="If you set limit to 0 you disable it">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/>
+                    </svg>
+                </a></h3>
             </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
             <button type="submit" class="btn btn-warning" (click)="editLimits()"
             data-toggle="modal" data-target="#exampleModal"
             data-backdrop="static" data-keyboard="false">Edit</button>
+            <button type="submit" class="btn btn-danger" (click)="resetLimits()"
+            data-toggle="modal" data-target="#exampleModal"
+            data-backdrop="static" data-keyboard="false">Reset</button>
         </div>
         </div>
             <div class="form-group row">
-                <label for="username" style="width:14%">Phe limit (mg): </label>
+                <label for="username" style="width:14.5%">Phe limit (mg): </label>
                 <label for="username" class="col-form-label col-sm-2">{{Limits?.PheLimit/100}}</label>
             </div>
             <div class="form-group row">
-                <label for="username" style="width:14%">Calories limit (kcal): </label>
+                <label for="username" style="width:14.5%">Calories limit (kcal): </label>
                 <label for="username" class="col-form-label col-sm-2">{{Limits?.CaloriesLimit/100}}</label>
             </div>
             <div class="form-group row">
-                <label for="username" style="width:14%">Protein limit (g): </label>
+                <label for="username" style="width:14.5%">Protein limit (g): </label>
                 <label for="username" class="col-form-label col-sm-2">{{Limits?.ProteinLimit/100}}</label>
             </div>
             <div class="form-group row">
-                <label for="username" style="width:14%">Fat limit (g): </label>
+                <label for="username" style="width:14.5%">Fat limit (g): </label>
                 <label for="username" class="col-form-label col-sm-2">{{Limits?.FatLimit/100}}</label>
             </div>
             <div class="form-group row">
-                <label for="username" style="width:14%">Carb limit (g): </label>
+                <label for="username" style="width:14.5%">Carb limit (g): </label>
                 <label for="username" class="col-form-label col-sm-2">{{Limits?.CarbLimit/100}}</label>
             </div>
     </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="form-group row">
+            <div style="width:14.5%">
+                <h3 class="card-title">User Medicine 
+                    <a data-toggle="tooltip" data-placement="top" title="Medicine is automatically added to your daily plan">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/>
+                    </svg>
+                </a></h3>
+            </div>
+        <div class="col-md-2">
+            <button *ngIf="med==null||med.UserMedicineId==0" type="submit" class="btn btn-success" (click)="addMed()"
+            data-toggle="modal" data-target="#exampleModal"
+            data-backdrop="static" data-keyboard="false">Add</button>
+            <div *ngIf="med!=null&&med.UserMedicineId!=0">
+            <button type="submit" class="btn btn-warning" (click)="editMed()"
+            data-toggle="modal" data-target="#exampleModal"
+            data-backdrop="static" data-keyboard="false">Edit</button>
+            <button type="submit" class="btn btn-danger" (click)="delMed()"
+            data-toggle="modal" data-target="#exampleModal"
+            data-backdrop="static" data-keyboard="false">Delete</button>
+            </div>
+        </div>
+        </div>
+            <div *ngIf="med!=null&&med.UserMedicineId!=0">
+            <div class="form-group row">
+                <label for="username" style="width:14%">Phe (mg): </label>
+                <label for="username" class="col-form-label col-sm-2">{{med?.Phe/100}}</label>
+            </div>
+            <div class="form-group row">
+                <label for="username" style="width:14%">Calories (kcal): </label>
+                <label for="username" class="col-form-label col-sm-2">{{med?.Calories/100}}</label>
+            </div>
+            <div class="form-group row">
+                <label for="username" style="width:14%">Protein (g): </label>
+                <label for="username" class="col-form-label col-sm-2">{{med?.Protein/100}}</label>
+            </div>
+            <div class="form-group row">
+                <label for="username" style="width:14%">Fat (g): </label>
+                <label for="username" class="col-form-label col-sm-2">{{med?.Fat/100}}</label>
+            </div>
+            <div class="form-group row">
+                <label for="username" style="width:14%">Carb (g): </label>
+                <label for="username" class="col-form-label col-sm-2">{{med?.Carb/100}}</label>
+            </div>
+            </div>
+
+            <div *ngIf="med==null||med.UserMedicineId==0">
+                <br>
+                <div class="form-group row">
+                    <label for="NoMed" ><h5>You currently don't have added Medicine</h5></label>
+                </div>
+            </div>
+    </div>
+
+    
 </div>

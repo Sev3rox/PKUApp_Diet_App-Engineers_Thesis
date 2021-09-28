@@ -60,6 +60,10 @@ import { EditUserComponent } from './user-profile/edit-user/edit-user.component'
 import { UserDailySummaryComponent } from './user-plan/user-meals/user-edit-meal/user-daily-summary/user-daily-summary.component';
 import { UserChartsComponent } from './user-charts/user-charts.component';
 import { UserDayAlertsComponent } from './user-plan/user-meals/user-day-alerts/user-day-alerts.component';
+import { ResetLimitsComponent } from './user-profile/reset-limits/reset-limits.component';
+import { AddEditMedComponent } from './user-profile/add-edit-med/add-edit-med.component';
+import { DelMedComponent } from './user-profile/del-med/del-med.component';
+import { UserDetailsMedComponent } from './user-plan/user-meals/user-details-med/user-details-med.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -115,6 +119,10 @@ export function tokenGetter() {
     UserDailySummaryComponent,
     UserChartsComponent,
     UserDayAlertsComponent,
+    ResetLimitsComponent,
+    AddEditMedComponent,
+    DelMedComponent,
+    UserDetailsMedComponent,
 
   ],
   imports: [
