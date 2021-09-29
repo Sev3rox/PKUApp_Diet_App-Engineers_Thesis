@@ -271,7 +271,7 @@ namespace PKUAppAPI.Controllers
                 if (sort == null)
                 {
 
-                    lastlist.OrderByDescending(x => x.Order).ToList();
+                    lastlist=lastlist.OrderByDescending(x => x.Order).ToList();
 
                     foreach (UserProductLastAdded lastprod in lastlist)
                     {
@@ -397,7 +397,7 @@ namespace PKUAppAPI.Controllers
                 if (sort == null)
                 {
 
-                    lastlist.OrderByDescending(x => x.Order).ToList();
+                    lastlist=lastlist.OrderByDescending(x => x.Order).ToList();
 
                     foreach (UserProductLastAdded lastprod in lastlist)
                     {
@@ -698,7 +698,7 @@ namespace PKUAppAPI.Controllers
                 if (sort == null)
                 {
 
-                    lastlist.OrderByDescending(x => x.Order).ToList();
+                    lastlist=lastlist.OrderByDescending(x => x.Order).ToList();
 
                     foreach (UserProductLastAdded lastprod in lastlist)
                     {
@@ -841,7 +841,7 @@ namespace PKUAppAPI.Controllers
                 if (sort == null)
                 {
 
-                    lastlist.OrderByDescending(x => x.Order).ToList();
+                    lastlist=lastlist.OrderByDescending(x => x.Order).ToList();
 
                     foreach (UserProductLastAdded lastprod in lastlist)
                     {

@@ -242,27 +242,27 @@ export class UserShowMealsComponent implements OnInit {
           Phe:
           [{
             "name": "Phe limit",
-            "value": this.daySummary?.Product.Phe/100
+            "value": (this.daySummary?.Product.Phe/100).toFixed()
           }],
           Calories:
           [{
             "name": "Calories limit",
-            "value": this.daySummary?.Product.Calories/100
+            "value": (this.daySummary?.Product.Calories/100).toFixed()
           }],
           Protein:
           [{
             "name": "Protein limit",
-            "value": this.daySummary?.Product.Protein/100
+            "value": (this.daySummary?.Product.Protein/100).toFixed()
           }],
           Fat:
           [{
             "name": "Fat limit",
-            "value": this.daySummary?.Product.Fat/100
+            "value": (this.daySummary?.Product.Fat/100).toFixed()
           }],
           Carb:
           [{
             "name": "Carb limit",
-            "value": this.daySummary?.Product.Carb/100
+            "value": (this.daySummary?.Product.Carb/100).toFixed()
           }],
         };
       }  

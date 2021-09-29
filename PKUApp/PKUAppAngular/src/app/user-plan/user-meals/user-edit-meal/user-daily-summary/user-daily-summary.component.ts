@@ -20,6 +20,7 @@ export class UserDailySummaryComponent implements OnInit {
   daySummaryCharts:any;
   colorScheme:any;
   Limits: any;
+  dayMed:any;
 
   ngOnInit(): void {
     this.colorScheme = {
@@ -49,7 +50,7 @@ export class UserDailySummaryComponent implements OnInit {
   refreshDaySummary(){
     this.service.getDaySummary(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
       this.daySummary=data;
-      this.refreshChartSummary();
+      this.refreshDayMed();
       this.getLimits();
     });
     }
@@ -59,30 +60,44 @@ export class UserDailySummaryComponent implements OnInit {
         Phe:
         [{
           "name": "Phe limit",
-          "value": this.daySummary?.Product.Phe/100
+          "value": (this.daySummary?.Product.Phe/100).toFixed()
         }],
         Calories:
         [{
           "name": "Calories limit",
-          "value": this.daySummary?.Product.Calories/100
+          "value": (this.daySummary?.Product.Calories/100).toFixed()
         }],
         Protein:
         [{
           "name": "Protein limit",
-          "value": this.daySummary?.Product.Protein/100
+          "value": (this.daySummary?.Product.Protein/100).toFixed()
         }],
         Fat:
         [{
           "name": "Fat limit",
-          "value": this.daySummary?.Product.Fat/100
+          "value": (this.daySummary?.Product.Fat/100).toFixed()
         }],
         Carb:
         [{
           "name": "Carb limit",
-          "value": this.daySummary?.Product.Carb/100
+          "value": (this.daySummary?.Product.Carb/100).toFixed()
         }],
       };
     }  
+
+    refreshDayMed(){
+      this.service.getDayMed(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
+        this.dayMed=data;
+        if(data!=undefined){
+        this.daySummary.Product.Phe+=this.dayMed.Phe;
+        this.daySummary.Product.Calories+=this.dayMed.Calories;
+        this.daySummary.Product.Protein+=this.dayMed.Protein;
+        this.daySummary.Product.Fat+=this.dayMed.Fat;
+        this.daySummary.Product.Carb+=this.dayMed.Carb;
+        }
+        this.refreshChartSummary();
+      });
+    }
 
     Close(){
       this.closing.closeClickFromOutside();

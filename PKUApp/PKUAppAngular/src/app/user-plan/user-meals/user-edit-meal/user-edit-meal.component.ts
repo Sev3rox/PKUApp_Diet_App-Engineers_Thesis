@@ -289,6 +289,11 @@ export class UserEditMealComponent implements OnInit {
     this.asc=false;
     this.sortRefresh();
     }
+    else if(this.sortNameHelp==""){
+      this.sortNameHelp="Name";
+      this.asc=true;
+      this.sortName=true;
+    }
     this.refreshProductsList()
   }
   
