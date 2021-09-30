@@ -25,8 +25,10 @@ export class UserDishComponent implements OnInit {
   product:any;
   productSearch:string="";
   catName:string="";
-  sortNameHelp="Name";
+  sortNameHelp:string="Name";
+  sortNameHelpBackup="";
   asc:boolean=true;
+  ascBackup:boolean=true;
   page:number=1;
   count:number=1;
   pageSize:number=1;
@@ -274,16 +276,32 @@ export class UserDishComponent implements OnInit {
   lastAddedChange(bol){
     this.lastAdded=bol;
     if(bol===true){
+    this.ascBackup=this.asc;
+    this.sortNameHelpBackup=this.sortNameHelp;
     this.sortNameHelp="";
     this.asc=false;
     this.sortRefresh();
     }
     else if(this.sortNameHelp==""){
-      this.sortNameHelp="Name";
-      this.asc=true;
-      this.sortName=true;
+      this.sortBackup(this.sortNameHelpBackup);
+      this.sortResult(this.sortNameHelpBackup);
     }
     this.refreshProductsList()
+  }
+
+  sortBackup(prop){
+    if(prop==="Name"){
+      this.sortName=!this.ascBackup;
+  }
+    else if(prop==="Category"){
+      this.sortCategory=!this.ascBackup;
+  }    
+        else if(prop==="Phe"){
+      this.sortPhe=!this.ascBackup;
+  }
+        else if(prop==="Calories"){
+      this.sortCalories=!this.ascBackup;
+  }
   }
   
   searchProduct(){

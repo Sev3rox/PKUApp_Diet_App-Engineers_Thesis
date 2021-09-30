@@ -64,6 +64,7 @@ import { ResetLimitsComponent } from './user-profile/reset-limits/reset-limits.c
 import { AddEditMedComponent } from './user-profile/add-edit-med/add-edit-med.component';
 import { DelMedComponent } from './user-profile/del-med/del-med.component';
 import { UserDetailsMedComponent } from './user-plan/user-meals/user-details-med/user-details-med.component';
+import { UserTrackingComponent } from './user-tracking/user-tracking.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -123,6 +124,7 @@ export function tokenGetter() {
     AddEditMedComponent,
     DelMedComponent,
     UserDetailsMedComponent,
+    UserTrackingComponent,
 
   ],
   imports: [
