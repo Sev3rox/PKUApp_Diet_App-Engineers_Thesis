@@ -1,1 +1,110 @@
-<p>user-tracking works!</p>
+<div style="text-align: center; background-color: #212529; color: #38b0ff;" >
+    <h1> Tracking Weight & Phe </h1>
+</div>
+<div style="display: flex; justify-content: center;">
+    <button *ngIf="isWeight" style="font-size: x-large; width:12%; background-color: #853c00; color:white" class="btn btn-light" type="button">Weight</button>
+    <button *ngIf="!isWeight" (click)="buttonChange('Weight')" style="font-size: x-large; width:12%;" type="button" class="btn btn-light">Weight</button>
+    <button *ngIf="isPhe" style="font-size: x-large; width:12%; background-color: #b700ff; color:white" class="btn btn-light" type="button">Phe</button>
+    <button *ngIf="!isPhe" (click)="buttonChange('Phe')" style="font-size: x-large; width:12%;" type="button" class="btn btn-light">Phe</button>
+</div>
+
+<div *ngIf="isWeight">
+    <div style="display: flex; justify-content: center; margin-top: 15px;">
+        <form style="width:80%" [formGroup]="weightTrackingForm" autocomplete="off" novalidate (ngSubmit)="addUpdateWeightTracking(weightTrackingForm.value)">
+
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4"></label>
+                <label for="Weight" style="margin-right: 10px;" class="col-form-label col-sm-1">Weight (kg):</label>
+                <div class="col-sm-2">
+                    <input style="text-align: center;" type="number" class="form-control" formControlName="Weight" id="Weight" value="weight">
+                </div>
+                <div class="col-md-1">
+                    <button *ngIf="weight==0" type="submit" class="btn btn-primary" [disabled]="!weightTrackingForm.valid">Add</button>
+                    <button *ngIf="weight!=0" type="submit" class="btn btn-primary" [disabled]="!weightTrackingForm.valid">Update</button>
+                </div>
+            </div>
+            <br>
+            <div style="display: flex; justify-content: center;">
+
+                <div *ngIf="showErrorWeight" class="alert alert-danger" role="alert">
+                    {{errorMessageWeight}}
+                </div>
+
+                <em *ngIf="validateControlWeight('Weight') && hasErrorWeight('Weight', 'required')">Weight is required</em>
+                <em *ngIf="validateControlWeight('Weight') && hasErrorWeight('Weight', 'min')">Value must be bigger or equal to 1</em>
+                <em *ngIf="validateControlWeight('Weight') && hasErrorWeight('Weight', 'max')">Value must be smaller or equal to 1000</em>
+            </div>
+            <br>
+        </form>
+    </div>
+
+    <div style="display: flex; justify-content: center; margin-top: 25px;">
+        <ngx-charts-bar-vertical *ngIf="loaded"
+          [view]="[1200, 500]"
+          [scheme]="chartColor"
+          [results]="chartData"
+          [gradient]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showYAxisLabel]="true"
+          [yAxisLabel]="yAxis"
+        >
+        <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 16px;">{{ model.name }}</b>
+            <br>
+            <b style="font-size: 16px;">{{ model.value }} {{chartUnit}}</b>
+        </ng-template>
+        </ngx-charts-bar-vertical>
+        </div>
+</div>
+
+
+<div *ngIf="isPhe">
+    <div style="display: flex; justify-content: center; margin-top: 15px;">
+        <form style="width:80%" [formGroup]="pheTrackingForm" autocomplete="off" novalidate (ngSubmit)="addUpdatePheTracking(pheTrackingForm.value)">
+
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4"></label>
+                <label for="Phe" style="margin-right: 10px; white-space: nowrap;" class="col-form-label col-sm-1">Phe [mg/dL]:</label>
+                <div class="col-sm-2">
+                    <input style="text-align: center;" type="number" class="form-control" formControlName="Phe" id="Phe" value="phe">
+                </div>
+                <div class="col-md-1">
+                    <button *ngIf="phe==0" type="submit" class="btn btn-primary" [disabled]="!pheTrackingForm.valid">Add</button>
+                    <button *ngIf="phe!=0" type="submit" class="btn btn-primary" [disabled]="!pheTrackingForm.valid">Update</button>
+                </div>
+            </div>
+            <br>
+            <div style="display: flex; justify-content: center;">
+                
+                <div *ngIf="showErrorPhe" class="alert alert-danger" role="alert">
+                    {{errorMessagePhe}}
+                </div>
+                <em *ngIf="validateControlPhe('Phe') && hasErrorPhe('Phe', 'required')">Phe is required</em>
+                <em *ngIf="validateControlPhe('Phe') && hasErrorPhe('Phe', 'min')">Value must be bigger or equal to 0</em>
+                <em *ngIf="validateControlPhe('Phe') && hasErrorPhe('Phe', 'max')">Value must be smaller or equal to 1000</em>
+            </div>
+            <br>
+        </form>
+    </div>
+
+    <div style="display: flex; justify-content: center; margin-top: 25px;">
+        <ngx-charts-bar-vertical *ngIf="loaded"
+          [view]="[1200, 500]"
+          [scheme]="chartColor"
+          [results]="chartData"
+          [gradient]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showYAxisLabel]="true"
+          [yAxisLabel]="yAxis"
+        >
+        <ng-template #tooltipTemplate let-model="model">
+            <b style="font-size: 16px;">{{ model.name }}</b>
+            <br>
+            <b style="font-size: 16px;">{{ model.value }} {{chartUnit}}</b>
+        </ng-template>
+        </ngx-charts-bar-vertical>
+        </div>
+</div>
+

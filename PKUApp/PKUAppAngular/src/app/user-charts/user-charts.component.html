@@ -2,15 +2,15 @@
     <h1> Charts </h1>
 </div>
 <div style="display: flex; justify-content: center;">
-    <button *ngIf="chartPhe"  style="width:10%; margin-left: 1%;" type="button" class="btn btn-primary">Phe Chart</button>
+    <button *ngIf="chartPhe"  style="width:10%; margin-left: 1%; background-color: #b700ff; color:black" class="btn btn-light" type="button">Phe Chart</button>
     <button *ngIf="!chartPhe" (click)="chartChange('Phe')" style="width:10%; margin-left: 1%;" type="button" class="btn btn-light">Phe Chart</button>
-    <button *ngIf="chartCalories"  style="width:10%;" type="button" class="btn btn-primary">Calories Chart</button>
+    <button *ngIf="chartCalories"  style="width:10%; background-color: #ffd900; color:black" class="btn btn-light" type="button">Calories Chart</button>
     <button *ngIf="!chartCalories" (click)="chartChange('Calories')" style="width:10%;" type="button" class="btn btn-light">Calories Chart</button>
-    <button *ngIf="chartProtein" style="width:10%;" type="button" class="btn btn-primary">Protein Chart</button>
+    <button *ngIf="chartProtein" style="width:10%; background-color: #0059ff; color:black" class="btn btn-light" type="button">Protein Chart</button>
     <button *ngIf="!chartProtein" (click)="chartChange('Protein')" style="width:10%;" type="button" class="btn btn-light">Protein Chart</button>
-    <button *ngIf="chartFat"  style="width:10%;" type="button" class="btn btn-primary">Fat Chart</button>
+    <button *ngIf="chartFat"  style="width:10%; background-color: #00b10f; color:black" class="btn btn-light" type="button">Fat Chart</button>
     <button *ngIf="!chartFat" (click)="chartChange('Fat')" style="width:10%;" type="button" class="btn btn-light">Fat Chart</button>
-    <button *ngIf="chartCarb"  style="width:10%;" type="button" class="btn btn-primary">Carb Chart</button>
+    <button *ngIf="chartCarb"  style="width:10%; background-color: #ff1e00; color:black" class="btn btn-light" type="button">Carb Chart</button>
     <button *ngIf="!chartCarb" (click)="chartChange('Carb')" style="width:10%;" type="button" class="btn btn-light">Carb Chart</button>
 </div>
 <div style="display: flex; justify-content: center; margin-top: 10px;">

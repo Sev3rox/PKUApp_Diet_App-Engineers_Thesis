@@ -17,6 +17,7 @@ namespace PKUAppAPI.Models
         public UserDailyLimits DailyLimits { get; set; }
         public ICollection<UserOffAlert> UserOffAlerts { get; set; }
         public ICollection<UserMedicine> UserMedicines { get; set; }
+        public ICollection<TrackedValue> TrackedValues { get; set; }
 
     }
 

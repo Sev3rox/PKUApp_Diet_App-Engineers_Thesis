@@ -49,7 +49,7 @@ export class EditLimitsComponent implements OnInit {
 
   editUserLimits(formValue){
     this.showError = false;
-    var val = { UserDailyLimitsId:this.UserDailyLimitsId,
+    let val = { UserDailyLimitsId:this.UserDailyLimitsId,
       PheLimit:(Math.round((Math.round(formValue.PheLimit * 100) / 100)*100)),
       CaloriesLimit:(Math.round((Math.round(formValue.CaloriesLimit * 100) / 100)*100)),
       ProteinLimit:(Math.round((Math.round(formValue.ProteinLimit * 100) / 100)*100)),

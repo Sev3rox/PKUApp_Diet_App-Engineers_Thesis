@@ -39,7 +39,7 @@ export class UserAddEditProductMealComponent implements OnInit {
 
   Add(formValue){
 
-    var val = {MealId:this.mealid,
+    let val = {MealId:this.mealid,
                ProductId:this.product.Product.ProductId,
                Weight:(Math.round((Math.round(formValue.Weight * 100) / 100)*100))}
 
@@ -55,7 +55,7 @@ export class UserAddEditProductMealComponent implements OnInit {
 
   Update(formValue){
 
-    var val = {MealId:this.mealid,
+    let val = {MealId:this.mealid,
                ProductId:this.product.Product.ProductId,
                Weight:(Math.round((Math.round(formValue.Weight * 100) / 100)*100))}
 

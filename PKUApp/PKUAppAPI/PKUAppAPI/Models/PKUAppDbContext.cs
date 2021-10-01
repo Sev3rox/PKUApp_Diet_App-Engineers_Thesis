@@ -24,6 +24,7 @@ namespace PKUAppAPI.Models
         public DbSet<UserDailyLimits> UserDailyLimits { get; set; }
         public DbSet<UserOffAlert> UserOffAlerts { get; set; }
         public DbSet<UserMedicine> UserMedicines { get; set; }
+        public DbSet<TrackedValue> TrackedValues { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,6 +46,13 @@ namespace PKUAppAPI.Models
             modelBuilder.Entity<User>()
                 .HasMany(c => c.UserMedicines)
                 .WithOne(e => e.User);
+
+            modelBuilder.Entity<User>()
+                .HasMany(c => c.TrackedValues)
+                .WithOne(e => e.User);
+
+            modelBuilder.Entity<TrackedValue>()
+                .HasIndex(b => b.Type);
 
             modelBuilder.Entity<User>()
                         .HasOne(e => e.DailyLimits)

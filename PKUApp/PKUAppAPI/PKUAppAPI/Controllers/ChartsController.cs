@@ -51,8 +51,6 @@ namespace PKUAppAPI.Controllers
 
             var medhelp = 0;
 
-            var dateString = lastdate.ToString("d", CultureInfo.CreateSpecificCulture("en-US"));
-
             if (chartType == "Phe")
             {
                 while (firstdate <= lastdate)

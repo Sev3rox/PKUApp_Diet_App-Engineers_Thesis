@@ -73,7 +73,7 @@ export class AddEditProductComponent implements OnInit {
   addProduct(productFormValue){
     this.showError = false;
     const product = {... productFormValue };
-    var val = { ProductId:this.ProductId,
+    let val = { ProductId:this.ProductId,
                 Name:product.Name,
                 Category:product.Category,
                 Phe:(Math.round((Math.round(product.Phe * 100) / 100)*100)),
@@ -95,7 +95,7 @@ export class AddEditProductComponent implements OnInit {
   updateProduct(productFormValue){
     this.showError = false;
     const product = {... productFormValue };
-    var val = { ProductId:this.ProductId,
+    let val = { ProductId:this.ProductId,
                 Name:product.Name,
                 Category:product.Category,
                 Phe:(Math.round((Math.round(product.Phe * 100) / 100)*100)),

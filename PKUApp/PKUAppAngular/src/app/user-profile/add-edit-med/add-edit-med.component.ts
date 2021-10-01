@@ -62,7 +62,7 @@ export class AddEditMedComponent implements OnInit {
     this.showError = false;
     this.date=new Date();
 
-    var val = { UserMedicineId:this.UserMedicineId,
+    let val = { UserMedicineId:this.UserMedicineId,
       Phe:(Math.round((Math.round(formValue.Phe * 100) / 100)*100)),
       Calories:(Math.round((Math.round(formValue.Calories * 100) / 100)*100)),
       Protein:(Math.round((Math.round(formValue.Protein * 100) / 100)*100)),
@@ -83,7 +83,7 @@ export class AddEditMedComponent implements OnInit {
     this.showError = false;
     this.date=new Date();
 
-    var val = { UserMedicineId:this.UserMedicineId,
+    let val = { UserMedicineId:this.UserMedicineId,
       Phe:(Math.round((Math.round(formValue.Phe * 100) / 100)*100)),
       Calories:(Math.round((Math.round(formValue.Calories * 100) / 100)*100)),
       Protein:(Math.round((Math.round(formValue.Protein * 100) / 100)*100)),

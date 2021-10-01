@@ -37,7 +37,7 @@ export class UserAddEditProductDishComponent implements OnInit {
 
   Add(formValue){
 
-    var val = {ProductId:this.product.Product.ProductId,
+    let val = {ProductId:this.product.Product.ProductId,
                Weight:(Math.round((Math.round(formValue.Weight * 100) / 100)*100))}
 
     this.service.addProductToDish(val).subscribe(res=>{
@@ -52,7 +52,7 @@ export class UserAddEditProductDishComponent implements OnInit {
 
   Update(formValue){
 
-    var val = {ProductId:this.product.Product.ProductId,
+    let val = {ProductId:this.product.Product.ProductId,
                Weight:(Math.round((Math.round(formValue.Weight * 100) / 100)*100))}
 
     this.service.editProductToDish(val).subscribe(res=>{
