@@ -21,6 +21,22 @@ namespace PKUAppAPI.Controllers
             public double value { get; set; }
         }
 
+        public class message
+        {
+            public string msg { get; set; }
+            public int type { get; set; }
+        }
+
+        public string[] Messages = new string[]
+        {
+            "You are gaining weight",
+            "You are losing weight",
+            "Your weight is stable",
+            "Your Phe results are getting worse be careful!",
+            "Your Phe results are getting better keep it up!",
+            "You Phe results are stable"
+        };
+
         private readonly PKUAppDbContext _context;
         public TrackController(PKUAppDbContext context)
         {
@@ -42,9 +58,11 @@ namespace PKUAppAPI.Controllers
 
             var result = new List<chartData>();
 
-            var trackRecords = await _context.TrackedValues.Where(a => a.UserId == user.Id && a.Type==type).OrderBy(a => a.Date).Take(30).ToListAsync();
+            var trackRecords = await _context.TrackedValues.Where(a => a.UserId == user.Id && a.Type==type).OrderByDescending(a => a.Date).Take(30).ToListAsync();
 
-            foreach(var trackrecord in trackRecords)
+            trackRecords = trackRecords.OrderBy(a => a.Date).ToList();
+
+            foreach (var trackrecord in trackRecords)
             {
                 var chartDay = new chartData
                 {
@@ -126,6 +144,87 @@ namespace PKUAppAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpGet("GetMessage")]
+        public async Task<ActionResult<message>> GetMessage(DateTime date, int type = 0)
+        {
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var trackRecords = await _context.TrackedValues.Where(a => a.UserId == user.Id && a.Type == type).OrderByDescending(a => a.Date).Take(2).ToListAsync();
+
+            trackRecords = trackRecords.OrderBy(a => a.Date).ToList();
+
+            if (trackRecords.Count < 2)
+                return null;
+
+            if (type == 1) {
+                if(trackRecords[1].Value >= trackRecords[0].Value+100)
+                {
+                    var message = new message
+                    {
+                        msg = Messages[0],
+                        type = 1
+                    };
+                    return message;
+                }
+                else if(trackRecords[0].Value >= trackRecords[1].Value+100)
+                {
+                    var message = new message
+                    {
+                        msg = Messages[1],
+                        type = 1
+                    };
+                    return message;
+                }
+                else
+                {
+                    var message = new message
+                    {
+                        msg = Messages[2],
+                        type = 1
+                    };
+                    return message;
+                }
+            }
+            else if(type == 2) {
+                if(trackRecords[1].Value >= trackRecords[0].Value + 50)
+                {
+                    var message = new message
+                    {
+                        msg = Messages[3],
+                        type = 2
+                    };
+                    return message;
+                }
+                else if(trackRecords[0].Value >= trackRecords[1].Value + 50)
+                {
+                    var message = new message
+                    {
+                        msg = Messages[4],
+                        type = 3
+                    };
+                    return message;
+                }
+                else
+                {
+                    var message = new message
+                    {
+                        msg = Messages[5],
+                        type = 1
+                    };
+                    return message;
+                }
+            }
+                return null;
         }
     }
 }

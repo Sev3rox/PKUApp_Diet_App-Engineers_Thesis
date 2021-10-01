@@ -19,6 +19,8 @@ export class UserTrackingComponent implements OnInit {
   isWeight:boolean=true;
   isPhe:boolean=false;
   date:Date;
+  msg:string="";
+  msgType:number=1;
 
   public weightTrackingForm: FormGroup;
   public pheTrackingForm: FormGroup;
@@ -196,8 +198,17 @@ UpdatePhe(formValue){
     this.service.getChartData(this.selectedType).subscribe(data=>{
       this.chartData=data
       this.loaded=true;
+      this.getMessage();
     });
   }
+
+  getMessage(){
+    this.service.getMessage(this.selectedType, this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
+        this.msg=data.msg;
+        this.msgType=data.type;
+    });
+  }
+  
 
   public hasErrorWeight = (controlName: string, errorName: string) => {
     return this.weightTrackingForm.controls[controlName].hasError(errorName)

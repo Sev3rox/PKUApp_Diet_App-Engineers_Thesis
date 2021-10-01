@@ -14,7 +14,15 @@ export class UserTrackingService {
     return this.http.get<any>(this.APIUrl+'/Track/GetCurrentRecord'+'?date='+date+'&&'+'type='+type);
   }
 
+  getPheTracking(type:number, date:any){
+    return this.http.get<any>(this.APIUrl+'/Track/GetCurrentRecord'+'?date='+date+'&&'+'type='+type);
+  }
+
   addWeightTracking(val:any){
+    return this.http.post<any>(this.APIUrl+'/Track',val);
+  }
+
+  addPheTracking(val:any){
     return this.http.post<any>(this.APIUrl+'/Track',val);
   }
 
@@ -22,19 +30,16 @@ export class UserTrackingService {
     return this.http.put<any>(this.APIUrl+'/Track'+'?id='+id+'&&'+'value='+value,null);
   }
 
-  getPheTracking(type:number, date:any){
-    return this.http.get<any>(this.APIUrl+'/Track/GetCurrentRecord'+'?date='+date+'&&'+'type='+type);
-  }
-
-  addPheTracking(val:any){
-    return this.http.post<any>(this.APIUrl+'/Track',val);
-  }
-
   updatePheTracking(id:number, value:number){
     return this.http.put<any>(this.APIUrl+'/Track'+'?id='+id+'&&'+'value='+value,null);
+  }
+
+  getMessage(type:number, date:any){
+    return this.http.get<any>(this.APIUrl+'/Track/GetMessage'+'?date='+date+'&&'+'type='+type);    
   }
 
   getChartData(type:number){
     return this.http.get<any>(this.APIUrl+'/Track'+'?type='+type);
   }
+
 }

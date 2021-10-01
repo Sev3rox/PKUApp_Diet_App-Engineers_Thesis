@@ -23,7 +23,6 @@
                     <button *ngIf="weight!=0" type="submit" class="btn btn-primary" [disabled]="!weightTrackingForm.valid">Update</button>
                 </div>
             </div>
-            <br>
             <div style="display: flex; justify-content: center;">
 
                 <div *ngIf="showErrorWeight" class="alert alert-danger" role="alert">
@@ -35,10 +34,13 @@
                 <em *ngIf="validateControlWeight('Weight') && hasErrorWeight('Weight', 'max')">Value must be smaller or equal to 1000</em>
             </div>
             <br>
+            <div style="display: flex; justify-content: center; font-size: x-large;">
+                <div style="color: #d9ff00; background-color: #212529; padding-left: 15px; padding-right: 15px;" *ngIf="msgType==1">{{msg}}</div>
+            </div>
         </form>
     </div>
 
-    <div style="display: flex; justify-content: center; margin-top: 25px;">
+    <div style="display: flex; justify-content: center; margin-top: 15px;">
         <ngx-charts-bar-vertical *ngIf="loaded"
           [view]="[1200, 500]"
           [scheme]="chartColor"
@@ -74,7 +76,6 @@
                     <button *ngIf="phe!=0" type="submit" class="btn btn-primary" [disabled]="!pheTrackingForm.valid">Update</button>
                 </div>
             </div>
-            <br>
             <div style="display: flex; justify-content: center;">
                 
                 <div *ngIf="showErrorPhe" class="alert alert-danger" role="alert">
@@ -85,10 +86,15 @@
                 <em *ngIf="validateControlPhe('Phe') && hasErrorPhe('Phe', 'max')">Value must be smaller or equal to 1000</em>
             </div>
             <br>
+            <div style="display: flex; justify-content: center; font-size: x-large;">
+                <div style="color: #ff9900; background-color: #212529; padding-left: 15px; padding-right: 15px;" *ngIf="msgType==1">{{msg}}</div>
+                <div style="color: #ff1e00; background-color: #212529; padding-left: 15px; padding-right: 15px;" *ngIf="msgType==2">{{msg}}</div>
+                <div style="color: #00b10f; background-color: #212529; padding-left: 15px; padding-right: 15px;" *ngIf="msgType==3">{{msg}}</div>
+            </div>
         </form>
     </div>
 
-    <div style="display: flex; justify-content: center; margin-top: 25px;">
+    <div style="display: flex; justify-content: center; margin-top: 15px;">
         <ngx-charts-bar-vertical *ngIf="loaded"
           [view]="[1200, 500]"
           [scheme]="chartColor"
