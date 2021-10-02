@@ -18,6 +18,7 @@ namespace PKUAppAPI.Models
         public ICollection<UserOffAlert> UserOffAlerts { get; set; }
         public ICollection<UserMedicine> UserMedicines { get; set; }
         public ICollection<TrackedValue> TrackedValues { get; set; }
+        public ICollection<UserExercise> UserExercises { get; set; }
 
     }
 

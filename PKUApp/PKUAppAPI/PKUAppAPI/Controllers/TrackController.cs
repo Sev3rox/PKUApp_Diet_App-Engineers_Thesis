@@ -44,7 +44,7 @@ namespace PKUAppAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<chartData>>> GetTracking(int type)
+        public async Task<ActionResult<IEnumerable<chartData>>> GetTracking(int type, DateTime date)
         {
             var claims = User.Claims
             .Select(c => new { c.Type, c.Value })
@@ -58,20 +58,48 @@ namespace PKUAppAPI.Controllers
 
             var result = new List<chartData>();
 
-            var trackRecords = await _context.TrackedValues.Where(a => a.UserId == user.Id && a.Type==type).OrderByDescending(a => a.Date).Take(30).ToListAsync();
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+            helpdate = helpdate.AddDays(-30);
 
-            trackRecords = trackRecords.OrderBy(a => a.Date).ToList();
+            var firstRecord = await _context.TrackedValues.Where(a => a.UserId == user.Id && a.Type==type && a.Date>=helpdate).OrderBy(a => a.Date).Take(1).ToListAsync();
 
-            foreach (var trackrecord in trackRecords)
+            var lastRecord = await _context.TrackedValues.Where(a => a.UserId == user.Id && a.Type == type && a.Date >= helpdate).OrderByDescending(a => a.Date).Take(1).ToListAsync();
+
+            var lastdate = new DateTime();
+            var firstdate = new DateTime();
+            if (lastRecord.Count == 1)
+                lastdate = new DateTime(lastRecord[0].Date.Year, lastRecord[0].Date.Month, lastRecord[0].Date.Day);
+            if (firstRecord.Count == 1)
+                firstdate = new DateTime(firstRecord[0].Date.Year, firstRecord[0].Date.Month, firstRecord[0].Date.Day);
+
+            if (lastdate != new DateTime() && firstdate != new DateTime())
             {
-                var chartDay = new chartData
+                while (firstdate <= lastdate)
                 {
-                    name = trackrecord.Date.ToString("d", CultureInfo.CreateSpecificCulture("en-US")),
-                    value = (double)((double)trackrecord.Value / 100)
-                };
-                result.Add(chartDay);
-            }
+                    var trackRecord = await _context.TrackedValues.FirstOrDefaultAsync(a => a.UserId == user.Id && a.Type == type && a.Date == firstdate);
 
+                    if (trackRecord != null)
+                    {
+                        var chartDay = new chartData
+                        {
+                            name = firstdate.ToString("d", CultureInfo.CreateSpecificCulture("en-US")),
+                            value = (double)((double)trackRecord.Value / 100)
+                        };
+                        result.Add(chartDay);
+                    }
+                    else
+                    {
+                        var chartDay = new chartData
+                        {
+                            name = firstdate.ToString("d", CultureInfo.CreateSpecificCulture("en-US")),
+                            value = 0
+                        };
+                        result.Add(chartDay);
+                    }
+
+                    firstdate = firstdate.AddDays(1);
+                }
+            }
             return result;
         }
 

@@ -25,6 +25,8 @@ namespace PKUAppAPI.Models
         public DbSet<UserOffAlert> UserOffAlerts { get; set; }
         public DbSet<UserMedicine> UserMedicines { get; set; }
         public DbSet<TrackedValue> TrackedValues { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<UserExercise> UserExercises { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -102,6 +104,17 @@ namespace PKUAppAPI.Models
                 .HasOne(bc => bc.Product)
                 .WithMany(c => c.UserProductDish)
                 .HasForeignKey(bc => bc.ProductId);
+
+            modelBuilder.Entity<UserExercise>()
+                .HasKey(bc => new { bc.UserId, bc.ExerciseId });
+            modelBuilder.Entity<UserExercise>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.UserExercises)
+                .HasForeignKey(bc => bc.UserId);
+            modelBuilder.Entity<UserExercise>()
+                .HasOne(bc => bc.Exercise)
+                .WithMany(c => c.UserExercises)
+                .HasForeignKey(bc => bc.ExerciseId);
 
 
             //modelBuilder.ApplyConfiguration(new RoleConfiguration());

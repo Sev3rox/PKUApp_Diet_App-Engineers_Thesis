@@ -76,12 +76,12 @@ export class UserShowMealsComponent implements OnInit {
     this.date=new Date();
     this.maxDate.setDate(this.maxDate.getDate()+6);
     this.minDate.setDate(this.minDate.getDate()-6);
-    this.currDate.setDate(this.currDate.getDate()-1);
+    this.currDate.setDate(this.currDate.getDate());
     }
     else{
     this.maxDate.setDate(this.maxDate.getDate()+5);
     this.minDate.setDate(this.minDate.getDate()-6);
-    this.currDate.setDate(this.currDate.getDate()-2);
+    this.currDate.setDate(this.currDate.getDate()-1);
     }
 
     if(this.datePipe.transform(this.date, 'yyyy-MM-dd')!=this.datePipe.transform(new Date(), 'yyyy-MM-dd')){

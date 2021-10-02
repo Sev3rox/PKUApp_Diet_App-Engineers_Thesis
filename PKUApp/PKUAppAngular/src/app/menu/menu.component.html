@@ -5,10 +5,6 @@
       </div>
 
       <ul class="list-unstyled components">
-          <li >
-              <a [routerLink]="['/home']" routerLinkActive="active"  
-                [routerLinkActiveOptions]="{exact: true}">Home</a>
-          </li>
           <li class="nav-item">
             <a class="nav-link"[routerLink]="['/products']" routerLinkActive="active" 
               [routerLinkActiveOptions]="{exact: true}">Products List</a>
@@ -64,13 +60,13 @@
       </div>
 
       <ul class="list-unstyled components">
-          <li >
-              <a [routerLink]="['/home']" routerLinkActive="active"  
-                [routerLinkActiveOptions]="{exact: true}">Home</a>
-          </li>
           <li class="nav-item">
             <a class="nav-link"[routerLink]="['/admin-products']" routerLinkActive="active" 
               [routerLinkActiveOptions]="{exact: true}">Product Managment</a>
+          </li>
+          <li>
+            <a class="nav-link"[routerLink]="['/admin-exercises']" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">Exercise Managment</a>
           </li>
       </ul>
   </nav>
@@ -121,10 +117,6 @@
       </div>
 
       <ul class="list-unstyled components">
-          <li >
-              <a [routerLink]="['/home']" routerLinkActive="active"  
-                [routerLinkActiveOptions]="{exact: true}">Home</a>
-          </li>
           <li >
             <a [routerLink]="['/user-plan']" routerLinkActive="active"  
               [routerLinkActiveOptions]="{exact: true}">Plan</a>

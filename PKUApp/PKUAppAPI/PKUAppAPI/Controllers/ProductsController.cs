@@ -81,6 +81,7 @@ namespace PKUAppAPI.Controllers
                 PageSize = pagesize,
                 Items = list.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
             };
+
             return Ok(result);
         }
 
@@ -156,7 +157,7 @@ namespace PKUAppAPI.Controllers
                 _context.Products.Add(product);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+                return CreatedAtAction("PostProduct", new { id = product.ProductId }, product);
             }
         }
 
@@ -498,7 +499,7 @@ namespace PKUAppAPI.Controllers
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("OwnAdd", new { id = product.ProductId }, product);
 
         }
 

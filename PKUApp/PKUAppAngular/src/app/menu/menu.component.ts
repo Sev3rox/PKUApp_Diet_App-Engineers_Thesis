@@ -14,8 +14,7 @@ export class MenuComponent implements OnInit {
   public isUserAuthenticated: boolean;
   public isAdmin: boolean;
   public Name: string;
-  constructor(private _authService: AuthenticationService, private _router: Router,private userService: UserService,
-    private toastr: ToastrService) { 
+  constructor(private _authService: AuthenticationService, private _router: Router, private userService: UserService, private toastr: ToastrService) { 
     this._authService.authChanged
     .subscribe(res =>{this.isUserAuthenticated = res;
       this.userService.getName()
@@ -31,7 +30,19 @@ export class MenuComponent implements OnInit {
       this.userService.getName()
     .subscribe(res =>{this.Name=res;});
     this.userService.isAdmin()
-    .subscribe(res =>{this.isAdmin=res;});
+    .subscribe(res2 =>{this.isAdmin=res2;
+
+      if(res2==true){
+        this._router.navigate(["/admin-products"]);
+      }
+      else if(res==true){
+        this._router.navigate(['/user-plan']);
+      }
+      else{
+        this._router.navigate(["/products"]);
+      }
+
+    });
     })
 
   }

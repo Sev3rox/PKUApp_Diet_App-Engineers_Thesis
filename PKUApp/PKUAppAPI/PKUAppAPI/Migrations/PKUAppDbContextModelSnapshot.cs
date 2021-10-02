@@ -150,6 +150,25 @@ namespace PKUAppAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("PKUAppAPI.Models.Exercise", b =>
+                {
+                    b.Property<int>("ExerciseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Calories")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ExerciseId");
+
+                    b.ToTable("Exercises");
+                });
+
             modelBuilder.Entity("PKUAppAPI.Models.Meal", b =>
                 {
                     b.Property<int>("MealId")
@@ -360,6 +379,27 @@ namespace PKUAppAPI.Migrations
                         .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("UserDailyLimits");
+                });
+
+            modelBuilder.Entity("PKUAppAPI.Models.UserExercise", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Date")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Time")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ExerciseId");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.ToTable("UserExercises");
                 });
 
             modelBuilder.Entity("PKUAppAPI.Models.UserMedicine", b =>
@@ -577,6 +617,25 @@ namespace PKUAppAPI.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("PKUAppAPI.Models.UserExercise", b =>
+                {
+                    b.HasOne("PKUAppAPI.Models.Exercise", "Exercise")
+                        .WithMany("UserExercises")
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PKUAppAPI.Models.User", "User")
+                        .WithMany("UserExercises")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PKUAppAPI.Models.UserMedicine", b =>
                 {
                     b.HasOne("PKUAppAPI.Models.User", "User")
@@ -652,6 +711,11 @@ namespace PKUAppAPI.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("PKUAppAPI.Models.Exercise", b =>
+                {
+                    b.Navigation("UserExercises");
+                });
+
             modelBuilder.Entity("PKUAppAPI.Models.Meal", b =>
                 {
                     b.Navigation("MealProducts");
@@ -677,6 +741,8 @@ namespace PKUAppAPI.Migrations
                     b.Navigation("Products");
 
                     b.Navigation("TrackedValues");
+
+                    b.Navigation("UserExercises");
 
                     b.Navigation("UserMedicines");
 

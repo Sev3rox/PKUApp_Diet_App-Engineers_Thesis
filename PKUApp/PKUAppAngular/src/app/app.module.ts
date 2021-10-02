@@ -65,6 +65,17 @@ import { AddEditMedComponent } from './user-profile/add-edit-med/add-edit-med.co
 import { DelMedComponent } from './user-profile/del-med/del-med.component';
 import { UserDetailsMedComponent } from './user-plan/user-meals/user-details-med/user-details-med.component';
 import { UserTrackingComponent } from './user-tracking/user-tracking.component';
+import { AdminExercisesComponent } from './admin-exercises/admin-exercises.component';
+import { AddEditExerciseComponent } from './admin-exercises/add-edit-exercise/add-edit-exercise.component';
+import { DeleteExerciseComponent } from './admin-exercises/delete-exercise/delete-exercise.component';
+import { DetailsExerciseComponent } from './admin-exercises/details-exercise/details-exercise.component';
+import { ShowExercisesComponent } from './admin-exercises/show-exercises/show-exercises.component';
+import { ExercisesComponent } from './exercises/exercises.component';
+import { NotlogedDetailsExerciseComponent } from './exercises/notloged-details-exercise/notloged-details-exercise.component';
+import { NotlogedShowExercisesComponent } from './exercises/notloged-show-exercises/notloged-show-exercises.component';
+import { UserExercisesComponent } from './user-exercises/user-exercises.component';
+import { UserDetailsExerciseComponent } from './user-exercises/user-details-exercise/user-details-exercise.component';
+import { UserShowExercisesComponent } from './user-exercises/user-show-exercises/user-show-exercises.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -125,6 +136,17 @@ export function tokenGetter() {
     DelMedComponent,
     UserDetailsMedComponent,
     UserTrackingComponent,
+    AdminExercisesComponent,
+    AddEditExerciseComponent,
+    DeleteExerciseComponent,
+    DetailsExerciseComponent,
+    ShowExercisesComponent,
+    ExercisesComponent,
+    NotlogedDetailsExerciseComponent,
+    NotlogedShowExercisesComponent,
+    UserExercisesComponent,
+    UserDetailsExerciseComponent,
+    UserShowExercisesComponent,
 
   ],
   imports: [

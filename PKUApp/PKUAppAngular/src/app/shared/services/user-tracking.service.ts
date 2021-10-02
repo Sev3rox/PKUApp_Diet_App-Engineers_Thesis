@@ -38,8 +38,8 @@ export class UserTrackingService {
     return this.http.get<any>(this.APIUrl+'/Track/GetMessage'+'?date='+date+'&&'+'type='+type);    
   }
 
-  getChartData(type:number){
-    return this.http.get<any>(this.APIUrl+'/Track'+'?type='+type);
+  getChartData(type:number, date:any){
+    return this.http.get<any>(this.APIUrl+'/Track'+'?date='+date+'&&'+'type='+type);
   }
 
 }

@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AdminProductsService } from 'src/app/shared/services/admin-products.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-show-products',
@@ -9,8 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ShowProductsComponent implements OnInit {
 
-  constructor(private service:AdminProductsService,
-    private toastr: ToastrService) { }
+  constructor(private service:AdminProductsService) { }
   ProductsList:any=[];
   ModalTitle:string;
   ActivateAddEditProductComp:boolean=false;

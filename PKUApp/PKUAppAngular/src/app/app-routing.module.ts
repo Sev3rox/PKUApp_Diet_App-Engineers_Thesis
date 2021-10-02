@@ -8,6 +8,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { AdminProductsComponent } from './admin-products/admin-products.component';
+import { AdminExercisesComponent } from './admin-exercises/admin-exercises.component';
 import { UserProductsComponent } from './user-products/user-products.component';
 import { OwnProductsComponent } from './user-products/own-products/own-products.component';
 import { ProductsComponent } from './products/products.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: '404', component : NotFoundComponent},
   { path: 'products', component : ProductsComponent},
   { path: 'admin-products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin-exercises', component: AdminExercisesComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'user-products', component: UserProductsComponent, canActivate: [AuthGuard] },
   { path: 'own-products', component: OwnProductsComponent, canActivate: [AuthGuard] },
   { path: 'user-plan', component: UserPlanComponent, canActivate: [AuthGuard] },

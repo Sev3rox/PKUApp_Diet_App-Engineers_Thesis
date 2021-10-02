@@ -55,7 +55,6 @@ export class UserTrackingComponent implements OnInit {
 
     this.refreshWeight();
     this.refreshPhe();
-    this.getChartData();
 
     this.weightTrackingForm = new FormGroup({
       Weight: new FormControl(this.weight, [Validators.required, Validators.min(1), Validators.max(1000)]),
@@ -166,11 +165,13 @@ UpdatePhe(formValue){
   refreshWeight(){
     this.date=new Date();
     this.service.getWeightTracking(1, this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
+      if(data!=null){
       this.weight=data.Value/100;
       this.wholeWeight=data;
       this.weightTrackingForm = new FormGroup({
         Weight: new FormControl(this.weight, [Validators.required, Validators.min(1), Validators.max(1000)]),
       })
+    }
       this.getChartData();
     })
   }
@@ -178,24 +179,26 @@ UpdatePhe(formValue){
   refreshPhe(){
     this.date=new Date();
     this.service.getPheTracking(2, this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
+      if(data!=null){
       this.phe=data.Value/100;
       this.wholePhe=data;
       this.pheTrackingForm = new FormGroup({
         Phe: new FormControl(this.phe, [Validators.required, Validators.min(1), Validators.max(1000)]),
       })
+    }
       this.getChartData();
     })
   }
 
   getChartData(){
-
+    this.date=new Date();
     if(this.isWeight==true)
     this.selectedType=1;
     else if(this.isPhe==true)
     this.selectedType=2;
 
     this.loaded=false;
-    this.service.getChartData(this.selectedType).subscribe(data=>{
+    this.service.getChartData(this.selectedType, this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
       this.chartData=data
       this.loaded=true;
       this.getMessage();
@@ -204,8 +207,10 @@ UpdatePhe(formValue){
 
   getMessage(){
     this.service.getMessage(this.selectedType, this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
+      if(data!=null){
         this.msg=data.msg;
         this.msgType=data.type;
+      }
     });
   }
   
