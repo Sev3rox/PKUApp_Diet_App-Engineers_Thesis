@@ -9,6 +9,10 @@
             <a class="nav-link"[routerLink]="['/products']" routerLinkActive="active" 
               [routerLinkActiveOptions]="{exact: true}">Products List</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link"[routerLink]="['/exercises']" routerLinkActive="active" 
+              [routerLinkActiveOptions]="{exact: true}">Exercises List</a>
+          </li>
       </ul>
   </nav>
 
@@ -138,6 +142,23 @@
             <a class="nav-link"[routerLink]="['/user-charts']" routerLinkActive="active" 
             [routerLinkActiveOptions]="{exact: true}">Charts</a>
           </li>
+          <li>
+            <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Exercises</a>
+            <ul class="collapse list-unstyled" id="pageSubmenu2">
+                <li>
+                  <a class="nav-link"[routerLink]="['/user-exercise-plan']" routerLinkActive="active" 
+                  [routerLinkActiveOptions]="{exact: true}">Exercise Plan</a>
+                </li>
+                <li>
+                  <a class="nav-link"[routerLink]="['/user-exercises']" routerLinkActive="active" 
+                  [routerLinkActiveOptions]="{exact: true}">Exercises List</a>
+                </li>
+                <li>
+                  <a class="nav-link"[routerLink]="['/user-products']" routerLinkActive="active" 
+                  [routerLinkActiveOptions]="{exact: true}">Exercises Chart</a>
+                </li>
+            </ul>
+        </li>
           <li>
             <a class="nav-link"[routerLink]="['/user-dish']" routerLinkActive="active" 
             [routerLinkActiveOptions]="{exact: true}">Dish Creation</a>

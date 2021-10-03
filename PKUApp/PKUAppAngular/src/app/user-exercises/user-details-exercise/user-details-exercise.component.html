@@ -1,1 +1,23 @@
-<p>user-details-exercise works!</p>
+<div class="d-flex flex-row bd-highlight mb-2">
+    <div class="form-group row" style="width: 100%">
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Name: </label>
+        <div class="col-sm-5">{{Name}}</div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-4"></label>
+        <label for="Name" class="col-form-label col-sm-3">Calories (kcal/h): </label>
+        <div class="col-sm-5">{{Calories/100}}</div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="form-group row">
+        <label  class="col-form-label col-sm-5"></label>
+        <div style="display: flex; justify-content: center; align-items: center;" class="col-sm-2">
+          <button class="btn btn-secondary" type="button" (click)='Close()'>Close</button>
+        </div>
+    </div>
+</div>
+</div>

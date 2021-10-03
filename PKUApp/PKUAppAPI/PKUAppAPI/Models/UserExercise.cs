@@ -12,7 +12,7 @@ namespace PKUAppAPI.Models
         public User User { get; set; }
         public int ExerciseId { get; set; }
         public Exercise Exercise { get; set; }
-        public int Date { get; set; }
+        public DateTime Date { get; set; }
         [Required(ErrorMessage = "Time is required."), Range(1, 10000 * 100, ErrorMessage = "Please enter a Time >= 1 minute and <= 10000 minutes")]
         public int Time { get; set; }
     }

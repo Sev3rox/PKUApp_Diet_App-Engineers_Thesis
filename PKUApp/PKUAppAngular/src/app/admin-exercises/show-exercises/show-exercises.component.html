@@ -29,9 +29,9 @@
  </div>
 
 <div style="display: flex; justify-content: center;">
- <div style="width:50%">
+ <div style="width:60%">
 <div style="margin-top:10px; margin-left: 1%; align-content: center;" >
-  <div style="width: 50%; margin: 0 auto;" class="d-flex flex-row" >
+  <div style="width: 60%; margin: 0 auto;" class="d-flex flex-row" >
     <input [(ngModel)]="exerciseSearch" class="form-control" placeholder="Search" (keyup.enter)="searchExercise()">
     <button (click)="searchExercise()" type="button" class="btn btn-primary" style="margin-left: 1rem;">Search</button>
     <button (click)="clearSearch()" type="button" class="btn btn-secondary" [disabled]="!exerciseSearch">Clear</button>

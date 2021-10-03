@@ -76,6 +76,9 @@ import { NotlogedShowExercisesComponent } from './exercises/notloged-show-exerci
 import { UserExercisesComponent } from './user-exercises/user-exercises.component';
 import { UserDetailsExerciseComponent } from './user-exercises/user-details-exercise/user-details-exercise.component';
 import { UserShowExercisesComponent } from './user-exercises/user-show-exercises/user-show-exercises.component';
+import { UserExercisePlanComponent } from './user-exercise-plan/user-exercise-plan.component';
+import { UserExercisePlanDetailsExerciseComponent } from './user-exercise-plan/user-exercise-plan-details-exercise/user-exercise-plan-details-exercise.component';
+import { UserExercisePlanAddEditExerciseComponent } from './user-exercise-plan/user-exercise-plan-add-edit-exercise/user-exercise-plan-add-edit-exercise.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -147,6 +150,9 @@ export function tokenGetter() {
     UserExercisesComponent,
     UserDetailsExerciseComponent,
     UserShowExercisesComponent,
+    UserExercisePlanComponent,
+    UserExercisePlanDetailsExerciseComponent,
+    UserExercisePlanAddEditExerciseComponent,
 
   ],
   imports: [

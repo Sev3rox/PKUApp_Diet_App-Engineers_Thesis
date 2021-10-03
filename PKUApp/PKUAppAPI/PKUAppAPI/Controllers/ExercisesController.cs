@@ -23,6 +23,12 @@ namespace PKUAppAPI.Controllers
             public List<T> Items { get; set; }
         }
 
+        public class ExerciseParam
+        {
+            public bool param { get; set; }
+            public Exercise Exercise { get; set; }
+        }
+
         private static int pagesize = 10;
 
         private readonly PKUAppDbContext _context;
@@ -38,7 +44,6 @@ namespace PKUAppAPI.Controllers
         {
 
             List<Exercise> list = new List<Exercise>();
-            List<Exercise> finallist = new List<Exercise>();
 
             list = await _context.Exercises.Where(a=> EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
 
@@ -158,6 +163,65 @@ namespace PKUAppAPI.Controllers
         private bool ExerciseExists(int id)
         {
             return _context.Exercises.Any(e => e.ExerciseId == id);
+        }
+
+        [HttpGet("GetUserExercises")]
+        [Authorize]
+        public async Task<ActionResult<Result<ExerciseParam>>> GetUserDishProducts(DateTime date, string search = null, string sort = null, bool asc = false, int page = 1)
+        {
+
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            List<Exercise> list = new List<Exercise>();
+            List<ExerciseParam> finallist = new List<ExerciseParam>();
+
+            list = await _context.Exercises.Where(a => EF.Functions.Like(a.Name, "%" + search + "%")).ToListAsync();
+
+
+            if (sort != null)
+            {
+                if (asc == true)
+                    list = list.OrderBy(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+                else
+                    list = list.OrderByDescending(x => x.GetType().GetProperty(sort).GetValue(x)).ToList();
+            }
+
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+
+            var ondaylist = _context.UserExercises.Where(a => a.Date == helpdate);
+
+            foreach(var exer in list)
+            {
+                var exerparam = new ExerciseParam
+                {
+                    param = false,
+                    Exercise = exer
+                };
+
+                if (ondaylist.Any(a => a.ExerciseId == exer.ExerciseId))
+                {
+                    exerparam.param = true;
+                }
+
+                finallist.Add(exerparam);
+            }
+
+            Result<ExerciseParam> result = new Result<ExerciseParam>
+            {
+                Count = list.Count(),
+                PageIndex = page,
+                PageSize = pagesize,
+                Items = finallist.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+            };
+
+            return Ok(result);
         }
     }
 }
