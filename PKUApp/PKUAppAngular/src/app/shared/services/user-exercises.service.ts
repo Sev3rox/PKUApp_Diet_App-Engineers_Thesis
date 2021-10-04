@@ -14,4 +14,12 @@ export class UserExercisesService {
     return this.http.get<any>(this.APIUrl+'/Exercises/GetUserExercises'+'?date='+date+'&&'+'search='+search+'&&'+'sort='+sort+'&&'+'asc='+asc+'&&'+'page='+page);
   }
 
+  addExerciseToDay(val:any){
+    return this.http.post(this.APIUrl+'/Exercises/AddExerciseToDay',val);
+  }
+
+  editExerciseToDay(val:any){
+    return this.http.put(this.APIUrl+'/Exercises/EditExerciseToDay',val);
+  }
+
 }

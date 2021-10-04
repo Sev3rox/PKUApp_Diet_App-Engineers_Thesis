@@ -11,11 +11,13 @@
             </button>
           </div>
           <div class="modal-body">
+            <app-user-exercise-plan-details-exercise [exercise]="exercise"  *ngIf="ActivateDetailsExerciseComp">
+            </app-user-exercise-plan-details-exercise>
+            <app-user-exercise-plan-add-edit-exercise [exercise]="exercise" [date]="date" [time]="time" *ngIf="ActivateAddEditExerciseComp">
+            </app-user-exercise-plan-add-edit-exercise>
               <!--
               <app-user-delete-meal [meal]="meal" *ngIf="ActivateDeleteMealComp">
               </app-user-delete-meal>
-              <app-user-details-meal [meal]="meal" *ngIf="ActivateDetailsMealComp">
-              </app-user-details-meal>
               <app-user-day-alerts [date]="date" [daySummary]="daySummary" [Limits]="Limits" *ngIf="ActivateDayAlertsComp">
               </app-user-day-alerts>
               <app-user-details-med [dayMed]="dayMed" *ngIf="ActivateDayMedComp">

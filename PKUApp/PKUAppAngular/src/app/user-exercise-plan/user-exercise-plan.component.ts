@@ -1,4 +1,3 @@
-
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { UserExercisesService } from 'src/app/shared/services/user-exercises.service';
@@ -17,10 +16,12 @@ export class UserExercisePlanComponent implements OnInit {
   maxDate:Date;
   currDate:Date;
   isToday:boolean=true;
+  time:number=0;
 
   ExercisesList:any=[];
   ModalTitle:string;
   ActivateDetailsExerciseComp:boolean=false;
+  ActivateAddEditExerciseComp:boolean=false;
   exercise:any;
   exerciseSearch:string="";
   sortNameHelp:string="Name";
@@ -73,11 +74,13 @@ export class UserExercisePlanComponent implements OnInit {
   }
  
   closeClick(){
- 
+    this.ActivateDetailsExerciseComp=false;
+    this.ActivateAddEditExerciseComp=false;
+    this.refreshExercisesList();
   }
 
   detailsClick(item){
-    this.exercise=item;
+    this.exercise=item.Exercise;
     this.ModalTitle="Exercise Details";
     this.ActivateDetailsExerciseComp=true;
   }
@@ -134,7 +137,9 @@ export class UserExercisePlanComponent implements OnInit {
   }
 
   addClick(item){
-
+    this.exercise=item;
+    this.ModalTitle="Add Exercise to Day";
+    this.ActivateAddEditExerciseComp=true;
   }
 
   refreshExercisesList(){

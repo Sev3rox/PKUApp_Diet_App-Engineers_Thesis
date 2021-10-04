@@ -1,1 +1,48 @@
-<p>user-exercise-plan-add-edit-exercise works!</p>
+  
+<div class="d-flex flex-row bd-highlight mb-2">
+
+    <div class="form-group row" style="width: 100%">
+
+        <div *ngIf="showError" class="alert alert-danger" role="alert">
+            {{errorMessage}}
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th style="text-align: center;">Name</th>
+                  <th style="text-align: center;">Calories (kcal/h)</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                    <td style="text-align: center;">{{exercise?.Exercise.Name}}</td>
+                    <td style="text-align: center;">{{exercise?.Exercise.Calories/100}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <form [formGroup]="exerciseForm" autocomplete="off" novalidate (ngSubmit)="addUpdateExercise(exerciseForm.value)">
+
+            <div class="form-group row">
+                <label for="Time" class="col-form-label col-sm-2">Time (min):</label>
+                <div class="col-sm-5">
+                    <input type="number" class="form-control" formControlName="Time" id="Time" value="time">
+                </div>
+                <div class="col-md-5">
+                    <em *ngIf="validateControl('Time') && hasError('Time', 'required')">Time is required</em>
+                    <em *ngIf="validateControl('Time') && hasError('Time', 'min')">Value must be bigger or equal to 1</em>
+                    <em *ngIf="validateControl('Time') && hasError('Time', 'max')">Value must be smaller or equal to 10000</em>
+                </div>
+            </div>
+            <br>
+
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <button *ngIf="time==0" type="submit" class="btn btn-primary" [disabled]="!exerciseForm.valid">Add</button>
+                    <button *ngIf="time!=0" type="submit" class="btn btn-primary" [disabled]="!exerciseForm.valid">Update</button>
+                    <button type="button" class="btn btn-secondary" (click)='Close()'>Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

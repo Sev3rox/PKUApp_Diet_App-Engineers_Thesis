@@ -223,5 +223,64 @@ namespace PKUAppAPI.Controllers
 
             return Ok(result);
         }
+
+        [HttpPost("AddExerciseToDay")]
+        public async Task<IActionResult> AddExerciseToDay(UserExercise userexer)
+        {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            userexer.UserId = user.Id;
+            userexer.Date = new DateTime(userexer.Date.Year, userexer.Date.Month, userexer.Date.Day);
+
+            _context.UserExercises.Add(userexer);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("EditExerciseToDay")]
+        public async Task<IActionResult> EditExerciseToDay(UserExercise userexer)
+        {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            if (user.Id != userexer.UserId)
+            {
+                return new JsonResult("Not your exercise in plan");
+            }
+
+            userexer.Date = new DateTime(userexer.Date.Year, userexer.Date.Month, userexer.Date.Day);
+
+            _context.Entry(userexer).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return new JsonResult(null);
+            }
+
+            return NoContent();
+
+        }
     }
 }
