@@ -17,11 +17,15 @@ export class UserExercisePlanComponent implements OnInit {
   currDate:Date;
   isToday:boolean=true;
   time:number=0;
+  userId:string="";
 
   ExercisesList:any=[];
+  ExercisesInDayList:any=[];
   ModalTitle:string;
   ActivateDetailsExerciseComp:boolean=false;
   ActivateAddEditExerciseComp:boolean=false;
+  ActivateDetailsExerciseOnPlanComp:boolean=false;
+  ActivateDeleteExerciseComp:boolean=false;
   exercise:any;
   exerciseSearch:string="";
   sortNameHelp:string="Name";
@@ -29,6 +33,9 @@ export class UserExercisePlanComponent implements OnInit {
   page:number=1;
   count:number=1;
   pageSize:number=1;
+  pageInDay:number=1;
+  countInDay:number=1;
+  pageSizeInDay:number=1;
 
   sortName:boolean=true;
   sortCalories:boolean=false;
@@ -52,6 +59,7 @@ export class UserExercisePlanComponent implements OnInit {
     }
     
     this.refreshExercisesList();
+    this.refreshExercisesInDayList();
   }
  
   dateClick(val){
@@ -63,7 +71,9 @@ export class UserExercisePlanComponent implements OnInit {
     else{
       this.isToday=true;
     }
- 
+
+    this.refreshExercisesList();
+    this.refreshExercisesInDayList();
   }
  
   @ViewChild('mybutton') mybutton: ElementRef<HTMLElement>;
@@ -76,7 +86,10 @@ export class UserExercisePlanComponent implements OnInit {
   closeClick(){
     this.ActivateDetailsExerciseComp=false;
     this.ActivateAddEditExerciseComp=false;
+    this.ActivateDetailsExerciseOnPlanComp=false;
+    this.ActivateDeleteExerciseComp=false;
     this.refreshExercisesList();
+    this.refreshExercisesInDayList();
   }
 
   detailsClick(item){
@@ -136,10 +149,36 @@ export class UserExercisePlanComponent implements OnInit {
     this.refreshExercisesList();
   }
 
+  onPageChange2(event){
+    this.pageInDay=event;
+    this.refreshExercisesInDayList();
+  }
+
   addClick(item){
     this.exercise=item;
     this.ModalTitle="Add Exercise to Day";
     this.ActivateAddEditExerciseComp=true;
+  }
+
+  detailsInDayClick(item){
+    this.exercise=item.Exercise;
+    this.time=item.Time;
+    this.ModalTitle="Exercise on day Details";
+    this.ActivateDetailsExerciseOnPlanComp=true;
+  }
+
+  editInDayClick(item){
+    this.exercise=item;
+    this.time=item.Time/100;
+    this.userId=item.UserId;
+    this.ModalTitle="Edit Exercise on Day";
+    this.ActivateAddEditExerciseComp=true;
+  }
+
+  deleteInDayClick(item){
+    this.exercise=item.Exercise;
+    this.ModalTitle="Edit Exercise on Day";
+    this.ActivateDeleteExerciseComp=true;
   }
 
   refreshExercisesList(){
@@ -149,5 +188,14 @@ export class UserExercisePlanComponent implements OnInit {
       this.count=data.Count;
       this.pageSize=data.PageSize;
     });
+    }
+
+    refreshExercisesInDayList(){
+    this.service.getExercisesInDay(this.datePipe.transform(this.date, 'yyyy-MM-dd'), this.pageInDay).subscribe(data=>{
+      this.ExercisesInDayList=data.Items;
+      this.pageInDay=data.PageIndex;
+      this.countInDay=data.Count;
+      this.pageSizeInDay=data.PageSize;
+    })
     }
 }

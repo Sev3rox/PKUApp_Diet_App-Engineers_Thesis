@@ -29,6 +29,13 @@ namespace PKUAppAPI.Controllers
             public Exercise Exercise { get; set; }
         }
 
+        public class ExerciseTime
+        {
+            public int Time { get; set; }
+            public string UserId { get; set; }
+            public Exercise Exercise { get; set; }
+        }
+
         private static int pagesize = 10;
 
         private readonly PKUAppDbContext _context;
@@ -281,6 +288,79 @@ namespace PKUAppAPI.Controllers
 
             return NoContent();
 
+        }
+
+        [HttpDelete("DeleteExerciseToDay")]
+        public async Task<IActionResult> DeleteExerciseToDay(DateTime date, int exerid)
+        {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+
+            var todel =await  _context.UserExercises.FirstOrDefaultAsync(a => a.UserId == user.Id && a.Date == helpdate && a.ExerciseId == exerid);
+
+            if(todel!=null)
+            _context.UserExercises.Remove(todel); 
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+
+        }
+
+        [HttpGet("GetExerciseInDay")]
+        public async Task<ActionResult<Result<ExerciseTime>>> GetExerciseInDay(DateTime date, int page=1)
+        {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+
+
+            List<ExerciseTime> list = new List<ExerciseTime>();
+
+            var userexerlist = await _context.UserExercises.Where(a => a.UserId==user.Id && a.Date==helpdate).ToListAsync();
+
+            foreach(var ex in userexerlist)
+            {
+                var exer = await _context.Exercises.FirstOrDefaultAsync(a => a.ExerciseId == ex.ExerciseId);
+
+                var exertime = new ExerciseTime
+                {
+                    Exercise = exer,
+                    Time = ex.Time,
+                    UserId=ex.UserId
+                };
+
+                list.Add(exertime);
+            }
+
+            Result<ExerciseTime> result = new Result<ExerciseTime>
+            {
+                 Count = list.Count(),
+                 PageIndex = page,
+                 PageSize = pagesize,
+                 Items = list.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+            };
+
+                return Ok(result);
         }
     }
 }

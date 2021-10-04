@@ -20,6 +20,8 @@ export class UserExercisePlanAddEditExerciseComponent implements OnInit {
       time:number;
   @Input() 
       date:any;
+  @Input() 
+      userId:string;
 
       public exerciseForm: FormGroup;
       public errorMessage: string = '';
@@ -55,9 +57,9 @@ export class UserExercisePlanAddEditExerciseComponent implements OnInit {
   }
 
   Update(formValue){
-
+      console.log(this.userId)
     let val = {ExerciseId:this.exercise.Exercise.ExerciseId,
-               UserId:this.exercise.Exercise.UserId,
+               UserId:this.userId,
                Date:this.datePipe.transform(this.date, 'yyyy-MM-dd'),
                Time:(Math.round((Math.round(formValue.Time * 100) / 100)*100))}
 

@@ -22,4 +22,12 @@ export class UserExercisesService {
     return this.http.put(this.APIUrl+'/Exercises/EditExerciseToDay',val);
   }
 
+  deleteExerciseToDay(date:any, id:number){
+    return this.http.delete(this.APIUrl+'/Exercises/DeleteExerciseToDay'+'?date='+date+'&&'+'exerid='+id);
+  }
+
+  getExercisesInDay( date:any, page:number):Observable<any>{
+    return this.http.get<any>(this.APIUrl+'/Exercises/GetExerciseInDay'+'?date='+date+'&&'+'page='+page);
+  }
+
 }

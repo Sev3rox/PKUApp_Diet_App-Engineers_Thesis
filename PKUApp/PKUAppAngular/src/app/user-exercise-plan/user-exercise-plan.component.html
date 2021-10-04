@@ -13,8 +13,13 @@
           <div class="modal-body">
             <app-user-exercise-plan-details-exercise [exercise]="exercise"  *ngIf="ActivateDetailsExerciseComp">
             </app-user-exercise-plan-details-exercise>
-            <app-user-exercise-plan-add-edit-exercise [exercise]="exercise" [date]="date" [time]="time" *ngIf="ActivateAddEditExerciseComp">
+            <app-user-exercise-plan-add-edit-exercise [exercise]="exercise" [date]="date" [time]="time" [userId]="userId" *ngIf="ActivateAddEditExerciseComp">
             </app-user-exercise-plan-add-edit-exercise>
+            <app-user-exercise-plan-details-on-exercise [exercise]="exercise" [time]="time"  *ngIf="ActivateDetailsExerciseOnPlanComp">
+            </app-user-exercise-plan-details-on-exercise>
+            <app-user-exercise-plan-delete-exercise [exercise]="exercise" [date]="date"  *ngIf="ActivateDeleteExerciseComp">
+            </app-user-exercise-plan-delete-exercise>
+            
               <!--
               <app-user-delete-meal [meal]="meal" *ngIf="ActivateDeleteMealComp">
               </app-user-delete-meal>
@@ -46,16 +51,63 @@
       </div>
       <button type="button" (click)="dateClick(1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()>=maxDate.getTime()">Next</button>
   </div>
-    <br>
- 
- 
- 
- 
- 
-  <div style="display: flex; justify-content: center; align-items: center;" *ngIf="currDate.getTime()<=date.getTime()">
-    <!--  table here  -->
+   
+
+     
+     <table class="table table-striped">
+       <thead>
+           <tr>
+             <th style="text-align: center;">Name</th>
+             <th style="text-align: center;">Calories (kcal)</th>
+             <th style="text-align: center;">Time (min)</th>
+             <th style="text-align: center;">Options</th>
+           </tr>
+       </thead>
+       <tbody>
+         <tr *ngFor="let dataItem of ExercisesInDayList | paginate : { id: 'pag2',
+           itemsPerPage:pageSizeInDay,
+           currentPage: pageInDay,
+           totalItems: countInDay
+         };
+         let i = index"
+           [class.active]="i==pageInDay">
+               <td style="text-align: center;">{{dataItem?.Exercise.Name}}</td>
+               <td style="text-align: center;">{{dataItem?.Exercise.Calories/100*dataItem?.Time/100/60 | number:'1.2-2'}}</td>
+               <td style="text-align: center;">{{dataItem?.Time/100}}</td>
+               <td style="display: flex; justify-content: center; align-items: center;">
+                 <button type="button" class="btn btn-info"
+                   (click)="detailsInDayClick(dataItem)"
+                   data-toggle="modal" data-target="#exampleModal"
+                   data-backdrop="static" data-keyboard="false"
+                   >Details
+                   </button>
+                   <button *ngIf="!dataItem.param" type="button" class="btn btn-warning" 
+                   (click)="editInDayClick(dataItem)" data-toggle="modal" data-target="#exampleModal"
+                   data-backdrop="static" data-keyboard="false"
+                   >Edit
+                   </button>
+                   <button *ngIf="!dataItem.param" type="button" class="btn btn-danger" 
+                   (click)="deleteInDayClick(dataItem)" data-toggle="modal" data-target="#exampleModal"
+                   data-backdrop="static" data-keyboard="false"
+                   >Delete
+                   </button>
+               </td>
+           </tr>
+       </tbody>
+     </table>
+     
+     <div *ngIf="count==0" style="text-align: center; padding-left: 20px;"><h5><b>No Results</b></h5><br><br></div>
+     
+     <div class="d-flex justify-content-center">
+     <pagination-controls 
+     id="pag2"
+     [responsive]="true"
+       previousLabel="Prev" 
+       nextLabel="Next" 
+     (pageChange)="onPageChange2($event)">
+     </pagination-controls>
+     </div>
       <br>
-  </div>
  
  
  
@@ -144,6 +196,7 @@
 
     
   </div>
+</div>
  
  
  
