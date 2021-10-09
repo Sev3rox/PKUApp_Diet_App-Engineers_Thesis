@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -29,14 +30,24 @@ namespace PKUAppAPI.Controllers
             public Exercise Exercise { get; set; }
         }
 
+        public class chartData
+        {
+            public string name { get; set; }
+            public int value { get; set; }
+        }
+
         public class ExerciseTime
         {
             public int Time { get; set; }
             public string UserId { get; set; }
+
+            public int UserExerciseId { get; set; }
             public Exercise Exercise { get; set; }
         }
 
         private static int pagesize = 10;
+
+        private static int pagesizeplan = 7;
 
         private readonly PKUAppDbContext _context;
 
@@ -346,7 +357,8 @@ namespace PKUAppAPI.Controllers
                 {
                     Exercise = exer,
                     Time = ex.Time,
-                    UserId=ex.UserId
+                    UserId=ex.UserId,
+                    UserExerciseId=ex.UserExerciseId
                 };
 
                 list.Add(exertime);
@@ -356,11 +368,124 @@ namespace PKUAppAPI.Controllers
             {
                  Count = list.Count(),
                  PageIndex = page,
-                 PageSize = pagesize,
-                 Items = list.Skip((page - 1) * pagesize).Take((pagesize)).ToList()
+                 PageSize = pagesizeplan,
+                 Items = list.Skip((page - 1) * pagesizeplan).Take((pagesizeplan)).ToList()
             };
 
                 return Ok(result);
+        }
+
+        [HttpGet("GetDaySummary")]
+        public async Task<ActionResult<Object>> GetDaySummary(DateTime date)
+        {
+
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var helpdate = new DateTime(date.Year, date.Month, date.Day);
+
+            var userexerlist = await _context.UserExercises.Where(a => a.UserId == user.Id && a.Date == helpdate).ToListAsync();
+
+            int time = 0;
+
+            int cal = 0;
+
+            foreach (var ex in userexerlist)
+            {
+                time +=ex.Time;
+                var exercise =await _context.Exercises.FirstOrDefaultAsync(a=>a.ExerciseId==ex.ExerciseId);
+                cal += exercise.Calories* ex.Time/60/100;
+            }
+
+            var res = new
+            {
+                Calories = cal,
+                Time = time
+            };
+
+            return Ok(res);
+        }
+
+
+        [HttpGet("GetCharts")]
+        public async Task<ActionResult<IEnumerable<chartData>>> GetCharts(DateTime date, string chartType = "", int chartDays = 0)
+        {
+            var claims = User.Claims
+            .Select(c => new { c.Type, c.Value })
+            .ToList();
+            if (claims.Count() == 0)
+            {
+                return new JsonResult(null);
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
+
+            var result = new List<chartData>();
+
+            var lastdate = new DateTime(date.Year, date.Month, date.Day);
+            var firstdate = new DateTime(date.Year, date.Month, date.Day);
+            firstdate = firstdate.AddDays(-chartDays);
+
+            if (chartType == "Calories")
+            {
+                while (firstdate <= lastdate)
+                {
+                    var exercisesInDay = await _context.UserExercises.Where(a => a.Date == firstdate && a.UserId == user.Id).ToListAsync();
+
+                    var value = 0;
+
+                    foreach (var exer in exercisesInDay)
+                    {
+                        var oneExer = await _context.Exercises.FirstOrDefaultAsync(a => a.ExerciseId == exer.ExerciseId);
+                        value += oneExer.Calories * exer.Time/100/100/60;
+                    }
+
+                    var chartDay = new chartData
+                    {
+                        name = firstdate.ToString("d", CultureInfo.CreateSpecificCulture("en-US")),
+                        value = value
+                    };
+
+                    result.Add(chartDay);
+
+                    firstdate = firstdate.AddDays(1);
+                }
+            }
+            else if (chartType == "Time")
+            {
+                while (firstdate <= lastdate)
+                {
+                    var exercisesInDay = await _context.UserExercises.Where(a => a.Date == firstdate && a.UserId == user.Id).ToListAsync();
+
+                    var value = 0;
+
+                    foreach (var exer in exercisesInDay)
+                    {
+                        var oneExer = await _context.Exercises.FirstOrDefaultAsync(a => a.ExerciseId == exer.ExerciseId);
+                        value += exer.Time / 100;
+                    }
+
+                    var chartDay = new chartData
+                    {
+                        name = firstdate.ToString("d", CultureInfo.CreateSpecificCulture("en-US")),
+                        value = value
+                    };
+
+                    result.Add(chartDay);
+
+                    firstdate = firstdate.AddDays(1);
+                }
+            }
+           
+
+            return result;
         }
     }
 }

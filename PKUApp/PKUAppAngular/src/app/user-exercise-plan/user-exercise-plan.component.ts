@@ -36,6 +36,8 @@ export class UserExercisePlanComponent implements OnInit {
   pageInDay:number=1;
   countInDay:number=1;
   pageSizeInDay:number=1;
+  daySummary:any;
+  userExerciseId:any;
 
   sortName:boolean=true;
   sortCalories:boolean=false;
@@ -60,6 +62,7 @@ export class UserExercisePlanComponent implements OnInit {
     
     this.refreshExercisesList();
     this.refreshExercisesInDayList();
+    this.refreshDaySummary()
   }
  
   dateClick(val){
@@ -74,6 +77,7 @@ export class UserExercisePlanComponent implements OnInit {
 
     this.refreshExercisesList();
     this.refreshExercisesInDayList();
+    this.refreshDaySummary()
   }
  
   @ViewChild('mybutton') mybutton: ElementRef<HTMLElement>;
@@ -90,6 +94,7 @@ export class UserExercisePlanComponent implements OnInit {
     this.ActivateDeleteExerciseComp=false;
     this.refreshExercisesList();
     this.refreshExercisesInDayList();
+    this.refreshDaySummary()
   }
 
   detailsClick(item){
@@ -156,6 +161,7 @@ export class UserExercisePlanComponent implements OnInit {
 
   addClick(item){
     this.exercise=item;
+    this.time=0;
     this.ModalTitle="Add Exercise to Day";
     this.ActivateAddEditExerciseComp=true;
   }
@@ -171,6 +177,7 @@ export class UserExercisePlanComponent implements OnInit {
     this.exercise=item;
     this.time=item.Time/100;
     this.userId=item.UserId;
+    this.userExerciseId=item.UserExerciseId;
     this.ModalTitle="Edit Exercise on Day";
     this.ActivateAddEditExerciseComp=true;
   }
@@ -180,6 +187,12 @@ export class UserExercisePlanComponent implements OnInit {
     this.ModalTitle="Edit Exercise on Day";
     this.ActivateDeleteExerciseComp=true;
   }
+
+  refreshDaySummary(){
+    this.service.getDaySummary(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
+      this.daySummary=data;
+    });
+    }
 
   refreshExercisesList(){
     this.service.getExercisesList(this.datePipe.transform(this.date, 'yyyy-MM-dd'), this.exerciseSearch.toString(), this.sortNameHelp, this.asc, this.page).subscribe(data=>{

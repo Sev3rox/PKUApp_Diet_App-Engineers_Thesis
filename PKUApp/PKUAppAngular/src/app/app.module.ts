@@ -81,6 +81,7 @@ import { UserExercisePlanDetailsExerciseComponent } from './user-exercise-plan/u
 import { UserExercisePlanAddEditExerciseComponent } from './user-exercise-plan/user-exercise-plan-add-edit-exercise/user-exercise-plan-add-edit-exercise.component';
 import { UserExercisePlanDeleteExerciseComponent } from './user-exercise-plan/user-exercise-plan-delete-exercise/user-exercise-plan-delete-exercise.component';
 import { UserExercisePlanDetailsOnExerciseComponent } from './user-exercise-plan/user-exercise-plan-details-on-exercise/user-exercise-plan-details-on-exercise.component';
+import { UserExerciseChartComponent } from './user-exercise-chart/user-exercise-chart.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -157,6 +158,7 @@ export function tokenGetter() {
     UserExercisePlanAddEditExerciseComponent,
     UserExercisePlanDeleteExerciseComponent,
     UserExercisePlanDetailsOnExerciseComponent,
+    UserExerciseChartComponent,
 
   ],
   imports: [

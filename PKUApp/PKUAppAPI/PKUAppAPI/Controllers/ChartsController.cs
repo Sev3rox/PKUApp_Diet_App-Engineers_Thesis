@@ -43,7 +43,6 @@ namespace PKUAppAPI.Controllers
             var result = new List<chartData>();
 
             var lastdate = new DateTime(date.Year, date.Month, date.Day);
-            lastdate=lastdate.AddDays(-1);
             var firstdate = new DateTime(date.Year, date.Month, date.Day);
             firstdate=firstdate.AddDays(-chartDays);
 

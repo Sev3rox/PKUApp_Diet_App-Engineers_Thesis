@@ -106,7 +106,7 @@ namespace PKUAppAPI.Models
                 .HasForeignKey(bc => bc.ProductId);
 
             modelBuilder.Entity<UserExercise>()
-                .HasKey(bc => new { bc.UserId, bc.ExerciseId });
+                .HasKey(bc => new { bc.UserExerciseId });
             modelBuilder.Entity<UserExercise>()
                 .HasOne(bc => bc.User)
                 .WithMany(b => b.UserExercises)

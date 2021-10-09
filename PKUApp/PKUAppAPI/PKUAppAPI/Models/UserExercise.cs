@@ -8,6 +8,7 @@ namespace PKUAppAPI.Models
 {
     public class UserExercise
     {
+        public int UserExerciseId { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
         public int ExerciseId { get; set; }

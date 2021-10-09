@@ -35,13 +35,17 @@
     <div style="display: flex; justify-content: center; align-items: center;">
         <button type="button" (click)="dateClick(-1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()<=minDate.getTime()">Prev</button>
         <div *ngIf="isToday" style="background-color: gold; padding: 0.5%;">
-            {{date | date:'MM-dd-yyyy'}}
+          <input type="date"/>
         </div>
         <div div *ngIf="!isToday" style="padding: 0.5%;">
-            {{date | date:'MM-dd-yyyy'}}
+               <input type="date"/>
         </div>
         <button type="button" (click)="dateClick(1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()>=maxDate.getTime()">Next</button>
     </div>
+
+
+
+    
     <div style="display: flex; justify-content: center; align-items: center;" *ngIf="currDate.getTime()<=date.getTime()">
         <button type="button" class="btn btn-success float-right m-2" 
         (click)="addMealClick()">

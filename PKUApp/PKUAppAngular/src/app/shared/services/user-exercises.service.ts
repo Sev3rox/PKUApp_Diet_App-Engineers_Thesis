@@ -30,4 +30,12 @@ export class UserExercisesService {
     return this.http.get<any>(this.APIUrl+'/Exercises/GetExerciseInDay'+'?date='+date+'&&'+'page='+page);
   }
 
+  getDaySummary(date:any):Observable<any>{
+    return this.http.get<any>(this.APIUrl+'/Exercises/GetDaySummary'+'?date='+date);
+  }
+
+  getChartData(date:any, chartType:string, chartDays:number){
+    return this.http.get<any>(this.APIUrl+'/Exercises/GetCharts'+'?date='+date+'&&'+'chartType='+chartType+'&&'+'chartDays='+chartDays);
+  }
+
 }
