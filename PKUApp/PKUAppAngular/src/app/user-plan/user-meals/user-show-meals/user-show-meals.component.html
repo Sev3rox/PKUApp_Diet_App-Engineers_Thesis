@@ -33,32 +33,32 @@
        </div>
       </div>
     <div style="display: flex; justify-content: center; align-items: center;">
-        <button type="button" (click)="dateClick(-1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()<=minDate.getTime()">Prev</button>
+        <button type="button" (click)="dateClick(-1)" class="btn btn-dark" style="margin: 5px;">Prev</button>
         <div *ngIf="isToday" style="background-color: gold; padding: 0.5%;">
-          <input type="date"/>
+          <input  required   id="date" type="date" #myDate (ngModelChange)="dateChangeinput($event)" [ngModel]="date| date:'yyyy-MM-dd'"/>
         </div>
         <div div *ngIf="!isToday" style="padding: 0.5%;">
-               <input type="date"/>
+               <input  required  id="date" type="date" #myDate (ngModelChange)="dateChangeinput($event)" [ngModel]="date| date:'yyyy-MM-dd'" value="formatedDate"/>
         </div>
-        <button type="button" (click)="dateClick(1)" class="btn btn-dark" style="margin: 5px;" [disabled]="date.getTime()>=maxDate.getTime()">Next</button>
+        <button type="button" (click)="dateClick(1)" class="btn btn-dark" style="margin: 5px;">Next</button>
     </div>
 
 
 
     
-    <div style="display: flex; justify-content: center; align-items: center;" *ngIf="currDate.getTime()<=date.getTime()">
+    <div style="display: flex; justify-content: center; align-items: center;" *ngIf="currDate.getTime()<=date.getTime()||isToday">
         <button type="button" class="btn btn-success float-right m-2" 
         (click)="addMealClick()">
         Add Meal
         </button>
     </div>
-    <div *ngIf="currDate.getTime()>date.getTime()">
+    <div *ngIf="currDate.getTime()>date.getTime()&&!isToday">
       <br>
     </div>
     <div style="display: flex; justify-content: center; align-items: center;" *ngIf="showError" class="alert alert-danger" role="alert">
         {{errorMessage}}
     </div>
-    <div style="display: flex; justify-content: center; align-items: center;" *ngIf="currDate.getTime()<=date.getTime()">
+    <div style="display: flex; justify-content: center; align-items: center;" *ngIf="currDate.getTime()<=date.getTime()||isToday">
         <table class="table table-striped" style="width: 100%">
             <tbody>
                 <tr *ngFor="let dataItem of MealsList">
@@ -90,7 +90,7 @@
         <br>
     </div>
 
-    <div style="display: flex; justify-content: center; align-items: center;" *ngIf="currDate.getTime()>date.getTime()">
+    <div style="display: flex; justify-content: center; align-items: center;" *ngIf="currDate.getTime()>date.getTime()&&!isToday">
       <table class="table table-striped" style="width: 100%">
           <tbody>
               <tr *ngFor="let dataItem of MealsList">

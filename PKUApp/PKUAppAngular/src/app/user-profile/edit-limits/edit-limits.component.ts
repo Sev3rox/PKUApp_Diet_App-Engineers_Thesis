@@ -22,6 +22,7 @@ export class EditLimitsComponent implements OnInit {
   ProteinLimit:number;
   FatLimit:number;
   CarbLimit:number;
+  AddCalories:boolean;
   UserId:number;
 
   public userLimitsForm: FormGroup;
@@ -36,6 +37,7 @@ export class EditLimitsComponent implements OnInit {
     this.FatLimit=this.Limits.FatLimit/100;
     this.CarbLimit=this.Limits.CarbLimit/100;
     this.UserId=this.Limits.UserId;
+    this.AddCalories=this.Limits.AddCalories;
     
 
     this.userLimitsForm = new FormGroup({
@@ -43,11 +45,18 @@ export class EditLimitsComponent implements OnInit {
       CaloriesLimit: new FormControl(this.CaloriesLimit, [Validators.required, Validators.min(0), Validators.max(100000)]),
       ProteinLimit: new FormControl(this.ProteinLimit, [Validators.required, Validators.min(0), Validators.max(10000)]),
       FatLimit: new FormControl(this.FatLimit, [Validators.required, Validators.min(0), Validators.max(10000)]),
-      CarbLimit: new FormControl(this.CarbLimit, [Validators.required, Validators.min(0), Validators.max(10000)])
+      CarbLimit: new FormControl(this.CarbLimit, [Validators.required, Validators.min(0), Validators.max(10000)]),
+      AddCalories: new FormControl(this.AddCalories)
     });
   }
 
+
+  valuechange(val){
+    this.CaloriesLimit=val;
+  }
+
   editUserLimits(formValue){
+
     this.showError = false;
     let val = { UserDailyLimitsId:this.UserDailyLimitsId,
       PheLimit:(Math.round((Math.round(formValue.PheLimit * 100) / 100)*100)),
@@ -55,6 +64,7 @@ export class EditLimitsComponent implements OnInit {
       ProteinLimit:(Math.round((Math.round(formValue.ProteinLimit * 100) / 100)*100)),
       FatLimit:(Math.round((Math.round(formValue.FatLimit * 100) / 100)*100)),
       CarbLimit:(Math.round((Math.round(formValue.CarbLimit * 100) / 100)*100)),
+      AddCalories:formValue.AddCalories,
       UserId:this.UserId}
 
     this.service.editLimits(val).subscribe(_=>{

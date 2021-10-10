@@ -79,6 +79,20 @@ export class UserExercisePlanComponent implements OnInit {
     this.refreshExercisesInDayList();
     this.refreshDaySummary()
   }
+
+  dateChangeinput(indate){
+
+    this.date=new Date(indate);
+    if(this.datePipe.transform(this.date, 'yyyy-MM-dd')!=this.datePipe.transform(new Date(), 'yyyy-MM-dd')){
+      this.isToday=false;
+    }
+    else{
+      this.isToday=true;
+    }
+    this.refreshExercisesList();
+    this.refreshExercisesInDayList();
+    this.refreshDaySummary()
+  }
  
   @ViewChild('mybutton') mybutton: ElementRef<HTMLElement>;
  

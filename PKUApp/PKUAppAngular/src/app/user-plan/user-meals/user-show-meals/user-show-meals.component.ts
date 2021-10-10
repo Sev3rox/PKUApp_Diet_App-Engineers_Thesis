@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserPlanService } from 'src/app/shared/services/user-plan.service';
 import { UserService } from './../../../shared/services/user.service';
+import { UserExercisesService } from 'src/app/shared/services/user-exercises.service';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
@@ -13,11 +14,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserShowMealsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private service:UserPlanService, private userService:UserService, private toastr: ToastrService, private datePipe: DatePipe, private router:Router) { }
+  constructor(private route: ActivatedRoute, private service:UserPlanService, private userService:UserService, private toastr: ToastrService, private datePipe: DatePipe, private router:Router, private exerservice: UserExercisesService) { }
   MealsList:any=[];
   date:Date;
-  minDate:Date;
-  maxDate:Date;
   currDate:Date;
   alertDate:Date;
   isToday:boolean=true;
@@ -66,21 +65,15 @@ export class UserShowMealsComponent implements OnInit {
       this.date=new Date(params.date);
   });
 
-    this.minDate=new Date();
-    this.maxDate=new Date();
     this.currDate=new Date();
     this.alertDate=new Date();
 
     if(this.date===undefined)
     {
     this.date=new Date();
-    this.maxDate.setDate(this.maxDate.getDate()+6);
-    this.minDate.setDate(this.minDate.getDate()-6);
     this.currDate.setDate(this.currDate.getDate());
     }
     else{
-    this.maxDate.setDate(this.maxDate.getDate()+5);
-    this.minDate.setDate(this.minDate.getDate()-6);
     this.currDate.setDate(this.currDate.getDate()-1);
     }
 
@@ -98,6 +91,19 @@ export class UserShowMealsComponent implements OnInit {
   dateClick(val){
     this.date.setDate(this.date.getDate()+val);
     this.date=new Date(this.date);
+    if(this.datePipe.transform(this.date, 'yyyy-MM-dd')!=this.datePipe.transform(new Date(), 'yyyy-MM-dd')){
+      this.isToday=false;
+    }
+    else{
+      this.isToday=true;
+    }
+    this.refreshMealsList();
+    this.refreshDaySummaryOnInit();
+  }
+
+  dateChangeinput(indate){
+
+    this.date=new Date(indate);
     if(this.datePipe.transform(this.date, 'yyyy-MM-dd')!=this.datePipe.transform(new Date(), 'yyyy-MM-dd')){
       this.isToday=false;
     }
@@ -159,12 +165,39 @@ export class UserShowMealsComponent implements OnInit {
 
   getLimits(){
     this.userService.getLimits()
-    .subscribe(res =>{this.Limits=res;});
+    .subscribe(res =>{this.Limits=res;
+    this.getIfAdd();
+    });
   }
 
   getLimitsOnInit(){
     this.userService.getLimits()
     .subscribe(res =>{this.Limits=res;
+    this.getIfAddOnInit();
+    });
+  }
+
+  getIfAdd(){
+    if(this.Limits.CaloriesLimit!=0 && this.Limits.AddCalories==true)
+    this.getExercise();
+  }
+
+  getIfAddOnInit(){
+    if(this.Limits.CaloriesLimit!=0 && this.Limits.AddCalories==true)
+    this.getExerciseOnInit();
+    else
+    this.showAlerts();
+  }
+
+  getExercise(){
+    this.exerservice.getDaySummary(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(_=>{
+      this.Limits.CaloriesLimit+=_.Calories;
+    });
+  }
+
+  getExerciseOnInit(){
+    this.exerservice.getDaySummary(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(_=>{
+      this.Limits.CaloriesLimit+=_.Calories;
       this.showAlerts();
     });
   }
@@ -177,7 +210,7 @@ export class UserShowMealsComponent implements OnInit {
   showAlerts(){
     let isalert=false;
     
-    if(this.date>=this.alertDate){
+    if(this.date>=this.alertDate||this.isToday){
         this.service.getOffAlerts(this.datePipe.transform(this.date, 'yyyy-MM-dd')).subscribe(data=>{
 
         if(data==false){

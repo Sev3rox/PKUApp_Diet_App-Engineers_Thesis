@@ -64,23 +64,25 @@
         </div>
         </div>
             <div class="form-group row">
-                <label for="username" style="width:14.5%">Phe limit (mg): </label>
+                <label for="username" style="width:14.5%; margin-top: 7px;">Phe limit (mg): </label>
                 <label for="username" class="col-form-label col-sm-2">{{Limits?.PheLimit/100}}</label>
             </div>
             <div class="form-group row">
-                <label for="username" style="width:14.5%">Calories limit (kcal): </label>
-                <label for="username" class="col-form-label col-sm-2">{{Limits?.CaloriesLimit/100}}</label>
+                <label for="username" style="width:14.5%; margin-top: 7px;">Calories limit (kcal): </label>
+                <label for="username" class="col-form-label col-sm-1">{{Limits?.CaloriesLimit/100}}</label>
+                <label  *ngIf="Limits?.CaloriesLimit!=0" for="username" class="col-form-label col-sm-3" style=" width: 21%;">Add burned Calories automatically to limit</label>
+                <input  *ngIf="Limits?.CaloriesLimit!=0" type="checkbox" onclick="return false;" class="col-form-label col-sm-1" style="margin-top: 12px; width: 1%;" [checked]="Limits?.AddCalories"/>
             </div>
             <div class="form-group row">
-                <label for="username" style="width:14.5%">Protein limit (g): </label>
+                <label for="username" style="width:14.5%; margin-top: 7px;">Protein limit (g): </label>
                 <label for="username" class="col-form-label col-sm-2">{{Limits?.ProteinLimit/100}}</label>
             </div>
             <div class="form-group row">
-                <label for="username" style="width:14.5%">Fat limit (g): </label>
+                <label for="username" style="width:14.5%; margin-top: 7px;">Fat limit (g): </label>
                 <label for="username" class="col-form-label col-sm-2">{{Limits?.FatLimit/100}}</label>
             </div>
             <div class="form-group row">
-                <label for="username" style="width:14.5%">Carb limit (g): </label>
+                <label for="username" style="width:14.5%; margin-top: 7px;">Carb limit (g): </label>
                 <label for="username" class="col-form-label col-sm-2">{{Limits?.CarbLimit/100}}</label>
             </div>
     </div>

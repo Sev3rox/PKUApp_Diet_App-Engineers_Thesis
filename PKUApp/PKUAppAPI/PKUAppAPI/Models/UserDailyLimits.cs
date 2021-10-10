@@ -20,6 +20,7 @@ namespace PKUAppAPI.Models
         public int FatLimit { get; set; }
         [Required(ErrorMessage = "CarbLimit is required."), Range(0, 100 * 100 * 100, ErrorMessage = "Please enter a CarbLimit value >= 0 and <= 10000")]
         public int CarbLimit { get; set; }
+        public bool AddCalories { get; set; }
         public string UserId { get; set; }
         public virtual User User { get; set; }
     }
