@@ -431,7 +431,7 @@ namespace PKUAppAPI.Controllers
 
             var lastdate = new DateTime(date.Year, date.Month, date.Day);
             var firstdate = new DateTime(date.Year, date.Month, date.Day);
-            firstdate = firstdate.AddDays(-chartDays);
+            firstdate = firstdate.AddDays(-(chartDays - 1));
 
             if (chartType == "Calories")
             {

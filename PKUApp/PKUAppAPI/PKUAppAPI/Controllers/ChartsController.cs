@@ -44,7 +44,7 @@ namespace PKUAppAPI.Controllers
 
             var lastdate = new DateTime(date.Year, date.Month, date.Day);
             var firstdate = new DateTime(date.Year, date.Month, date.Day);
-            firstdate=firstdate.AddDays(-chartDays);
+            firstdate=firstdate.AddDays(-(chartDays-1));
 
             var meds = await _context.UserMedicines.Where(a => a.StartDate != a.EndDate && a.StartDate<= lastdate && (a.EndDate>= firstdate || a.EndDate==null) && a.UserId == user.Id).OrderBy(a=>a.StartDate).ToListAsync();
 
