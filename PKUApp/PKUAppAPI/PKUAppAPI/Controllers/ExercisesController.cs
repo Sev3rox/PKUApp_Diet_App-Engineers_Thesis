@@ -213,7 +213,7 @@ namespace PKUAppAPI.Controllers
 
             var helpdate = new DateTime(date.Year, date.Month, date.Day);
 
-            var ondaylist = _context.UserExercises.Where(a => a.Date == helpdate);
+            var ondaylist = _context.UserExercises.Where(a => a.Date == helpdate && a.UserId == user.Id);
 
             foreach(var exer in list)
             {

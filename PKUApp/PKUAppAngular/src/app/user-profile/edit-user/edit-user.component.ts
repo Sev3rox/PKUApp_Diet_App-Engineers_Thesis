@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UserProfileComponent } from '../user-profile.component'
 import { UserService } from './../../shared/services/user.service';
+import { MenuComponent } from 'src/app/menu/menu.component';
 
 @Component({
   selector: 'app-edit-user',
@@ -11,7 +12,7 @@ import { UserService } from './../../shared/services/user.service';
 })
 export class EditUserComponent implements OnInit {
 
-  constructor(private toastr: ToastrService, private closing:UserProfileComponent, private service:UserService) { }
+  constructor(private toastr: ToastrService, private closing:UserProfileComponent, private service:UserService, private edit:MenuComponent) { }
 
   @Input()
   Name
@@ -31,6 +32,7 @@ export class EditUserComponent implements OnInit {
     this.service.editSettings(formValue.Name).subscribe(_=>{
       this.toastr.success("Edited successfully", "User Management");
       this.closing.closeClickFromOutside();
+      this.edit.nameEdit();
     });
   }
 

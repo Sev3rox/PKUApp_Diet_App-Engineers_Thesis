@@ -52,4 +52,9 @@ export class MenuComponent implements OnInit {
     this._router.navigate(["/"]);
     this.toastr.success("Logged out successfully", "Logging Out");
   }
+
+  public nameEdit(){
+    this.userService.getName()
+    .subscribe(res =>{this.Name=res;})
+  }
 }
