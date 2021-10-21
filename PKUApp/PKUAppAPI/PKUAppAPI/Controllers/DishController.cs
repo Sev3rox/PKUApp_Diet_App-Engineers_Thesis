@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PKUAppAPI.Models;
+using PKUAppAPI.Data;
 
 namespace PKUAppAPI.Controllers
 {

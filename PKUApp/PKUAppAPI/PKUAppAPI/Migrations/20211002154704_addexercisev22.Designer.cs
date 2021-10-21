@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PKUAppAPI.Models;
+using PKUAppAPI.Data;
 
 namespace PKUAppAPI.Migrations
 {
@@ -391,8 +392,8 @@ namespace PKUAppAPI.Migrations
                     b.Property<int>("ExerciseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Date")
-                        .HasColumnType("int");
+                 //   b.Property<int>("Date")
+                 //       .HasColumnType("int");
 
                     b.Property<int>("Time")
                         .HasColumnType("int");

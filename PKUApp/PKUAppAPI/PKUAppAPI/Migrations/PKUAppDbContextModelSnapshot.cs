@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PKUAppAPI.Models;
+using PKUAppAPI.Data;
 
 namespace PKUAppAPI.Migrations
 {
@@ -345,6 +345,76 @@ namespace PKUAppAPI.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "fc47a809-0a95-4219-a1e4-a1a6691fd062",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e7ff9acf-8f25-4e37-b77f-ac8d5867c921",
+                            Email = "a@a",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            Name = "Admin",
+                            NormalizedEmail = "A@A",
+                            NormalizedUserName = "A@A",
+                            PasswordHash = "AQAAAAEAACcQAAAAENawFML/bfclXH5AH3nPlW0R/pnHadOGDFZ7rfi8z1MalUiCc+VaxU2l+TDytBw3DQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "03036ae8-1945-4266-ab85-589409a61dbe",
+                            TwoFactorEnabled = false,
+                            UserName = "a@a"
+                        },
+                        new
+                        {
+                            Id = "f0fbf0b4-2ee5-4790-b08f-65f729ded115",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5229f7e2-5b24-42a6-9834-f0f130e6e821",
+                            Email = "u@u",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            Name = "User",
+                            NormalizedEmail = "U@U",
+                            NormalizedUserName = "U@U",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGeVbjSxGWedmIaDQexL0Z0qpqRPSEf71JQsADyfIXIuCiDi/ifkOtArzFzpF/KSyQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e11176c2-5af6-433b-bed0-f66ca4596042",
+                            TwoFactorEnabled = false,
+                            UserName = "u@u"
+                        },
+                        new
+                        {
+                            Id = "cba2cac7-a12a-4d3f-acfb-01fd62278377",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0356bfe3-0d61-4f8e-9155-fd2aa0c492d0",
+                            Email = "u@u2",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            Name = "User2",
+                            NormalizedEmail = "U@U2",
+                            NormalizedUserName = "U@U2",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFxee2kU0Sj9Z3+JZIFeO4gzJPO0scYhuRTkQWiWNK8YJbEIjtW/C6KP+dpHZWvIVg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f78a5b7d-20c3-4a53-801c-65b6605cc8f3",
+                            TwoFactorEnabled = false,
+                            UserName = "u@u2"
+                        },
+                        new
+                        {
+                            Id = "c30785a5-5dd4-4303-b6ee-f21e154679eb",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "71cc0e1e-b5ca-4983-9f51-b9b1400a5e3f",
+                            Email = "u@u3",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            Name = "User3",
+                            NormalizedEmail = "U@U3",
+                            NormalizedUserName = "U@U3",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMQwMHy+HNeE2zpyfloUivtumSh1cHZwpDAELWxu880yB9Z8clZpKVGuKESi09G8lg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7cb0fe19-38ce-4ed0-ac3d-40f956c79393",
+                            TwoFactorEnabled = false,
+                            UserName = "u@u3"
+                        });
                 });
 
             modelBuilder.Entity("PKUAppAPI.Models.UserDailyLimits", b =>
@@ -382,6 +452,41 @@ namespace PKUAppAPI.Migrations
                         .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("UserDailyLimits");
+
+                    b.HasData(
+                        new
+                        {
+                            UserDailyLimitsId = 1,
+                            AddCalories = false,
+                            CaloriesLimit = 0,
+                            CarbLimit = 0,
+                            FatLimit = 0,
+                            PheLimit = 0,
+                            ProteinLimit = 0,
+                            UserId = "f0fbf0b4-2ee5-4790-b08f-65f729ded115"
+                        },
+                        new
+                        {
+                            UserDailyLimitsId = 2,
+                            AddCalories = false,
+                            CaloriesLimit = 0,
+                            CarbLimit = 0,
+                            FatLimit = 0,
+                            PheLimit = 0,
+                            ProteinLimit = 0,
+                            UserId = "cba2cac7-a12a-4d3f-acfb-01fd62278377"
+                        },
+                        new
+                        {
+                            UserDailyLimitsId = 3,
+                            AddCalories = false,
+                            CaloriesLimit = 0,
+                            CarbLimit = 0,
+                            FatLimit = 0,
+                            PheLimit = 0,
+                            ProteinLimit = 0,
+                            UserId = "c30785a5-5dd4-4303-b6ee-f21e154679eb"
+                        });
                 });
 
             modelBuilder.Entity("PKUAppAPI.Models.UserExercise", b =>

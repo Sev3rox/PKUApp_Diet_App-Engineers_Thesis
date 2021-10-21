@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PKUAppAPI.Models;
+using PKUAppAPI.Data;
 
 namespace PKUAppAPI.Controllers
 {

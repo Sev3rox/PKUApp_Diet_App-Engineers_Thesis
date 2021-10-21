@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using PKUAppAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PKUAppAPI.Models
+namespace PKUAppAPI.Data
 {
     public class PKUAppDbContext : IdentityDbContext<User>
     {
@@ -119,12 +120,12 @@ namespace PKUAppAPI.Models
 
             //modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
+            modelBuilder.Seed();
+
             // Code to seed data
         }
 
     }
-
-
 
     public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
     {
@@ -139,4 +140,7 @@ namespace PKUAppAPI.Models
             );
         }
     }
+
+
+
 }

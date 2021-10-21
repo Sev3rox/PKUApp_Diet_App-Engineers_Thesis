@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using PKUAppAPI.Data;
 
 namespace PKUAppAPI.Controllers
 {
