@@ -8,6 +8,7 @@ namespace PKUAppAPI.Models
 {
     public class Exercise
     {
+        //Calories per 1h and * 100
         public int ExerciseId { get; set; }
         [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }

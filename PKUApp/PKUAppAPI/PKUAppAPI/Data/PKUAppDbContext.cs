@@ -118,11 +118,10 @@ namespace PKUAppAPI.Data
                 .HasForeignKey(bc => bc.ExerciseId);
 
 
-            //modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            //modelBuilder.ApplyConfiguration(new RoleConfiguration()); it is commented becuse it is already added in migrations
 
             modelBuilder.Seed();
 
-            // Code to seed data
         }
 
     }
