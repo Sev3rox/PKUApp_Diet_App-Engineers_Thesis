@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+//Created on Wydzia³ Informatyki Politechniki Bia³ostockiej
+
 namespace PKUAppAPI
 {
     public class Program

@@ -250,6 +250,17 @@ export class UserShowMealsComponent implements OnInit {
         this.daySummary.Product.Fat+=this.dayMed.Fat;
         this.daySummary.Product.Carb+=this.dayMed.Carb;
         }
+          if(this.daySummary.Product.Phe<100)
+          this.daySummary.Product.Phe=0
+          if(this.daySummary.Product.Calories<100)
+          this.daySummary.Product.Calories=0
+          if(this.daySummary.Product.Protein<100)
+          this.daySummary.Product.Protein=0
+          if(this.daySummary.Product.Fat<100)
+          this.daySummary.Product.Fat=0
+          if(this.daySummary.Product.Carb<100)
+          this.daySummary.Product.Carb=0
+          
         this.refreshChartSummary();
       });
     }

@@ -251,11 +251,11 @@ export class OwnShowProductsComponent implements OnInit {
         this.catName='';
       }
     }
-    else if(name=="ProteinFoods"){
+    else if(name=="Protein Foods"){
       if(this.categoryProteinFoods==false){
         this.categoryRefresh();
         this.categoryProteinFoods=true;
-        this.catName='ProteinFoods';
+        this.catName='Protein Foods';
       }
       else{
         this.categoryProteinFoods=false;

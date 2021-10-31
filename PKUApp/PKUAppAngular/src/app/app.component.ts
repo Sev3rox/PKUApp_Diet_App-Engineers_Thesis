@@ -1,3 +1,4 @@
+//Created on Wydział Informatyki Politechniki Białostockiej
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './shared/services/authentication.service';
 

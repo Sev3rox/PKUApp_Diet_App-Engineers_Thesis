@@ -1,3 +1,5 @@
+//Created on Wydział Informatyki Politechniki Białostockiej
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandlerService } from './shared/services/error-handler.service';

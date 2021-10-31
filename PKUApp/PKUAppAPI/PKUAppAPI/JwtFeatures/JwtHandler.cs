@@ -10,6 +10,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
+//Whole implementation of .NET Identity and JWT is inspired by the one that is pressented in https://docs.microsoft.com/en-us/documentation/
+//So Code that is used in this app that implements identity might be similar to other applications bacause it is almostly the same in all apps using it
+
 namespace PKUAppAPI.JwtFeatures
 {
     public class JwtHandler

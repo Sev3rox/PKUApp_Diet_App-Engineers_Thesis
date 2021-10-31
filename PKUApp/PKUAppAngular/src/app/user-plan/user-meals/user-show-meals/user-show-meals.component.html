@@ -190,7 +190,7 @@
         </td>
 
         <td *ngIf="Limits?.PheLimit==0">
-          <div style="position: relative;" *ngIf="daySummary?.Product.Phe==0">
+          <div style="position: relative;" *ngIf="daySummary?.Product.Phe<1">
             <div style="position: absolute; top: 120px; left: 105px;">
             <div style="height: 80px; width: 80px; background-color: white;">
               <div style="text-align: center;">
@@ -215,7 +215,7 @@
         </div>
         </div>
 
-          <div style="position: relative;" *ngIf="daySummary?.Product.Phe!=0">
+          <div style="position: relative;" *ngIf="daySummary?.Product.Phe>=1">
             <div style="position: absolute; top: 120px; left: 105px;">
             <div style="height: 80px; width: 80px; background-color: white;">
               <div style="text-align: center;">
@@ -255,7 +255,7 @@
         </td>
 
         <td *ngIf="Limits?.CaloriesLimit==0">
-          <div style="position: relative;" *ngIf="daySummary?.Product.Calories==0">
+          <div style="position: relative;" *ngIf="daySummary?.Product.Calories<1">
             <div style="position: absolute; top: 120px; left: 105px;">
               <div style="height: 80px; width: 80px; background-color: white;">
                 <div style="text-align: center;">
@@ -280,7 +280,7 @@
         </div>
         </div>
 
-          <div style="position: relative;" *ngIf="daySummary?.Product.Calories!=0">
+          <div style="position: relative;" *ngIf="daySummary?.Product.Calories>=1">
             <div style="position: absolute; top: 120px; left: 105px;">
               <div style="height: 80px; width: 80px; background-color: white;">
                 <div style="text-align: center;">

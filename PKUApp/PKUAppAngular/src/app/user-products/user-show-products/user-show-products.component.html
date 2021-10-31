@@ -33,8 +33,8 @@
         <button *ngIf="!categoryDairy" (click)="categoryResult('Dairy')" style="width:9%;" type="button" class="btn btn-light">Dairy</button>
         <button *ngIf="categoryGrains" (click)="categoryResult('Grains')" style="width:9%;" type="button" class="btn btn-primary">Grains</button>
         <button *ngIf="!categoryGrains" (click)="categoryResult('Grains')" style="width:9%;" type="button" class="btn btn-light">Grains</button>
-        <button *ngIf="categoryProteinFoods" (click)="categoryResult('ProteinFoods')" style="width:9%;" type="button" class="btn btn-primary">Protein Foods</button>
-        <button *ngIf="!categoryProteinFoods" (click)="categoryResult('ProteinFoods')" style="width:9%;" type="button" class="btn btn-light">Protein Foods</button>
+        <button *ngIf="categoryProteinFoods" (click)="categoryResult('Protein Foods')" style="width:9%;" type="button" class="btn btn-primary">Protein Foods</button>
+        <button *ngIf="!categoryProteinFoods" (click)="categoryResult('Protein Foods')" style="width:9%;" type="button" class="btn btn-light">Protein Foods</button>
         <button *ngIf="categoryDrinks" (click)="categoryResult('Drinks')" style="width:9%;" type="button" class="btn btn-primary">Drinks</button>
         <button *ngIf="!categoryDrinks" (click)="categoryResult('Drinks')" style="width:9%;" type="button" class="btn btn-light">Drinks</button>
         <button *ngIf="categorySnacks" (click)="categoryResult('Snacks')" style="width:8%;" type="button" class="btn btn-primary">Snacks</button>
@@ -56,7 +56,8 @@
       </button>
       </div>
       <div style="margin-top:10px; margin-left: 1%; align-content: center;" class="d-flex flex-row" >
-        <div style="width: 70%; margin: 0 auto;" class="d-flex flex-row" >
+        <div style="width: 50%; margin: 0 auto;" class="d-flex flex-row" >
+          <div  style="width: 20%;"></div>
           <input [(ngModel)]="productSearch" class="form-control" placeholder="Search" (keyup.enter)="searchProduct()">
           <button (click)="searchProduct()" type="button" class="btn btn-primary" style="margin-left: 1rem;">Search</button>
           <button (click)="clearSearch()" type="button" class="btn btn-secondary" [disabled]="!productSearch">Clear</button>

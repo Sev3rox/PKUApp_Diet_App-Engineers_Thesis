@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
+//Created on Wydział Informatyki Politechniki Białostockiej
+
 namespace PKUAppAPI.Models
 {
     public class Exercise

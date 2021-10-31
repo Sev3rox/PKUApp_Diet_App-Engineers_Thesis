@@ -1,3 +1,6 @@
+//Whole implementation of .NET Identity and JWT is inspired by the one that is pressented in https://docs.microsoft.com/en-us/documentation/ and other sites
+//So Code that is used in this app that implements identity might be similar to other applications bacause it is almostly the same in all apps using it
+
 import { UserForAuthenticationDto } from './../../_interfaces/userForAuthenticationDto.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from './../../shared/services/authentication.service';

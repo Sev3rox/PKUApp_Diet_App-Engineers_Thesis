@@ -1,3 +1,4 @@
+//Created on Wydział Informatyki Politechniki Białostockiej
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
