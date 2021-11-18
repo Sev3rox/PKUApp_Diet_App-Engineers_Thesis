@@ -18,10 +18,10 @@ namespace PKUAppAPI.Data
             var password = new PasswordHasher<User>();
             string hashed = "";
 
-            var admin = new User { Email = "a@a", Name = "Admin", UserName = "a@a", NormalizedUserName = "A@A", NormalizedEmail = "A@A", LockoutEnabled = true };
-            var user = new User { Email = "u@u", Name = "User", UserName = "u@u", NormalizedUserName = "U@U", NormalizedEmail = "U@U", LockoutEnabled = true };
-            var user2 = new User { Email = "u@u2", Name = "User2", UserName = "u@u2", NormalizedUserName = "U@U2", NormalizedEmail = "U@U2", LockoutEnabled = true };
-            var user3 = new User { Email = "u@u3", Name = "User3", UserName = "u@u3", NormalizedUserName = "U@U3", NormalizedEmail = "U@U3", LockoutEnabled = true };
+            var admin = new User { Id= "d318a720-1017-4703-98cf-44954069d6e5", Email = "a@a", Name = "Admin", UserName = "a@a", NormalizedUserName = "A@A", NormalizedEmail = "A@A", LockoutEnabled = true };
+            var user = new User { Id = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957", Email = "u@u", Name = "User", UserName = "u@u", NormalizedUserName = "U@U", NormalizedEmail = "U@U", LockoutEnabled = true };
+            var user2 = new User { Id = "46ad44f4-c682-4c31-8f04-b364d516a8ed", Email = "u@u2", Name = "User2", UserName = "u@u2", NormalizedUserName = "U@U2", NormalizedEmail = "U@U2", LockoutEnabled = true };
+            var user3 = new User { Id = "b40c12be-c3bc-4765-80ca-2f637e603f8a", Email = "u@u3", Name = "User3", UserName = "u@u3", NormalizedUserName = "U@U3", NormalizedEmail = "U@U3", LockoutEnabled = true };
             hashed = password.HashPassword(admin, "123456");
             admin.PasswordHash = hashed;
             hashed = password.HashPassword(user, "123456");
@@ -697,7 +697,7 @@ namespace PKUAppAPI.Data
             //Meals
             #region Meals
 
-            var today = DateTime.Today;
+            var today = DateTime.Today.AddDays(1);
             today = new DateTime(today.Year, today.Month, today.Day);
 
             //Meal names  "First Meal","Second Meal","Third Meal","Fourth Meal","Fifth Meal","Sixth Meal","Seventh Meal","Eighth Meal","Ninth Meal","Tenth Meal"

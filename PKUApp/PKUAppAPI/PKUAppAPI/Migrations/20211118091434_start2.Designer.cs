@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PKUAppAPI.Data;
 
 namespace PKUAppAPI.Migrations
 {
     [DbContext(typeof(PKUAppDbContext))]
-    partial class PKUAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211118091434_start2")]
+    partial class start2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2056,16 +2058,16 @@ namespace PKUAppAPI.Migrations
                         {
                             Id = "d318a720-1017-4703-98cf-44954069d6e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "609b4c61-4692-4ecd-b98d-46b81333a8f7",
+                            ConcurrencyStamp = "41080b2f-31be-403f-a33b-9455e69acdf6",
                             Email = "a@a",
                             EmailConfirmed = false,
                             LockoutEnabled = true,
                             Name = "Admin",
                             NormalizedEmail = "A@A",
                             NormalizedUserName = "A@A",
-                            PasswordHash = "AQAAAAEAACcQAAAAEA893zwSsGryjix4cyQ1GWUYZYDmUaCIcM9prUrEzX6vcbOY/SXL3iYtE25uyQ2c3A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAED2yVO5SlkFZYV6mvGFbtnWglN6hTCTnfa6ZJ3XLSpkXnvRab0h3Aw9IcW/AlKX/KA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9b34e598-6d42-4314-a9f3-63b0e25cec3a",
+                            SecurityStamp = "e2a49056-48a6-42df-947c-12e4482df58c",
                             TwoFactorEnabled = false,
                             UserName = "a@a"
                         },
@@ -2073,16 +2075,16 @@ namespace PKUAppAPI.Migrations
                         {
                             Id = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bb978aeb-ecdb-4b32-9d37-2221a0fbbc2f",
+                            ConcurrencyStamp = "1abcab14-601c-4ca9-af1e-dea4ce782d30",
                             Email = "u@u",
                             EmailConfirmed = false,
                             LockoutEnabled = true,
                             Name = "User",
                             NormalizedEmail = "U@U",
                             NormalizedUserName = "U@U",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJlUo9wvMe6ra4R8UaEqKpChDGWvu8bATSEUPz0g7M5VqzcWhFkpB0LsUigjGb0dew==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMc4f3S55jvsXrep9Knr+6RCRiyQkgt7/vPerHQWUQE6V41zCHR1b5vXAv7ozzg9uA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "50432f4f-a832-4476-bb5a-d12c4952e658",
+                            SecurityStamp = "56a5d6ee-f62b-42c0-a29f-1d3029980780",
                             TwoFactorEnabled = false,
                             UserName = "u@u"
                         },
@@ -2090,16 +2092,16 @@ namespace PKUAppAPI.Migrations
                         {
                             Id = "46ad44f4-c682-4c31-8f04-b364d516a8ed",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "802287bb-6ea6-46eb-bb07-b588d17a2004",
+                            ConcurrencyStamp = "ba56adb2-a0ed-41de-a63a-7c7a8da50d16",
                             Email = "u@u2",
                             EmailConfirmed = false,
                             LockoutEnabled = true,
                             Name = "User2",
                             NormalizedEmail = "U@U2",
                             NormalizedUserName = "U@U2",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM5YTh8KHe8s0qhj4I2Btz1AQnryzhEt5U3TeQNHHG+sh06WsDo/EY6FVcjTZGH6KQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAzjV1J6e9+//utGCUmbOquPI+Lyi028If47ehP/UfU4WOg32LcnjOjBL60pVjTOcQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7f12804a-0159-4935-acb9-762eb110ad3e",
+                            SecurityStamp = "1b44f3f8-87ce-42aa-9dc9-9f1d58d973f1",
                             TwoFactorEnabled = false,
                             UserName = "u@u2"
                         },
@@ -2107,16 +2109,16 @@ namespace PKUAppAPI.Migrations
                         {
                             Id = "b40c12be-c3bc-4765-80ca-2f637e603f8a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8a1f4a09-aea6-46a6-bcf7-3c27a7e9e4e8",
+                            ConcurrencyStamp = "de2b8972-2ed1-4982-a7a7-fc9500c10abf",
                             Email = "u@u3",
                             EmailConfirmed = false,
                             LockoutEnabled = true,
                             Name = "User3",
                             NormalizedEmail = "U@U3",
                             NormalizedUserName = "U@U3",
-                            PasswordHash = "AQAAAAEAACcQAAAAELrRe44FszsWRdqfv3FXE+swTbUgxDlvoENqh5GEYhLHGlU6cMi417Pnkb0P25TVBg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAe20sF5KBK0xFZFeDLpT59GoBPEIgneig0hxNOVBocPsJ64OvDkYBrYZIbcfdzqKQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d4a375db-bc11-423b-89a7-abc40450ba61",
+                            SecurityStamp = "6cc4c496-02b1-443d-a02d-f5f3e2ce6dc2",
                             TwoFactorEnabled = false,
                             UserName = "u@u3"
                         });

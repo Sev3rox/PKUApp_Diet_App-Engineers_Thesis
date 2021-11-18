@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PKUAppAPI.Data;
 
 namespace PKUAppAPI.Migrations
 {
     [DbContext(typeof(PKUAppDbContext))]
-    partial class PKUAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211118091659_start3")]
+    partial class start3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -421,252 +423,252 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             MealId = 1,
-                            Date = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 2,
-                            Date = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 3,
-                            Date = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Third Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 4,
-                            Date = new DateTime(2021, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 5,
-                            Date = new DateTime(2021, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 6,
-                            Date = new DateTime(2021, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 7,
-                            Date = new DateTime(2021, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 8,
-                            Date = new DateTime(2021, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Third Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 9,
-                            Date = new DateTime(2021, 11, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 10,
-                            Date = new DateTime(2021, 11, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 11,
-                            Date = new DateTime(2021, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 12,
-                            Date = new DateTime(2021, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 13,
-                            Date = new DateTime(2021, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Third Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 14,
-                            Date = new DateTime(2021, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 15,
-                            Date = new DateTime(2021, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 16,
-                            Date = new DateTime(2021, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Third Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 17,
-                            Date = new DateTime(2021, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Fourth Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 18,
-                            Date = new DateTime(2021, 11, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 19,
-                            Date = new DateTime(2021, 11, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 20,
-                            Date = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 21,
-                            Date = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 22,
-                            Date = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Third Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 23,
-                            Date = new DateTime(2021, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 24,
-                            Date = new DateTime(2021, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 25,
-                            Date = new DateTime(2021, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 26,
-                            Date = new DateTime(2021, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 27,
-                            Date = new DateTime(2021, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 28,
-                            Date = new DateTime(2021, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 29,
-                            Date = new DateTime(2021, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Third Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 30,
-                            Date = new DateTime(2021, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 31,
-                            Date = new DateTime(2021, 11, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 32,
-                            Date = new DateTime(2021, 11, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 33,
-                            Date = new DateTime(2021, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 34,
-                            Date = new DateTime(2021, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Second Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 35,
-                            Date = new DateTime(2021, 11, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             MealId = 36,
-                            Date = new DateTime(2021, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "First Meal",
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         });
@@ -1825,7 +1827,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 1,
-                            Date = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 980
@@ -1833,7 +1835,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 2,
-                            Date = new DateTime(2021, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 960
@@ -1841,7 +1843,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 3,
-                            Date = new DateTime(2021, 11, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 930
@@ -1849,7 +1851,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 4,
-                            Date = new DateTime(2021, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 970
@@ -1857,7 +1859,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 5,
-                            Date = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 900
@@ -1865,7 +1867,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 6,
-                            Date = new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 880
@@ -1873,7 +1875,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 7,
-                            Date = new DateTime(2021, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 930
@@ -1881,7 +1883,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 8,
-                            Date = new DateTime(2021, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 900
@@ -1889,7 +1891,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 9,
-                            Date = new DateTime(2021, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 870
@@ -1897,7 +1899,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 10,
-                            Date = new DateTime(2021, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 850
@@ -1905,7 +1907,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 101,
-                            Date = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 10600
@@ -1913,7 +1915,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 102,
-                            Date = new DateTime(2021, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 1060
@@ -1921,7 +1923,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 103,
-                            Date = new DateTime(2021, 11, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 10690
@@ -1929,7 +1931,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 104,
-                            Date = new DateTime(2021, 11, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 10720
@@ -1937,7 +1939,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 105,
-                            Date = new DateTime(2021, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 10700
@@ -1945,7 +1947,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 106,
-                            Date = new DateTime(2021, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 10710
@@ -1953,7 +1955,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 107,
-                            Date = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 10740
@@ -1961,7 +1963,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 108,
-                            Date = new DateTime(2021, 11, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 10750
@@ -1969,7 +1971,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 109,
-                            Date = new DateTime(2021, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 10800
@@ -1977,7 +1979,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             TrackedValueId = 110,
-                            Date = new DateTime(2021, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             Value = 10870
@@ -2056,16 +2058,16 @@ namespace PKUAppAPI.Migrations
                         {
                             Id = "d318a720-1017-4703-98cf-44954069d6e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "609b4c61-4692-4ecd-b98d-46b81333a8f7",
+                            ConcurrencyStamp = "597ad3b1-93fa-4975-8ee1-37e136e6994f",
                             Email = "a@a",
                             EmailConfirmed = false,
                             LockoutEnabled = true,
                             Name = "Admin",
                             NormalizedEmail = "A@A",
                             NormalizedUserName = "A@A",
-                            PasswordHash = "AQAAAAEAACcQAAAAEA893zwSsGryjix4cyQ1GWUYZYDmUaCIcM9prUrEzX6vcbOY/SXL3iYtE25uyQ2c3A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPp04tifVL1wZzo5oi+DpVb39DanSKlKujz6IeiyORLwB+/Py1B7iQTXfd5XiyKlAQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9b34e598-6d42-4314-a9f3-63b0e25cec3a",
+                            SecurityStamp = "af05e7df-1813-45c9-b595-566e7715102b",
                             TwoFactorEnabled = false,
                             UserName = "a@a"
                         },
@@ -2073,16 +2075,16 @@ namespace PKUAppAPI.Migrations
                         {
                             Id = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bb978aeb-ecdb-4b32-9d37-2221a0fbbc2f",
+                            ConcurrencyStamp = "b1b48b45-fb38-431c-a8a1-6b3524e147a7",
                             Email = "u@u",
                             EmailConfirmed = false,
                             LockoutEnabled = true,
                             Name = "User",
                             NormalizedEmail = "U@U",
                             NormalizedUserName = "U@U",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJlUo9wvMe6ra4R8UaEqKpChDGWvu8bATSEUPz0g7M5VqzcWhFkpB0LsUigjGb0dew==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA4VyWPvPSjTvMB9v6msGSjtF259//ncfmKy61fh7d0vUSFva0MJgopB4G1pulkuPw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "50432f4f-a832-4476-bb5a-d12c4952e658",
+                            SecurityStamp = "2cccef8d-ec17-4f80-bfd0-101f66e261a1",
                             TwoFactorEnabled = false,
                             UserName = "u@u"
                         },
@@ -2090,16 +2092,16 @@ namespace PKUAppAPI.Migrations
                         {
                             Id = "46ad44f4-c682-4c31-8f04-b364d516a8ed",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "802287bb-6ea6-46eb-bb07-b588d17a2004",
+                            ConcurrencyStamp = "e83fe879-8233-4c5b-bafe-bb64d5840e33",
                             Email = "u@u2",
                             EmailConfirmed = false,
                             LockoutEnabled = true,
                             Name = "User2",
                             NormalizedEmail = "U@U2",
                             NormalizedUserName = "U@U2",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM5YTh8KHe8s0qhj4I2Btz1AQnryzhEt5U3TeQNHHG+sh06WsDo/EY6FVcjTZGH6KQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKcQDNCeXTfsgg1MDradmQRanNcxAjW9466Mg8wYZhjzZ/vpdpU2HJXLtKcnuACuyg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7f12804a-0159-4935-acb9-762eb110ad3e",
+                            SecurityStamp = "2242630f-fa81-4ba6-a86a-7bbe85c8dac4",
                             TwoFactorEnabled = false,
                             UserName = "u@u2"
                         },
@@ -2107,16 +2109,16 @@ namespace PKUAppAPI.Migrations
                         {
                             Id = "b40c12be-c3bc-4765-80ca-2f637e603f8a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8a1f4a09-aea6-46a6-bcf7-3c27a7e9e4e8",
+                            ConcurrencyStamp = "c86f5a1f-3d79-4f67-b895-5dfcb9b73a9f",
                             Email = "u@u3",
                             EmailConfirmed = false,
                             LockoutEnabled = true,
                             Name = "User3",
                             NormalizedEmail = "U@U3",
                             NormalizedUserName = "U@U3",
-                            PasswordHash = "AQAAAAEAACcQAAAAELrRe44FszsWRdqfv3FXE+swTbUgxDlvoENqh5GEYhLHGlU6cMi417Pnkb0P25TVBg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOtPrjzj3pQaZSWx6g/gXcbkYkMOHU5uOlbwRs7DFUm3Cq3Ueh1AvJePeJam+QiLfQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d4a375db-bc11-423b-89a7-abc40450ba61",
+                            SecurityStamp = "6ea09873-3d7b-4809-9004-8e1989e5be53",
                             TwoFactorEnabled = false,
                             UserName = "u@u3"
                         });
@@ -2225,7 +2227,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 1,
-                            Date = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 1,
                             Time = 3000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2233,7 +2235,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 2,
-                            Date = new DateTime(2021, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 2,
                             Time = 4500,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2241,7 +2243,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 3,
-                            Date = new DateTime(2021, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 3,
                             Time = 9000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2249,7 +2251,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 4,
-                            Date = new DateTime(2021, 11, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 1,
                             Time = 6000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2257,7 +2259,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 5,
-                            Date = new DateTime(2021, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 2,
                             Time = 6000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2265,7 +2267,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 6,
-                            Date = new DateTime(2021, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 28,
                             Time = 9000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2273,14 +2275,6 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 7,
-                            Date = new DateTime(2021, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ExerciseId = 3,
-                            Time = 4500,
-                            UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
-                        },
-                        new
-                        {
-                            UserExerciseId = 8,
                             Date = new DateTime(2021, 11, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 3,
                             Time = 4500,
@@ -2288,8 +2282,16 @@ namespace PKUAppAPI.Migrations
                         },
                         new
                         {
+                            UserExerciseId = 8,
+                            Date = new DateTime(2021, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExerciseId = 3,
+                            Time = 4500,
+                            UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
+                        },
+                        new
+                        {
                             UserExerciseId = 9,
-                            Date = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 8,
                             Time = 12000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2297,7 +2299,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 10,
-                            Date = new DateTime(2021, 11, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 8,
                             Time = 4000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2305,7 +2307,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 11,
-                            Date = new DateTime(2021, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 2,
                             Time = 4500,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2313,7 +2315,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 12,
-                            Date = new DateTime(2021, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 28,
                             Time = 10000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2321,7 +2323,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 13,
-                            Date = new DateTime(2021, 10, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 1,
                             Time = 10000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2329,7 +2331,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 14,
-                            Date = new DateTime(2021, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 2,
                             Time = 8000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2337,7 +2339,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 15,
-                            Date = new DateTime(2021, 11, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 28,
                             Time = 10000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2345,7 +2347,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 16,
-                            Date = new DateTime(2021, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 1,
                             Time = 10000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2353,7 +2355,7 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserExerciseId = 17,
-                            Date = new DateTime(2021, 11, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ExerciseId = 2,
                             Time = 8000,
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
@@ -2406,7 +2408,7 @@ namespace PKUAppAPI.Migrations
                             Fat = 1800,
                             Phe = 1200,
                             Protein = 3000,
-                            StartDate = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2021, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
@@ -2414,11 +2416,11 @@ namespace PKUAppAPI.Migrations
                             UserMedicineId = 2,
                             Calories = 5000,
                             Carb = 3800,
-                            EndDate = new DateTime(2021, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2021, 11, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fat = 1700,
                             Phe = 1500,
                             Protein = 3400,
-                            StartDate = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
@@ -2426,11 +2428,11 @@ namespace PKUAppAPI.Migrations
                             UserMedicineId = 3,
                             Calories = 5300,
                             Carb = 3500,
-                            EndDate = new DateTime(2021, 11, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndDate = new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fat = 1900,
                             Phe = 1100,
                             Protein = 3200,
-                            StartDate = new DateTime(2021, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2021, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
@@ -2441,7 +2443,7 @@ namespace PKUAppAPI.Migrations
                             Fat = 2800,
                             Phe = 1000,
                             Protein = 3600,
-                            StartDate = new DateTime(2021, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2021, 11, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         });
                 });
@@ -2469,13 +2471,13 @@ namespace PKUAppAPI.Migrations
                         new
                         {
                             UserOffAlertId = 1,
-                            Date = new DateTime(2021, 11, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         },
                         new
                         {
                             UserOffAlertId = 2,
-                            Date = new DateTime(2021, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2021, 11, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = "483f0b30-9dbf-4fc0-b66a-4bc1642c4957"
                         });
                 });
