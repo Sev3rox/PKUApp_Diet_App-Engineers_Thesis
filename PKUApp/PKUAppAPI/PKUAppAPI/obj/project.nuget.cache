@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "V37KVbiZHxcatNNQEcgMayP+wlRkm2G3WjfibheDdaFMU7tryNzyZSwTRuHTxzwC0r0E/mVMIqLtbYd5jWir6Q==",
+  "dgSpecHash": "gLmHQ5CO/smVsqT3UvKd4yCbh0yrjumwDEPCqO4HoMnjCsferetCjwLuZ3NXLAw9JWqZNoyYvHkFOU/1M1xIZA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PC\\Desktop\\Inż\\PKUApp\\PKUAppAPI\\PKUAppAPI\\PKUAppAPI.csproj",
+  "projectFilePath": "C:\\Users\\PC\\Desktop\\Nowy folder\\Engineer-s-Thesis\\PKUApp\\PKUAppAPI\\PKUAppAPI\\PKUAppAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",

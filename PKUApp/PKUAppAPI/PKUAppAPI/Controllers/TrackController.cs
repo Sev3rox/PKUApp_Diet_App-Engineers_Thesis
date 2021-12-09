@@ -16,7 +16,7 @@ namespace PKUAppAPI.Controllers
     [Authorize]
     public class TrackController : ControllerBase //Name is Track instead of Tracking because my adblock extension was blocking api call with Tracking name
     {
-        public class chartData
+        public class chartDataTr
         {
             public string name { get; set; }
             public double value { get; set; }
@@ -45,7 +45,7 @@ namespace PKUAppAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<chartData>>> GetTracking(int type, DateTime date)
+        public async Task<ActionResult<IEnumerable<chartDataTr>>> GetTracking(int type, DateTime date)
         {
             var claims = User.Claims
             .Select(c => new { c.Type, c.Value })
@@ -57,7 +57,7 @@ namespace PKUAppAPI.Controllers
 
             var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
-            var result = new List<chartData>();
+            var result = new List<chartDataTr>();
 
             var helpdate = new DateTime(date.Year, date.Month, date.Day);
             helpdate = helpdate.AddDays(-30);
@@ -81,7 +81,7 @@ namespace PKUAppAPI.Controllers
 
                     if (trackRecord != null)
                     {
-                        var chartDay = new chartData
+                        var chartDay = new chartDataTr
                         {
                             name = firstdate.ToString("d", CultureInfo.CreateSpecificCulture("en-US")),
                             value = (double)((double)trackRecord.Value / 100)
@@ -90,7 +90,7 @@ namespace PKUAppAPI.Controllers
                     }
                     else
                     {
-                        var chartDay = new chartData
+                        var chartDay = new chartDataTr
                         {
                             name = firstdate.ToString("d", CultureInfo.CreateSpecificCulture("en-US")),
                             value = 0
@@ -125,7 +125,7 @@ namespace PKUAppAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<chartData>>> PostTracking(TrackedValue value)
+        public async Task<ActionResult<IEnumerable<chartDataTr>>> PostTracking(TrackedValue value)
         {
             var claims = User.Claims
             .Select(c => new { c.Type, c.Value })
@@ -147,7 +147,7 @@ namespace PKUAppAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<IEnumerable<chartData>>> PutTracking(int id, int value)
+        public async Task<ActionResult<IEnumerable<chartDataTr>>> PutTracking(int id, int value)
         {
             var claims = User.Claims
             .Select(c => new { c.Type, c.Value })

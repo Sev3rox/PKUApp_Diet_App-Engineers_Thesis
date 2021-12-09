@@ -31,7 +31,7 @@ namespace PKUAppAPI.Controllers
             public Exercise Exercise { get; set; }
         }
 
-        public class chartData
+        public class chartDataEx
         {
             public string name { get; set; }
             public int value { get; set; }
@@ -416,7 +416,7 @@ namespace PKUAppAPI.Controllers
 
 
         [HttpGet("GetCharts")]
-        public async Task<ActionResult<IEnumerable<chartData>>> GetCharts(DateTime date, string chartType = "", int chartDays = 0)
+        public async Task<ActionResult<IEnumerable<chartDataEx>>> GetCharts(DateTime date, string chartType = "", int chartDays = 0)
         {
             var claims = User.Claims
             .Select(c => new { c.Type, c.Value })
@@ -428,7 +428,7 @@ namespace PKUAppAPI.Controllers
 
             var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == claims[0].Value);
 
-            var result = new List<chartData>();
+            var result = new List<chartDataEx>();
 
             var lastdate = new DateTime(date.Year, date.Month, date.Day);
             var firstdate = new DateTime(date.Year, date.Month, date.Day);
@@ -448,7 +448,7 @@ namespace PKUAppAPI.Controllers
                         value += oneExer.Calories * exer.Time/100/100/60;
                     }
 
-                    var chartDay = new chartData
+                    var chartDay = new chartDataEx
                     {
                         name = firstdate.ToString("d", CultureInfo.CreateSpecificCulture("en-US")),
                         value = value
@@ -473,7 +473,7 @@ namespace PKUAppAPI.Controllers
                         value += exer.Time / 100;
                     }
 
-                    var chartDay = new chartData
+                    var chartDay = new chartDataEx
                     {
                         name = firstdate.ToString("d", CultureInfo.CreateSpecificCulture("en-US")),
                         value = value
