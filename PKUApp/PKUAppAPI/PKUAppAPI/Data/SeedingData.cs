@@ -1635,7 +1635,7 @@ namespace PKUAppAPI.Data
                 {
                     UserMedicineId = 22,
                     StartDate = today.AddDays(-3),
-                    UserId = user.Id,
+                    UserId = user2.Id,
                     Phe = 1000,
                     Calories = 4200,
                     Protein = 3600,

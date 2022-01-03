@@ -7661,11 +7661,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\Desktop\\Nowy folder\\Engineer-s-Thesis\\PKUApp\\PKUAppAPI\\PKUAppAPI\\PKUAppAPI.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Desktop\\Engineer-s-Thesis\\PKUApp\\PKUAppAPI\\PKUAppAPI\\PKUAppAPI.csproj",
       "projectName": "PKUAppAPI",
-      "projectPath": "C:\\Users\\PC\\Desktop\\Nowy folder\\Engineer-s-Thesis\\PKUApp\\PKUAppAPI\\PKUAppAPI\\PKUAppAPI.csproj",
+      "projectPath": "C:\\Users\\PC\\Desktop\\Engineer-s-Thesis\\PKUApp\\PKUAppAPI\\PKUAppAPI\\PKUAppAPI.csproj",
       "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\Desktop\\Nowy folder\\Engineer-s-Thesis\\PKUApp\\PKUAppAPI\\PKUAppAPI\\obj\\",
+      "outputPath": "C:\\Users\\PC\\Desktop\\Engineer-s-Thesis\\PKUApp\\PKUAppAPI\\PKUAppAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7755,7 +7755,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
